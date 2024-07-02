@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "28639589684",
+    "project_id": "airline-system-4e527",
+    "storage_bucket": "airline-system-4e527.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28639589684:android:83f51a1972b036a833a161",
+        "android_client_info": {
+          "package_name": "com.travel.travel_system"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnRrUq_TPtCzHwboWsCJlVUSEVcAwHo0o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
