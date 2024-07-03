@@ -9,7 +9,7 @@ customToast({
 {
   Fluttertoast.showToast(
       msg: title,
-      textColor: ColorManager.primary,
+      textColor: ColorManager.primaryBlue,
       backgroundColor: color,
       gravity: ToastGravity.BOTTOM,
       toastLength: Toast.LENGTH_LONG,

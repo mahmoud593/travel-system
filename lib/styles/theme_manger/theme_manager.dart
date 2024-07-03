@@ -5,7 +5,7 @@ import 'package:travel_system/styles/colors/color_manager.dart';
 ThemeData getApplicationTheme(BuildContext context) {
   return ThemeData(
     scaffoldBackgroundColor: ColorManager.white,
-    primaryColor: ColorManager.primary,
+    primaryColor: ColorManager.primaryBlue,
     useMaterial3: true,
     fontFamily: 'DINNEXTLTARABIC',
     // app bar theme
@@ -19,10 +19,10 @@ ThemeData getApplicationTheme(BuildContext context) {
           fontFamily: 'DINNEXTLTARABIC',
         ),
         iconTheme: const IconThemeData(
-          color: ColorManager.primary,
+          color: ColorManager.primaryBlue,
         ),
         systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: ColorManager.white,
+          statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.dark,
         )),
   );
