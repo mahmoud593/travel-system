@@ -49,7 +49,7 @@ class CustomPinPutWidget extends StatelessWidget {
           decoration: BoxDecoration(
             color: ColorManager.white,
             border: Border.all(
-              color: ColorManager.primary,
+              color: ColorManager.primaryBlue,
             ),
             borderRadius: BorderRadius.circular(SizeConfig.height*0.015),
           ),
@@ -61,7 +61,7 @@ class CustomPinPutWidget extends StatelessWidget {
           decoration: BoxDecoration(
             color: ColorManager.white,
             border: Border.all(
-              color: ColorManager.primary,
+              color: ColorManager.primaryBlue,
             ),
             borderRadius: BorderRadius.circular(SizeConfig.height*0.015),
           ),

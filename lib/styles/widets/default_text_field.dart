@@ -52,7 +52,7 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
           fillColor: widget.fillColor,
           errorStyle: TextStyle(
             fontSize: MediaQuery.sizeOf(context).height*0.02,
-            color: ColorManager.primary,
+            color: ColorManager.primaryBlue,
           ),
 
           hintText: widget.hintText,
