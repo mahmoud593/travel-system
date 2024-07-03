@@ -1,9 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travel_system/core/local/shared_preferences.dart';
-import 'package:travel_system/features/on_boarding_screen/screen/on_boarding_screen.dart';
+import 'package:travel_system/features/home_layout/presentation/cubit/home_layout_cubit.dart';
+import 'package:travel_system/features/home_layout/presentation/view/home_layout_screen/screens/home_layout_screen.dart';
 import 'package:travel_system/styles/theme_manger/theme_manager.dart';
 
 import 'firebase_options.dart';
@@ -22,10 +24,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: getApplicationTheme(context),
-      home: const OnBoarding(),
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => HomeLayoutCubit(),),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: getApplicationTheme(context),
+          home: const HomeLayoutScreen(),
+        ),
     );
   }
 }

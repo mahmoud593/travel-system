@@ -1,19 +1,16 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:travel_system/core/helper/app_size_config.dart';
 import 'package:travel_system/features/on_boarding_screen/widget/pageview_item.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
 import 'package:travel_system/styles/text_styles/text_styles.dart';
-import 'package:travel_system/styles/widets/default_button.dart';
 
 
 class OnBoarding extends StatefulWidget {
 
-  const OnBoarding({Key? key}) : super(key: key);
+  const OnBoarding({super.key});
 
   @override
   State<OnBoarding> createState() => _OnBoardingState();

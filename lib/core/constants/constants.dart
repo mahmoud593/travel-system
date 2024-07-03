@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:travel_system/features/new_posts/presentation/view/new_posts_screen/screens/new_posts_screen.dart';
+import 'package:travel_system/features/posts/presentation/view/posts_screen/screens/posts_screen.dart';
+import 'package:travel_system/features/settings/presentation/view/settings_screen/screens/settings_screen.dart';
 import 'package:travel_system/models/onboarding_model.dart';
 
 class Constants{
@@ -20,4 +24,18 @@ class Constants{
     ),
 
   ];
+
+  static List<Widget> homeLayoutScreens=[
+    const PostsScreen(),
+    const NewPostsScreen(),
+    const SettingsScreen(),
+  ];
+
+
+  static List<String> homeLayoutTitles=[
+    'Posts Screen',
+    'New Posts Screen',
+    'Settings Screen',
+  ];
+
 }

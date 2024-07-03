@@ -1,4 +1,4 @@
-class AssetManager{
+class AssetsManager{
 
   static const String onBoardingGif_1 = "assets/gif/on_boarding_gif_1.json";
   static const String onBoardingGif_2 = "assets/gif/on_boarding_gif_2.json";
@@ -11,5 +11,7 @@ class AssetManager{
   static const String appLogo = "assets/images/app_logo.png";
   static const String slpLogo = "assets/images/slp_logo.png";
 
+  static const String homeIcon = "assets/icons/home.png";
+  static const String settingIcon = "assets/icons/settings.png";
 
 }
