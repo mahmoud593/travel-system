@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: getApplicationTheme(context),
-          home: const OnBoarding(),
+          home: const HomeLayoutScreen(),
         ),
     );
   }

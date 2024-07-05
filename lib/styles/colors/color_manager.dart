@@ -9,6 +9,8 @@ class ColorManager{
   static const background = Color(0xFFEDEFF5);
   static const darkGrey = Color(0xFF101820);
   static const lightGrey = Color(0xFF6E6E6E);
+  static const darkWhite = Color(0xfff7f7f7);
+  static const lightGrey2 = Color(0xFFD2D2D2);
 
   static const success = Color(0xFF4CAF50);
   static const warning = Color(0xFFffb401);

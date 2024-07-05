@@ -5,6 +5,26 @@ import 'package:travel_system/styles/colors/color_manager.dart';
 
 class TextStyles {
   /// normal text style
+  static TextStyle textStyle12Bold= TextStyle(
+      fontSize: SizeConfig.height * 0.015,
+      color: ColorManager.white,
+      fontWeight: FontWeight.bold
+  );
+
+  static TextStyle textStyle12Medium= TextStyle(
+      fontSize: SizeConfig.height * 0.015,
+      color: ColorManager.white,
+      fontWeight: FontWeight.w600
+  );
+
+  static TextStyle textStyle12Regular= TextStyle(
+      fontSize: SizeConfig.height * 0.015,
+      color: ColorManager.white,
+      fontWeight: FontWeight.w400
+  );
+
+
+  /// normal text style
   static TextStyle textStyle18Bold= TextStyle(
     fontSize: SizeConfig.height * 0.02,
     color: ColorManager.white,
