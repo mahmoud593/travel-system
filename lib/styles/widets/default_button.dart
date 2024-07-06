@@ -21,8 +21,8 @@ class DefaultButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Container(
-      height: MediaQuery.sizeOf(context).height*0.065,
-      width: MediaQuery.sizeOf(context).width*.8,
+      height: MediaQuery.sizeOf(context).height*0.05,
+      width: MediaQuery.sizeOf(context).width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).height*0.01),
         color: buttonColor,

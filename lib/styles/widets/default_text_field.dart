@@ -57,7 +57,7 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
 
           hintText: widget.hintText,
           hintStyle: TextStyle(
-            fontSize: MediaQuery.sizeOf(context).height*0.02,
+            fontSize: MediaQuery.sizeOf(context).height*0.018,
             color: ColorManager.lightGrey,
           ),
           suffixIcon: widget.withSuffix==true ?
@@ -82,22 +82,22 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
             vertical: MediaQuery.sizeOf(context).height*0.01
           ),
           border: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: ColorManager.gray,
+            borderSide: BorderSide(
+              color: Colors.grey.withOpacity(0.5),
               width: 1,
             ),
             borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).height*0.01),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: ColorManager.gray,
+            borderSide: BorderSide(
+              color: Colors.grey.withOpacity(0.5),
               width: 1,
             ),
             borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).height*0.01),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: ColorManager.gray,
+            borderSide: BorderSide(
+              color: Colors.grey.withOpacity(0.5),
               width: 1,
             ),
             borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).height*0.01),
@@ -110,7 +110,7 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
             borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).height*0.03),
           ),
           disabledBorder: OutlineInputBorder(
-            borderSide:  BorderSide(
+            borderSide:  const BorderSide(
               color: ColorManager.gray,
               width: 1,
             ),

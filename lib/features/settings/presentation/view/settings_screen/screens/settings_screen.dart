@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travel_system/core/helper/app_size_config.dart';
+import 'package:travel_system/features/settings/presentation/view/edit_profile_screen/edit_profile_screen.dart';
+import 'package:travel_system/features/settings/presentation/view/notification_screen/notificarions_screen.dart';
 import 'package:travel_system/features/settings/presentation/view/settings_screen/widgets/settings_item.dart';
 import 'package:travel_system/features/settings/presentation/view/settings_screen/widgets/user_info_card.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
@@ -16,6 +18,7 @@ class SettingsScreen extends StatelessWidget {
         child: Column(
           children: [
 
+            /// user info card
             const UserInfoCard(name: "Mohamed Mamdouh", email: "mohamed.mmdouh.dev@gmail.com"),
 
             SizedBox(height: screenHeight * 0.05,),
@@ -34,13 +37,21 @@ class SettingsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     /// Edit Profile
-                    SettingsItem(title: 'Edit Profile', icon: Icons.person_outline, onTap: (){}),
+                    SettingsItem(
+                        title: 'Edit Profile',
+                        icon: Icons.person_outline,
+                        onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfileScreen())),
+                    ),
 
                     /// History
                     SettingsItem(title: 'History', icon: Icons.history_outlined, onTap: (){}),
 
                     ///Notifications
-                    SettingsItem(title: 'Notifications', icon: Icons.notifications_outlined, onTap: (){}),
+                    SettingsItem(
+                        title: 'Notifications',
+                        icon: Icons.notifications_outlined,
+                        onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationsScreen())),
+                    ),
 
 
                     /// Delete Account
