@@ -14,4 +14,17 @@ class AssetsManager{
   static const String homeIcon = "assets/icons/home.png";
   static const String settingIcon = "assets/icons/settings.png";
 
+  static const String iWantImage = "assets/images/i_want.png";
+  static const String iHaveImage = "assets/images/i_have.png";
+  static const String startDateImage = "assets/images/start_date.png";
+  static const String endDateImage = "assets/images/end_date.png";
+  static const String travelDateImage = "assets/images/travel_date.png";
+  static const String willToFlyImage = "assets/images/will_to_fly.png";
+  static const String hoursImage = "assets/images/hours.png";
+  static const String boyImage = "assets/images/boy.png";
+  static const String airportImage = "assets/images/airport.png";
+  static const String travelImage = "assets/images/travel.png";
+  static const String planeTicketImage = "assets/images/plane-ticket.png";
+
+
 }

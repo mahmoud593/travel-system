@@ -27,7 +27,7 @@ class Constants{
 
   static List<Widget> homeLayoutScreens=[
     const PostsScreen(),
-    const NewPostsScreen(),
+     NewPostsScreen(),
     const SettingsScreen(),
   ];
 

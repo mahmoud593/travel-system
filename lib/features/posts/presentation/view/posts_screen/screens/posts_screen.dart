@@ -1,12 +1,16 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:travel_system/features/posts/presentation/view/posts_screen/widgets/post_widget.dart';
 
 class PostsScreen extends StatelessWidget {
   const PostsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Posts'),
+    return ListView.separated(
+        physics: const BouncingScrollPhysics(),
+        itemBuilder: (context, index) => const PostWidget(),
+        separatorBuilder: (context, index) => const Divider(),
+        itemCount: 10
     );
   }
 }
