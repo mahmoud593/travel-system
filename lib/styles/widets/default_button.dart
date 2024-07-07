@@ -22,9 +22,9 @@ class DefaultButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Container(
       height: MediaQuery.sizeOf(context).height*0.065,
-      width: MediaQuery.sizeOf(context).width*.8,
+      width: MediaQuery.sizeOf(context).width,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).height*0.01),
+        borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).height*0.04),
         color: buttonColor,
       ),
 
@@ -32,7 +32,7 @@ class DefaultButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           buttonText,
-          style: large?TextStyles.textStyle24Bold:TextStyles.textStyle18Medium,
+          style: large?TextStyles.textStyle18Medium:TextStyles.textStyle18Medium,
         ),
       ),
     );

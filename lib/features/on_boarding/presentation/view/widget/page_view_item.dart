@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:travel_system/core/constants/constants.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
+import 'package:travel_system/styles/text_styles/text_styles.dart';
 
 
 
 class PageViewItem extends StatelessWidget {
-  int index;
-  PageViewItem({super.key,required this.index});
+  final int index;
+  const PageViewItem({super.key,required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -16,29 +16,30 @@ class PageViewItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox( height: size.height*.05),
+        SizedBox( height: size.height*.1),
+        /// image
         Align(
           alignment: Alignment.center,
-          child: Lottie.asset(
+          child: Image.asset(
               Constants.onBoardingScreens[index].image,
               height: size.height*.35
           ),
         ),
         SizedBox( height: size.height*.05),
+        /// Title
         Text(
           Constants.onBoardingScreens[index].title,
-          style: TextStyle(
-              color: ColorManager.black,
-              fontSize: size.height*.035,
-              fontWeight: FontWeight.w600
+          style: TextStyles.textStyle24Bold.copyWith(
+            color: ColorManager.primaryBlue,
           ),
         ),
-        const SizedBox(height: 15,),
+         SizedBox(height: size.height*.05),
+        /// content
         Text(
             Constants.onBoardingScreens[index].content,
-            style: const TextStyle(
-            color: ColorManager.gray,
-          ),
+            style: TextStyles.textStyle18Medium.copyWith(
+              color: ColorManager.darkGrey.withOpacity(.6),
+            ),
           textAlign: TextAlign.center,
         ),
       ],
