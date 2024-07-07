@@ -19,6 +19,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
             color: ColorManager.gray,
             shape: const CircularNotchedRectangle(),
             notchMargin: 3,
+            height: SizeConfig.height*0.075,
             child: SizedBox(
               child: Row(
                 mainAxisSize: MainAxisSize.max,

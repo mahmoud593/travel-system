@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travel_system/core/local/shared_preferences.dart';
 import 'package:travel_system/features/home_layout/presentation/cubit/home_layout_cubit.dart';
 import 'package:travel_system/features/home_layout/presentation/view/home_layout_screen/screens/home_layout_screen.dart';
+import 'package:travel_system/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:travel_system/features/settings/presentation/view/history_screen/history_screen.dart';
 import 'package:travel_system/styles/theme_manger/theme_manager.dart';
 
 import 'firebase_options.dart';
@@ -27,6 +29,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => HomeLayoutCubit(),),
+          BlocProvider(create: (context) => SettingsCubit(),),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

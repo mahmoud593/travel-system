@@ -19,7 +19,7 @@ ThemeData getApplicationTheme(BuildContext context) {
           fontFamily: 'DINNEXTLTARABIC',
         ),
         iconTheme: const IconThemeData(
-          color: ColorManager.primaryBlue,
+          color: ColorManager.black,
         ),
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,

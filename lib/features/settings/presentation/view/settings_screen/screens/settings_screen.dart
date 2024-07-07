@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travel_system/core/helper/app_size_config.dart';
 import 'package:travel_system/features/settings/presentation/view/edit_profile_screen/edit_profile_screen.dart';
+import 'package:travel_system/features/settings/presentation/view/history_screen/history_screen.dart';
 import 'package:travel_system/features/settings/presentation/view/notification_screen/notificarions_screen.dart';
 import 'package:travel_system/features/settings/presentation/view/settings_screen/widgets/settings_item.dart';
 import 'package:travel_system/features/settings/presentation/view/settings_screen/widgets/user_info_card.dart';
@@ -44,7 +45,11 @@ class SettingsScreen extends StatelessWidget {
                     ),
 
                     /// History
-                    SettingsItem(title: 'History', icon: Icons.history_outlined, onTap: (){}),
+                    SettingsItem(
+                        title: 'History',
+                        icon: Icons.history_outlined,
+                        onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context) => const HistoryScreen())),
+                    ),
 
                     ///Notifications
                     SettingsItem(
