@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:travel_system/features/new_posts/presentation/view/new_posts_screen/screens/new_posts_screen.dart';
 import 'package:travel_system/features/posts/presentation/view/posts_screen/screens/posts_screen.dart';
 import 'package:travel_system/features/settings/presentation/view/settings_screen/screens/settings_screen.dart';
-import 'package:travel_system/models/onboarding_model.dart';
 import 'package:travel_system/features/on_boarding/data/model/onboarding_model.dart';
 
 class Constants{

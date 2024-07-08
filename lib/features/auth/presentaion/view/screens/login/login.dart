@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -5,7 +6,7 @@ import 'package:travel_system/core/helper/material_navigation.dart';
 import 'package:travel_system/features/auth/presentaion/cubit/login_cubit/login_cubit.dart';
 import 'package:travel_system/features/auth/presentaion/view/widgets/login_form.dart';
 import 'package:travel_system/features/auth/presentaion/view/widgets/logo_in_circular_avatar.dart';
-import 'package:travel_system/features/splash/presentation/view/splash_screen.dart';
+import 'package:travel_system/features/home_layout/presentation/view/home_layout_screen/screens/home_layout_screen.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
 import 'package:travel_system/styles/text_styles/text_styles.dart';
 import 'package:travel_system/styles/widets/app_bar_without_height_widget.dart';
@@ -21,11 +22,12 @@ class LoginScreen extends StatelessWidget {
     if(state is LoginLoading){
       isLoading = true;
     }else if(state is LoginSuccess){
-      customPushAndRemoveUntil(context, const SplashScreen());
+      customPushAndRemoveUntil(context, const HomeLayoutScreen());
     }
   },
   child: ModalProgressHUD(
       inAsyncCall: isLoading,
+    progressIndicator:  const CupertinoActivityIndicator(),
       child: Scaffold(
         appBar:  appBarWithoutHeightWidget(),
         body: SingleChildScrollView(

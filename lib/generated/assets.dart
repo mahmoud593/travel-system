@@ -2,9 +2,25 @@
 class Assets {
   Assets._();
 
+  static const String fontsDINNEXTLTARABICLIGHT = 'assets/fonts/DINNEXTLTARABIC-LIGHT.ttf';
+  static const String fontsFonts = 'assets/fonts/fonts.dart';
+  static const String iconsHome = 'assets/icons/home.png';
+  static const String iconsSettings = 'assets/icons/settings.png';
+  static const String imagesAirport = 'assets/images/airport.png';
+  static const String imagesBoy = 'assets/images/boy.png';
+  static const String imagesEndDate = 'assets/images/end_date.png';
+  static const String imagesHours = 'assets/images/hours.png';
+  static const String imagesIHave = 'assets/images/i_have.png';
+  static const String imagesIWant = 'assets/images/i_want.png';
   static const String imagesLogo = 'assets/images/logo.png';
   static const String imagesOnBoarding1 = 'assets/images/onBoarding1.png';
   static const String imagesOnBoarding2 = 'assets/images/onBoarding2.png';
   static const String imagesPilot = 'assets/images/pilot.png';
+  static const String imagesPlane = 'assets/images/plane.png';
+  static const String imagesPlaneTicket = 'assets/images/plane-ticket.png';
+  static const String imagesStartDate = 'assets/images/start_date.png';
+  static const String imagesTravel = 'assets/images/travel.png';
+  static const String imagesTravelDate = 'assets/images/travel_date.png';
+  static const String imagesWillToFly = 'assets/images/will_to_fly.png';
 
 }

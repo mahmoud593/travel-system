@@ -6,7 +6,7 @@ import 'package:travel_system/core/helper/material_navigation.dart';
 import 'package:travel_system/features/auth/presentaion/cubit/register_cubit/register_cubit.dart';
 import 'package:travel_system/features/auth/presentaion/view/widgets/logo_in_circular_avatar.dart';
 import 'package:travel_system/features/auth/presentaion/view/widgets/register_form.dart';
-import 'package:travel_system/features/splash/presentation/view/splash_screen.dart';
+import 'package:travel_system/features/home_layout/presentation/view/home_layout_screen/screens/home_layout_screen.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
 import 'package:travel_system/styles/text_styles/text_styles.dart';
 import 'package:travel_system/styles/widets/app_bar_without_height_widget.dart';
@@ -22,13 +22,12 @@ class RegisterScreen extends StatelessWidget {
     if(state is RegisterLoading){
       isLoading = true;
     }else if(state is RegisterSuccess){
-      customPushAndRemoveUntil(context, const SplashScreen());
+      customPushAndRemoveUntil(context, const HomeLayoutScreen());
     }
   },
   child: ModalProgressHUD(
       inAsyncCall: isLoading,
     progressIndicator:  const CupertinoActivityIndicator(),
-
     child: Scaffold(
       appBar:  appBarWithoutHeightWidget(),
         body: SingleChildScrollView(
