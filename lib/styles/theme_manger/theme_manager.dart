@@ -10,7 +10,6 @@ ThemeData getApplicationTheme(BuildContext context) {
     fontFamily: 'DINNEXTLTARABIC',
     // app bar theme
     appBarTheme: AppBarTheme(
-        elevation: 0.0,
         color: ColorManager.white,
         titleTextStyle: Theme.of(context).textTheme.headlineMedium!.copyWith(
           color: ColorManager.backgroundText,
