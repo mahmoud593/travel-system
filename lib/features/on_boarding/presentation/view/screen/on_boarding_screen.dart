@@ -1,11 +1,10 @@
-
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:travel_system/core/helper/app_size_config.dart';
-import 'package:travel_system/features/on_boarding_screen/widget/pageview_item.dart';
+import 'package:travel_system/features/on_boarding/presentation/view/widget/next_with_arrow_button.dart';
+import 'package:travel_system/features/on_boarding/presentation/view/widget/page_view_item.dart';
+import 'package:travel_system/features/on_boarding/presentation/view/widget/skip_button_widget.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
 import 'package:travel_system/styles/text_styles/text_styles.dart';
 
@@ -25,18 +24,8 @@ class _OnBoardingState extends State<OnBoarding> {
 
   @override
   void initState() {
-
-    timer = Timer.periodic(const Duration(seconds: 10), (timer) {
-      Future.delayed(const Duration(seconds: 7),(){
-        if(currentIndex==3){
-        }
-        else{
-          currentIndex++;
-          pageController.nextPage(duration: const Duration(seconds: 3), curve: Curves.fastOutSlowIn);
-        }
-      });
-    });
     super.initState();
+    timeDelay();
   }
 
   @override
@@ -59,6 +48,7 @@ class _OnBoardingState extends State<OnBoarding> {
         ),
         child: Column(
           children: [
+            /// page view
             Expanded(
               child: PageView.builder(
                 physics: const BouncingScrollPhysics(),
@@ -72,43 +62,47 @@ class _OnBoardingState extends State<OnBoarding> {
                 itemCount: 3 ,
               ),
             ),
+            /// Page indicator
             SmoothPageIndicator(
               controller: pageController,
               count: 3,
               effect: const JumpingDotEffect(
                   dotColor: ColorManager.gray,
                   activeDotColor: ColorManager.primaryBlue,
-                  dotWidth: 12,
-                  dotHeight: 12,
+                  dotWidth: 20,
+                  dotHeight: 5,
               ),
 
             ),
             SizedBox(height: size.height*.03,),
-
-
+            /// next and skip
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextButton(onPressed: (){}, child: Text("Skip",style: TextStyles.textStyle18Medium.copyWith(
-                  color: ColorManager.primaryBlue
-                ),)),
-                Container(
-                  width: size.width*.15,
-                  height: size.height*.07,
-                  decoration: const BoxDecoration(
-                    color: ColorManager.primaryBlue,
-                    shape:  BoxShape.circle,
-                  ),
-                  child: Icon(Icons.arrow_right_alt_rounded,
-                    size: SizeConfig.height*.05,
-                    color: ColorManager.white,),
+                /// Skip Button
+                const SkipButtonWidget(),
+                 /// Next Button
+                 NextWithArrowButtonWidget(
+                  currentIndex: currentIndex,
+                  pageController: pageController,
                 ),
-
               ],
-            ),
+            )
           ],
         ),
       ),
     );
+  }
+  void timeDelay()async{
+    timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+      Future.delayed(const Duration(seconds: 7),(){
+        if(currentIndex==3){
+        }
+        else{
+          currentIndex++;
+          pageController.nextPage(duration: const Duration(seconds: 3), curve: Curves.fastOutSlowIn);
+        }
+      });
+    });
   }
 }

@@ -13,6 +13,7 @@ class UserDataFromStorage {
   static late String driverCarImage;
   static late String driverPersonalImage;
   static late String driverCity;
+  static late String userId;
   static late bool userIsGuest;
   static late bool userIsCompany;
   static late bool themeIsDarkMode;
@@ -74,6 +75,10 @@ class UserDataFromStorage {
 
   static setDriverCity(String value) {
     driverCity=value;
+    _setData();
+  }
+  static setUserId(String value) {
+    userId=value;
     _setData();
   }
 
@@ -220,6 +225,7 @@ class UserDataFromStorage {
     prefs.setString('driverCarImage',driverCarImage);
     prefs.setString('driverPersonalImage',driverPersonalImage);
     prefs.setString('driverCity',driverCity);
+    prefs.setString('userId',userId);
     prefs.setString('notLogin',notLogin);
 
 
@@ -269,6 +275,7 @@ class UserDataFromStorage {
     driverCarImage = prefs.getString("driverCarImage")??'';
     driverAbout = prefs.getString("driverAbout")??'';
     driverCity = prefs.getString("driverCity")??'';
+    userId = prefs.getString("userId")??'';
     notLogin = prefs.getString("notLogin")??'';
 
 

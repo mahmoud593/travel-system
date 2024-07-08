@@ -3,6 +3,7 @@ import 'package:travel_system/features/new_posts/presentation/view/new_posts_scr
 import 'package:travel_system/features/posts/presentation/view/posts_screen/screens/posts_screen.dart';
 import 'package:travel_system/features/settings/presentation/view/settings_screen/screens/settings_screen.dart';
 import 'package:travel_system/models/onboarding_model.dart';
+import 'package:travel_system/features/on_boarding/data/model/onboarding_model.dart';
 
 class Constants{
 
@@ -10,17 +11,17 @@ class Constants{
     OnBoardingModel(
         title: 'Freelancer',
         content: 'A freelancer is a self-employed individual who offers services to clients on a project basis, often working remotely and managing their own business',
-        image: 'assets/icons/onboarding1.json'
+        image: 'assets/images/onBoarding1.png'
     ),
     OnBoardingModel(
         title: 'Investment',
         content: 'We ate constantly adding your favourite restaurant throughout the territory and around your area carefully selected',
-        image: 'assets/icons/onboarding2.json'
+        image: 'assets/images/pilot.png'
     ),
     OnBoardingModel(
         title: 'Social Media',
         content: ' it is easy to determine the exact number of calories consumed at each meal',
-        image: 'assets/icons/onboarding3.json'
+        image: 'assets/images/onBoarding2.png'
     ),
 
   ];

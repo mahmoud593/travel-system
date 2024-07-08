@@ -1,15 +1,17 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travel_system/core/local/shared_preferences.dart';
+import 'package:travel_system/features/on_boarding/presentation/view/screen/on_boarding_screen.dart';
 import 'package:travel_system/features/home_layout/presentation/cubit/home_layout_cubit.dart';
 import 'package:travel_system/features/home_layout/presentation/view/home_layout_screen/screens/home_layout_screen.dart';
 import 'package:travel_system/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:travel_system/features/settings/presentation/view/history_screen/history_screen.dart';
 import 'package:travel_system/styles/theme_manger/theme_manager.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'features/auth/presentaion/cubit/login_cubit/login_cubit.dart';
+import 'features/auth/presentaion/cubit/register_cubit/register_cubit.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -27,15 +29,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => HomeLayoutCubit(),),
-          BlocProvider(create: (context) => SettingsCubit(),),
-        ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: getApplicationTheme(context),
-          home: const HomeLayoutScreen(),
-        ),
+      providers: [
+        BlocProvider(create: (context) => LoginCubit()),
+        BlocProvider(create: (context) => RegisterCubit()),
+        BlocProvider(create: (context) => HomeLayoutCubit(),),
+        BlocProvider(create: (context) => SettingsCubit(),),
+      ],
+
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: getApplicationTheme(context),
+        home: const OnBoarding(),
+      ),
     );
   }
 }
