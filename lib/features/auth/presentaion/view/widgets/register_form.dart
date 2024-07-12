@@ -1,11 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_system/core/helper/app_size_config.dart';
 import 'package:travel_system/core/helper/material_navigation.dart';
 import 'package:travel_system/features/auth/presentaion/cubit/register_cubit/register_cubit.dart';
 import 'package:travel_system/features/auth/presentaion/view/screens/login/login.dart';
+import 'package:travel_system/features/auth/presentaion/view/widgets/aircraft_gridview_widget.dart';
 import 'package:travel_system/features/auth/presentaion/view/widgets/auth_text_form_field.dart';
-import 'package:travel_system/features/splash/presentation/view/splash_screen.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
 import 'package:travel_system/styles/text_styles/text_styles.dart';
 import 'package:travel_system/styles/widets/default_button.dart';
@@ -15,23 +16,13 @@ class RegisterForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    TextEditingController userNameController = TextEditingController();
-    TextEditingController emailController = TextEditingController();
-    TextEditingController phoneNumberController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-    TextEditingController peasController = TextEditingController();
-    TextEditingController rankController = TextEditingController();
-    TextEditingController payrollNumberController = TextEditingController();
+
     return BlocConsumer<RegisterCubit, RegisterState>(
-      listener: (context, state) {
-        if (state is RegisterSuccess) {
-          customPushAndRemoveUntil(context, const SplashScreen());
-        }},
+      listener: (context, state) {},
       builder: (context, state) {
         var cubit = RegisterCubit.get(context);
         return Form(
-          key: formKey,
+          key: cubit.formKey,
           child: Column(
             children: [
 
@@ -39,7 +30,7 @@ class RegisterForm extends StatelessWidget {
               AuthTextFormField(
                 labelText: "Username",
                 hintText: "Enter your name",
-                controller: userNameController,
+                controller:cubit. userNameController,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "User name is required";
@@ -57,7 +48,7 @@ class RegisterForm extends StatelessWidget {
               AuthTextFormField(
                 labelText: "Email",
                 hintText: "Enter your e-mail",
-                controller: emailController,
+                controller:cubit.emailController,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "E-mail is required";
@@ -75,7 +66,7 @@ class RegisterForm extends StatelessWidget {
               AuthTextFormField(
                 labelText: "Phone number",
                 hintText: "Enter your phone number",
-                controller: phoneNumberController,
+                controller:cubit.phoneNumberController,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Phone number is required";
@@ -93,7 +84,7 @@ class RegisterForm extends StatelessWidget {
               AuthTextFormField(
                 labelText: "Beas number",
                 hintText: "Enter your Beas number",
-                controller: peasController,
+                controller: cubit.peasController,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Beas number is required";
@@ -111,7 +102,7 @@ class RegisterForm extends StatelessWidget {
               AuthTextFormField(
                 labelText: "Rank",
                 hintText: "Enter your rank",
-                controller: rankController,
+                controller: cubit.rankController,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Rank is required";
@@ -129,7 +120,7 @@ class RegisterForm extends StatelessWidget {
               AuthTextFormField(
                 labelText: "PayRoll number",
                 hintText: "Enter your payroll number",
-                controller: payrollNumberController,
+                controller: cubit.payrollNumberController,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Rank is required";
@@ -143,13 +134,16 @@ class RegisterForm extends StatelessWidget {
                 height: SizeConfig.height * .01,
               ),
 
+              const AircraftGridviewWidget(),
+
+
               /// Password
               AuthTextFormField(
                 isPassword: true,
                 withSuffix: true,
                 labelText: "Password",
                 hintText: "Enter your password",
-                controller: passwordController,
+                controller: cubit.passwordController,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Password is required";
@@ -168,15 +162,16 @@ class RegisterForm extends StatelessWidget {
                   width: SizeConfig.width,
                   buttonText: "Register",
                   onPressed: () {
-                    if (formKey.currentState!.validate()) {
+                    if (cubit.formKey.currentState!.validate()) {
                       cubit.register(
-                      email: emailController.text,
-                      password: passwordController.text,
-                      userName: userNameController.text,
-                      phoneNumber: phoneNumberController.text,
-                      beasNumber: peasController.text,
-                      rank: rankController.text,
-                      payRollNumber: payrollNumberController.text
+                      email: cubit.emailController.text,
+                      password: cubit.passwordController.text,
+                      userName:cubit. userNameController.text,
+                      phoneNumber:cubit. phoneNumberController.text,
+                      beasNumber: cubit.peasController.text,
+                      rank: cubit.rankController.text,
+                      payRollNumber:cubit. payrollNumberController.text,
+                      airCrafts: cubit.selectedAirCrafts
                       );
                     }},
                   buttonColor: ColorManager.primaryBlue,

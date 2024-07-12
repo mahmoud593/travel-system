@@ -11,6 +11,15 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   static RegisterCubit get(context) => BlocProvider.of(context);
 
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController peasController = TextEditingController();
+  TextEditingController rankController = TextEditingController();
+  TextEditingController payrollNumberController = TextEditingController();
+
   Future<void> register(
       {required String email,
       required String password,
@@ -18,7 +27,9 @@ class RegisterCubit extends Cubit<RegisterState> {
       required String phoneNumber,
       required String beasNumber,
       required String rank,
-      required String payRollNumber}) async {
+      required String payRollNumber,
+      required List<int> airCrafts
+      }) async {
     emit(RegisterLoading());
     try {
       RegisterRepoImplement()
@@ -30,14 +41,19 @@ class RegisterCubit extends Cubit<RegisterState> {
         beasNumber: beasNumber,
         rank: rank,
         payRollNumber: payRollNumber,
-      ).then((value) {
+        airCrafts: airCrafts
+      )
+          .then(
+        (value) {
           uploadUserDataToFireBase(
               email: email,
               userName: userName,
               phoneNumber: phoneNumber,
               beasNumber: beasNumber,
               rank: rank,
-              payRollNumber: payRollNumber);
+              payRollNumber: payRollNumber,
+              airCrafts: airCrafts
+          );
         },
       );
       emit(RegisterSuccess());
@@ -47,27 +63,32 @@ class RegisterCubit extends Cubit<RegisterState> {
     }
   }
 
+  List<int> selectedAirCrafts=[];
+
   Future<void> uploadUserDataToFireBase(
       {required String email,
       required String userName,
       required String phoneNumber,
       required String beasNumber,
       required String rank,
-      required String payRollNumber}) async {
-    emit(RegisterLoading());
+      required String payRollNumber,
+      String? userImage,
+      required List<int> airCrafts}) async {
     try {
-      RegisterRepoImplement().uploadUserDataToFireBase(
+      await RegisterRepoImplement().uploadUserDataToFireBase(
           email: email,
           userName: userName,
           phoneNumber: phoneNumber,
           beasNumber: beasNumber,
           rank: rank,
-          payRollNumber: payRollNumber);
+          payRollNumber: payRollNumber,
+          userImage: userImage,
+          airCrafts: airCrafts);
       // UserDataFromStorage.setUserId(uId);
-      emit(RegisterSuccess());
     } on Exception catch (e) {
       debugPrint(e.toString());
-      emit(RegisterFailure());
     }
   }
+
+
 }
