@@ -17,9 +17,7 @@ class _AircraftGridviewWidgetState extends State<AircraftGridviewWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<RegisterCubit, RegisterState>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         var cubit= RegisterCubit.get(context);
         return Column(
