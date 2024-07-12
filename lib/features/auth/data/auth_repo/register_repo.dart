@@ -1,12 +1,15 @@
 abstract class RegisterRepo {
-  Future<void> register(
-      {required String email,
-          required String password,
-          required String userName,
-          required String phoneNumber,
-          required String beasNumber,
-          required String rank,
-          required String payRollNumber,});
+  Future<void> register({
+    required String email,
+    required String password,
+    required String userName,
+    required String phoneNumber,
+    required String beasNumber,
+    required String rank,
+    required String payRollNumber,
+    String? userImage,
+    required List<int> airCrafts,
+  });
 
   Future<void> uploadUserDataToFireBase(
       {required String email,
@@ -14,5 +17,7 @@ abstract class RegisterRepo {
       required String phoneNumber,
       required String beasNumber,
       required String rank,
-      required String payRollNumber});
+      required String payRollNumber,
+      String? userImage,
+      required List<int> airCrafts});
 }

@@ -6,6 +6,8 @@ class UserModel{
   final String beasNumber;
   final String rank;
   final String payRollNumber;
+  final String userImage;
+  final List<int> airCrafts;
 
   UserModel({
     required this.email,
@@ -14,7 +16,9 @@ class UserModel{
     required this.phoneNumber,
     required this.beasNumber,
     required this.rank,
-    required this.payRollNumber
+    required this.payRollNumber,
+    required this.userImage,
+    required this.airCrafts
   });
   UserModel.fromJson(Map<String, dynamic> json)
     : this(
@@ -24,7 +28,9 @@ class UserModel{
     phoneNumber : json['phoneNumber']??'',
     beasNumber: json['beasNumber']??'',
     rank : json['rank']??'',
-    payRollNumber : json['payRollNumber']??''
+    payRollNumber : json['payRollNumber']??'',
+      userImage : json['userImage']??'',
+    airCrafts: json['airCrafts']??[]
   );
 
   Map<String, dynamic> toJson() => {
@@ -34,6 +40,8 @@ class UserModel{
     'phoneNumber' : phoneNumber,
     'beasNumber' : beasNumber,
     'rank' : rank,
-    'payRollNumber' : payRollNumber
+    'payRollNumber' : payRollNumber,
+    'userImage' : userImage,
+    'airCrafts':airCrafts
   };
 }

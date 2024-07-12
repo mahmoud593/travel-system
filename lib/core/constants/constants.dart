@@ -38,4 +38,11 @@ class Constants{
     'Settings Screen',
   ];
 
+  static List<int> airCraftsModel=[
+    777,
+    787,
+    330,
+    320
+  ];
+
 }
