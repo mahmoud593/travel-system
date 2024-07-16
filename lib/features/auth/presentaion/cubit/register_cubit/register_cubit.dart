@@ -32,8 +32,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       }) async {
     emit(RegisterLoading());
     try {
-      RegisterRepoImplement()
-          .register(
+      RegisterRepoImplement().register(
         email: email,
         password: password,
         userName: userName,

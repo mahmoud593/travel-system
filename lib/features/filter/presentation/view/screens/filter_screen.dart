@@ -7,10 +7,21 @@ import 'package:travel_system/styles/text_styles/text_styles.dart';
 import 'package:travel_system/styles/widets/default_button.dart';
 import 'package:travel_system/styles/widets/default_text_field.dart';
 
-class FilterScreen extends StatelessWidget {
+class FilterScreen extends StatefulWidget {
    FilterScreen({super.key});
 
+  @override
+  State<FilterScreen> createState() => _FilterScreenState();
+}
+
+class _FilterScreenState extends State<FilterScreen> {
   var textController = TextEditingController();
+
+   String ?flights;
+
+   String ?dateTime;
+
+   String ?willToFly;
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +37,10 @@ class FilterScreen extends StatelessWidget {
           child:Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const NewPostRowDateWidget(icon: AssetsManager.airportImage, text:'Flights',),
-        
+              const NewPostRowDateWidget(icon: AssetsManager.airportImage, text:'Flights',description: 'Choose location of your flight that you have',),
+
               SizedBox(height: SizeConfig.height * 0.01,),
-        
+
               Container(
                 padding: EdgeInsets.only(
                     left: SizeConfig.height * 0.02,
@@ -46,8 +57,13 @@ class FilterScreen extends StatelessWidget {
                     )),
                     icon: const Icon(Icons.arrow_drop_down),
                     elevation: 5,
+                    value: flights,
                     style: const TextStyle(color: Colors.black, fontSize: 16),
-                    onChanged: (String? newValue) {},
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        flights=newValue;
+                      });
+                    },
                     items: <String>['One', 'Two', 'Three', 'Four']
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
@@ -58,20 +74,24 @@ class FilterScreen extends StatelessWidget {
                   ),
                 ),
               ),
-        
+
               SizedBox(height: SizeConfig.height * 0.04,),
-        
-              const NewPostRowDateWidget(icon: AssetsManager.travelDateImage, text:'Date time',),
-        
+
+              const NewPostRowDateWidget(icon: AssetsManager.travelDateImage, text:'Date time',description: 'Choose location of your flight that you have',),
+
               SizedBox(height: SizeConfig.height * 0.01,),
-        
+
               GestureDetector(
                 onTap: (){
                   showDatePicker(
                       context: context,
                       firstDate: DateTime.now(),
                       lastDate: DateTime(2030)
-                  ).whenComplete(() => print('Done'));
+                  ).then((v){
+                    setState(() {
+                      dateTime = v.toString();
+                    });
+                  });
                 },
                 child: Container(
                     padding: EdgeInsets.symmetric(
@@ -83,25 +103,29 @@ class FilterScreen extends StatelessWidget {
                       color: Colors.grey[300],
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Text('Choose Date',style: TextStyles.textStyle18Medium.copyWith(
+                    child: Text(dateTime??'Choose Date',style: TextStyles.textStyle18Medium.copyWith(
                         color: Colors.black54
                     ),
                     )),
               ),
-        
+
               SizedBox(height: SizeConfig.height * 0.04,),
-        
-              const NewPostRowDateWidget(icon: AssetsManager.willToFlyImage, text:'Willing to fly',),
-        
+
+              const NewPostRowDateWidget(icon: AssetsManager.willToFlyImage, text:'Willing to fly',description: 'Choose location of your flight that you have',),
+
               SizedBox(height: SizeConfig.height * 0.01,),
-        
+
               GestureDetector(
                 onTap: (){
                   showDatePicker(
                       context: context,
                       firstDate: DateTime.now(),
                       lastDate: DateTime(2030)
-                  ).whenComplete(() => print('Done'));
+                  ).then((v){
+                    setState(() {
+                      willToFly = v.toString();
+                    });
+                  });
                 },
                 child: Container(
                     padding: EdgeInsets.symmetric(
@@ -113,18 +137,18 @@ class FilterScreen extends StatelessWidget {
                       color: Colors.grey[300],
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Text('Choose Date',style: TextStyles.textStyle18Medium.copyWith(
+                    child: Text(willToFly??'Choose Date',style: TextStyles.textStyle18Medium.copyWith(
                         color: Colors.black54
                     ),
                     )),
               ),
-        
+
               SizedBox(height: SizeConfig.height * 0.04,),
-        
-              const NewPostRowDateWidget(icon: AssetsManager.hoursImage, text:'Hours',),
-        
+
+              const NewPostRowDateWidget(icon: AssetsManager.hoursImage, text:'Hours',description: 'Choose location of your flight that you have',),
+
               SizedBox(height: SizeConfig.height * 0.01,),
-        
+
               DefaultTextField(
                   controller: textController,
                   hintText: 'Hours',
@@ -133,9 +157,9 @@ class FilterScreen extends StatelessWidget {
                   textInputAction: TextInputAction.done,
                   fillColor: Colors.grey[300]
               ),
-        
+
               SizedBox(height: SizeConfig.height * 0.04,),
-        
+
               Align(
                 alignment: Alignment.center,
                 child: DefaultButton(
@@ -145,7 +169,7 @@ class FilterScreen extends StatelessWidget {
                     large: true
                 ),
               ),
-        
+
             ],
           )
         ),

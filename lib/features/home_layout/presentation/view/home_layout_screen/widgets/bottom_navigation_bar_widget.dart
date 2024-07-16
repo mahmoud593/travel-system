@@ -6,6 +6,8 @@ import 'package:travel_system/features/home_layout/presentation/cubit/home_layou
 import 'package:travel_system/features/home_layout/presentation/cubit/home_layout_states.dart';
 import 'package:travel_system/styles/assets/asset_manager.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+
 
 class BottomNavigationBarWidget extends StatelessWidget {
   const BottomNavigationBarWidget({super.key});
@@ -15,27 +17,27 @@ class BottomNavigationBarWidget extends StatelessWidget {
     return BlocBuilder<HomeLayoutCubit,HomeLayoutStates>(
         builder: (context,state){
           var cubit=HomeLayoutCubit.get(context);
-          return BottomAppBar(
-            color: ColorManager.gray,
-            shape: const CircularNotchedRectangle(),
-            notchMargin: 3,
-            height: SizeConfig.height*0.075,
-            child: SizedBox(
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                      onPressed: ()=> cubit.switchBottomNav(0),
-                      icon: const Icon(Icons.home,color:ColorManager.primaryBlue,)
-                  ),
-                  IconButton(
-                      onPressed: ()=> cubit.switchBottomNav(2),
-                      icon: const Icon(Icons.settings,color: ColorManager.primaryBlue,)
-                  ),
-                ],
+          return SalomonBottomBar(
+            backgroundColor: ColorManager.white,
+            currentIndex: cubit.currentIndex,
+            onTap: (i) => cubit.switchBottomNav(i),
+            items: [
+              /// Home
+              SalomonBottomBarItem(
+                icon: Icon(Icons.home),
+                title: Text("Home"),
+                selectedColor: ColorManager.primaryBlue,
+                unselectedColor: ColorManager.lightBlue
               ),
-            ),
+
+              /// Profile
+              SalomonBottomBarItem(
+                icon: Icon(Icons.person),
+                title: Text("Profile"),
+                selectedColor: ColorManager.primaryBlue,
+                unselectedColor: ColorManager.lightBlue
+              ),
+            ],
           );
         });
   }

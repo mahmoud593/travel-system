@@ -10,7 +10,7 @@ class SplashScreen extends StatelessWidget {
     return Container(
       height: SizeConfig.height,
       width:  SizeConfig.width,
-      decoration: const BoxDecoration(
+      decoration:  BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,

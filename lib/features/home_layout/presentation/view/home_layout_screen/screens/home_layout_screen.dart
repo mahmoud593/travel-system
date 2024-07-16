@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_system/core/constants/constants.dart';
+import 'package:travel_system/core/helper/app_size_config.dart';
 import 'package:travel_system/core/helper/material_navigation.dart';
 import 'package:travel_system/features/filter/presentation/view/screens/filter_screen.dart';
 import 'package:travel_system/features/home_layout/presentation/cubit/home_layout_cubit.dart';
@@ -22,21 +23,8 @@ class HomeLayoutScreen extends StatelessWidget {
                 backgroundColor: Colors.white,
                 extendBody: true,
                 floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-                appBar: AppBar(
-                  title: Text(Constants.homeLayoutTitles[HomeLayoutCubit.get(context).currentIndex]),
-                  actions: [
-                    if(HomeLayoutCubit.get(context).currentIndex==0)
-                    IconButton(
-                        onPressed: ()=>customPushNavigator(context,  FilterScreen()),
-                        icon: const Icon(
-                          Icons.menu,
-                          color: ColorManager.primaryBlue,
-                        )
-                    ),
-                  ],
-                ),
+                appBar: AppBar(toolbarHeight: 0.0,),
                 body: Constants.homeLayoutScreens[HomeLayoutCubit.get(context).currentIndex],
-                floatingActionButton:  const FloatingActionButtonWidget(),
                 bottomNavigationBar: const BottomNavigationBarWidget()
 
             );
