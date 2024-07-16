@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_system/core/constants/constants.dart';
 import 'package:travel_system/core/helper/app_size_config.dart';
-import 'package:travel_system/features/auth/presentaion/cubit/register_cubit/register_cubit.dart';
+import 'package:travel_system/features/auth/presentaion/cubit/auth_cubit/auth_cubit.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
 import 'package:travel_system/styles/text_styles/text_styles.dart';
 
@@ -16,10 +16,10 @@ class AircraftGridviewWidget extends StatefulWidget {
 class _AircraftGridviewWidgetState extends State<AircraftGridviewWidget> {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<RegisterCubit, RegisterState>(
+    return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {},
       builder: (context, state) {
-        var cubit= RegisterCubit.get(context);
+        var cubit= AuthCubit.get(context);
         return Column(
           children: [
             Padding(

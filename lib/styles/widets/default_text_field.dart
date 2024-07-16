@@ -51,8 +51,8 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
           filled:  true,
           fillColor: widget.fillColor,
           errorStyle: TextStyle(
-            fontSize: MediaQuery.sizeOf(context).height*0.02,
-            color: ColorManager.primaryBlue,
+            fontSize: MediaQuery.sizeOf(context).height*0.018,
+            color: Colors.red,
           ),
 
           hintText: widget.hintText,
@@ -105,16 +105,16 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
           errorBorder: OutlineInputBorder(
             borderSide: const BorderSide(
               color: ColorManager.error,
-              width: 1,
+              // width: 1,
             ),
-            borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).height*0.03),
+            borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).height*0.01),
           ),
           disabledBorder: OutlineInputBorder(
             borderSide:  const BorderSide(
               color: ColorManager.gray,
               width: 1,
             ),
-            borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).height*0.03),
+            borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).height*0.01),
           ),
         ),
         controller: widget.controller,

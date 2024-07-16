@@ -52,7 +52,7 @@ dependencies:
   fluttertoast: ^8.2.6
   ticket_widget: ^1.0.2
   ticket_material: ^0.3.1
-
+  flutter_chat_bubble: ^2.0.2
   #firebase package
   firebase_core: ^3.2.0
   firebase_auth: ^5.1.2

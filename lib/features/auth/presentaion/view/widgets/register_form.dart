@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_system/core/helper/app_size_config.dart';
 import 'package:travel_system/core/helper/material_navigation.dart';
-import 'package:travel_system/features/auth/presentaion/cubit/register_cubit/register_cubit.dart';
+import 'package:travel_system/features/auth/presentaion/cubit/auth_cubit/auth_cubit.dart';
 import 'package:travel_system/features/auth/presentaion/view/screens/login/login.dart';
 import 'package:travel_system/features/auth/presentaion/view/widgets/aircraft_gridview_widget.dart';
-import 'package:travel_system/features/auth/presentaion/view/widgets/auth_text_form_field.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
 import 'package:travel_system/styles/text_styles/text_styles.dart';
 import 'package:travel_system/styles/widets/default_button.dart';
+import 'package:travel_system/styles/widets/default_text_field.dart';
 
 class RegisterForm extends StatelessWidget {
   const RegisterForm({super.key});
@@ -17,141 +17,145 @@ class RegisterForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return BlocConsumer<RegisterCubit, RegisterState>(
+    return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {},
       builder: (context, state) {
-        var cubit = RegisterCubit.get(context);
+        var cubit = AuthCubit.get(context);
         return Form(
           key: cubit.formKey,
           child: Column(
             children: [
 
               /// User name
-              AuthTextFormField(
-                labelText: "Username",
-                hintText: "Enter your name",
-                controller:cubit. userNameController,
+              DefaultTextField(
+                controller: cubit.userNameController,
+                hintText: "User name",
                 validator: (value) {
-                  if (value!.isEmpty) {
-                    return "User name is required";
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your name';
                   }
                   return null;
                 },
                 keyboardType: TextInputType.name,
                 textInputAction: TextInputAction.next,
+                fillColor: ColorManager.white,
               ),
               SizedBox(
-                height: SizeConfig.height * .01,
+                height: SizeConfig.height * .02,
               ),
 
               /// Email
-              AuthTextFormField(
-                labelText: "Email",
-                hintText: "Enter your e-mail",
-                controller:cubit.emailController,
+              DefaultTextField(
+                controller: cubit.registerEmailController,
+                hintText: "E-mail",
                 validator: (value) {
-                  if (value!.isEmpty) {
-                    return "E-mail is required";
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your e-mail';
                   }
                   return null;
                 },
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
+                fillColor: ColorManager.white,
               ),
               SizedBox(
-                height: SizeConfig.height * .01,
+                height: SizeConfig.height * .02,
               ),
 
               /// Phone number
-              AuthTextFormField(
-                labelText: "Phone number",
-                hintText: "Enter your phone number",
-                controller:cubit.phoneNumberController,
+              DefaultTextField(
+                controller: cubit.phoneNumberController,
+                hintText: "Phone Number",
                 validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Phone number is required";
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your Phone Number';
                   }
                   return null;
                 },
                 keyboardType: TextInputType.phone,
                 textInputAction: TextInputAction.next,
+                fillColor: ColorManager.white,
               ),
+
               SizedBox(
-                height: SizeConfig.height * .01,
+                height: SizeConfig.height * .02,
               ),
 
               /// Beas number
-              AuthTextFormField(
-                labelText: "Beas number",
-                hintText: "Enter your Beas number",
+              DefaultTextField(
                 controller: cubit.peasController,
+                hintText: "Beas number",
                 validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Beas number is required";
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your Beas number';
                   }
                   return null;
                 },
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
+                fillColor: ColorManager.white,
               ),
               SizedBox(
-                height: SizeConfig.height * .01,
+                height: SizeConfig.height * .02,
               ),
 
               /// rank
-              AuthTextFormField(
-                labelText: "Rank",
-                hintText: "Enter your rank",
-                controller: cubit.rankController,
+              DefaultTextField(
+                controller: cubit.payrollNumberController,
+                hintText: "PayRoll Number",
                 validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Rank is required";
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your PayRoll Number';
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.phone,
+                textInputAction: TextInputAction.next,
+                fillColor: ColorManager.white,
+              ),
+
+
+              SizedBox(
+                height: SizeConfig.height * .02,
+              ),
+
+              /// PayRoll number
+              DefaultTextField(
+                controller: cubit.rankController,
+                hintText: "Rank",
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your Rank';
                   }
                   return null;
                 },
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.next,
+                fillColor: ColorManager.white,
               ),
               SizedBox(
-                height: SizeConfig.height * .01,
+                height: SizeConfig.height * .02,
               ),
 
-              /// PayRoll number
-              AuthTextFormField(
-                labelText: "PayRoll number",
-                hintText: "Enter your payroll number",
-                controller: cubit.payrollNumberController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Rank is required";
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.next,
-              ),
-              SizedBox(
-                height: SizeConfig.height * .01,
-              ),
-
+              /// Aircraft check box
               const AircraftGridviewWidget(),
 
 
               /// Password
-              AuthTextFormField(
+              DefaultTextField(
+                controller: cubit.registerPasswordController,
+                hintText: "Password",
                 isPassword: true,
                 withSuffix: true,
-                labelText: "Password",
-                hintText: "Enter your password",
-                controller: cubit.passwordController,
                 validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Password is required";
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your Password';
                   }
                   return null;
                 },
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.done,
+                fillColor: ColorManager.white,
               ),
               SizedBox(
                 height: SizeConfig.height * .02,
@@ -164,8 +168,8 @@ class RegisterForm extends StatelessWidget {
                   onPressed: () {
                     if (cubit.formKey.currentState!.validate()) {
                       cubit.register(
-                      email: cubit.emailController.text,
-                      password: cubit.passwordController.text,
+                      email: cubit.registerEmailController.text,
+                      password: cubit.registerPasswordController.text,
                       userName:cubit. userNameController.text,
                       phoneNumber:cubit. phoneNumberController.text,
                       beasNumber: cubit.peasController.text,
@@ -178,7 +182,7 @@ class RegisterForm extends StatelessWidget {
                   large: true),
 
               SizedBox(
-                height: SizeConfig.height * .01,
+                height: SizeConfig.height * .03,
               ),
 
               /// Already have an account
@@ -199,7 +203,10 @@ class RegisterForm extends StatelessWidget {
                               color: ColorManager.primaryBlue
                           ))),
                 ],
-              )
+              ),
+              SizedBox(
+                height: SizeConfig.height * .03,
+              ),
             ],
           ),
         );
