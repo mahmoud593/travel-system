@@ -31,7 +31,7 @@ class UserEditImageItem extends StatelessWidget {
                     color: ColorManager.primaryBlue,
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                      image: cubit.uploadedProfileImage != null ? FileImage(cubit.uploadedProfileImage!) : const AssetImage('assets/images/plane.png'),
+                      image: cubit.uploadedProfileImage != null ? FileImage(cubit.uploadedProfileImage!) : NetworkImage("${cubit.userModel?.userImage}"),
                       fit: BoxFit.fill,
                     )
                 ),

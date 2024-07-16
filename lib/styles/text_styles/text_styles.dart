@@ -53,7 +53,7 @@ class TextStyles {
   static TextStyle textStyle24Medium= TextStyle(
       fontSize: SizeConfig.height * 0.024,
       color: ColorManager.white,
-      fontWeight: FontWeight.w500
+      fontWeight: FontWeight.w600
   );
 
   static TextStyle textStyle24Regular= TextStyle(

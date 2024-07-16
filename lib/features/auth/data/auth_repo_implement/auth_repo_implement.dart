@@ -8,8 +8,11 @@ import 'package:travel_system/features/auth/data/model/user_model.dart';
 class AuthRepoImplement extends AuthRepo{
   @override
   Future<void> login({required String email, required String password}) async {
-    UserCredential user = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email, password: password);
+    await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password).then((value){
+      UserDataFromStorage.setUserId(value.user!.uid);
+      debugPrint("User Id ===========================> ${UserDataFromStorage.userId}");
+    });
   }
   @override
   Future<void> register({
@@ -52,7 +55,7 @@ class AuthRepoImplement extends AuthRepo{
         beasNumber: beasNumber,
         rank: rank,
         payRollNumber: payRollNumber,
-        userImage: userImage??"",
+        userImage: userImage??"https://firebasestorage.googleapis.com/v0/b/airline-system-4e527.appspot.com/o/plane.png?alt=media&token=df606f6d-7628-4385-bec4-24b31c08c7bf",
         airCrafts: airCrafts
     );
     final databaseReference = FirebaseDatabase.instance.ref();

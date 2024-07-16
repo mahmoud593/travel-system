@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travel_system/core/local/shared_preferences.dart';
 import 'package:travel_system/features/auth/presentaion/cubit/auth_cubit/auth_cubit.dart';
+import 'package:travel_system/features/auth/presentaion/view/screens/login/login.dart';
 import 'package:travel_system/features/new_posts/presentation/cubit/new_post_cubit.dart';
 import 'package:travel_system/features/home_layout/presentation/cubit/home_layout_cubit.dart';
 import 'package:travel_system/features/home_layout/presentation/view/home_layout_screen/screens/home_layout_screen.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => AuthCubit()),
         BlocProvider(create: (context) => HomeLayoutCubit(),),
-        BlocProvider(create: (context) => SettingsCubit(),),
+        BlocProvider(create: (context) => SettingsCubit()..getUserData(),),
         BlocProvider(create: (context) => NewPostCubit(),),
         BlocProvider(create: (context) => PostsCubit()..getPosts(),),
       ],

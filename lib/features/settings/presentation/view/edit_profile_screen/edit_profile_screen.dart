@@ -38,14 +38,23 @@ class EditProfileScreen extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
                     /// user edit image item
-                    UserEditImageItem(onTap: () => cubit.getProfileImage()),
+                    Align(
+                      alignment: Alignment.center,
+                      child: UserEditImageItem(onTap: () => cubit.getProfileImage()),
+                    ),
 
                     SizedBox(height: SizeConfig.height * 0.05,),
 
+                    Text(
+                      'Name',
+                      style: TextStyles.textStyle18Medium
+                          .copyWith(color: ColorManager.black),
+                    ),
+                    SizedBox(height: SizeConfig.height * 0.01,),
                     DefaultTextField(
                       controller: cubit.editProfileNameController,
                       hintText: "Name",
@@ -62,6 +71,12 @@ class EditProfileScreen extends StatelessWidget {
                     SizedBox(height: SizeConfig.height * 0.01,),
 
 
+                    Text(
+                      'Email',
+                      style: TextStyles.textStyle18Medium
+                          .copyWith(color: ColorManager.black),
+                    ),
+                    SizedBox(height: SizeConfig.height * 0.01,),
                     DefaultTextField(
                       controller: cubit.editProfileEmailController,
                       hintText: "Email",
@@ -77,7 +92,12 @@ class EditProfileScreen extends StatelessWidget {
                     ),
                     SizedBox(height: SizeConfig.height * 0.01,),
 
-
+                    Text(
+                      'Base',
+                      style: TextStyles.textStyle18Medium
+                          .copyWith(color: ColorManager.black),
+                    ),
+                    SizedBox(height: SizeConfig.height * 0.01,),
                     DefaultTextField(
                       controller: cubit.editProfileBaseController,
                       hintText: "Base",
@@ -93,7 +113,12 @@ class EditProfileScreen extends StatelessWidget {
                     ),
                     SizedBox(height: SizeConfig.height * 0.01,),
 
-
+                    Text(
+                      'Rank',
+                      style: TextStyles.textStyle18Medium
+                          .copyWith(color: ColorManager.black),
+                    ),
+                    SizedBox(height: SizeConfig.height * 0.01,),
                     DefaultTextField(
                       controller: cubit.editProfileRankController,
                       hintText: "Rank",
@@ -109,7 +134,12 @@ class EditProfileScreen extends StatelessWidget {
                     ),
                     SizedBox(height: SizeConfig.height * 0.01,),
 
-
+                    Text(
+                      'Payroll Number',
+                      style: TextStyles.textStyle18Medium
+                          .copyWith(color: ColorManager.black),
+                    ),
+                    SizedBox(height: SizeConfig.height * 0.01,),
                     DefaultTextField(
                       controller: cubit.editProfilePayrollNumberController,
                       hintText: "Payroll Number",
@@ -125,6 +155,12 @@ class EditProfileScreen extends StatelessWidget {
                     ),
                     SizedBox(height: SizeConfig.height * 0.01,),
 
+                    Text(
+                      'Mobile Number',
+                      style: TextStyles.textStyle18Medium
+                          .copyWith(color: ColorManager.black),
+                    ),
+                    SizedBox(height: SizeConfig.height * 0.01,),
                     DefaultTextField(
                       controller: cubit.editProfilePhoneNumberController,
                       hintText: "Mobile Number",
@@ -147,6 +183,8 @@ class EditProfileScreen extends StatelessWidget {
                       buttonColor: ColorManager.primaryBlue,
                       large: false,
                     ),
+                    SizedBox(height: SizeConfig.height * 0.05,),
+
                   ],
                 ),
               ),

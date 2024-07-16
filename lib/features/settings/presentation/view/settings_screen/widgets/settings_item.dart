@@ -14,34 +14,43 @@ class SettingsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+      child: Container(
+        height: SizeConfig.height * 0.07,
+        width: SizeConfig.width,
+        decoration: BoxDecoration(
+          color: ColorManager.gray,
+          borderRadius: BorderRadius.circular(SizeConfig.height*0.02),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(SizeConfig.height*0.02),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Row(
+                children: [
+                  Icon(
+                    icon,
+                    color: ColorManager.primaryBlue,
+                    size: SizeConfig.height*0.03,
+                  ),
+                  SizedBox(width: SizeConfig.height*0.01,),
+                  Text(
+                    title,
+                    style: TextStyles.textStyle18Regular.copyWith(color: ColorManager.primaryBlue, fontWeight: FontWeight.w400),
+                  ),
+                ],
+              ),
+
               Icon(
-                icon,
+                Icons.arrow_forward_ios,
                 color: ColorManager.primaryBlue,
-                size: SizeConfig.height*0.03,
+                size: SizeConfig.height*0.02,
               ),
-              SizedBox(width: SizeConfig.height*0.01,),
-              Text(
-                title,
-                style: TextStyles.textStyle18Regular.copyWith(color: ColorManager.primaryBlue, fontWeight: FontWeight.w400),
-              ),
+
             ],
           ),
-          SizedBox(height: SizeConfig.height*0.003,),
-          Visibility(
-            visible: isDivider,
-            child: Divider(
-              color: ColorManager.primaryBlue.withOpacity(0.5),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

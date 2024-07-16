@@ -27,7 +27,8 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> login({required String email, required String password}) async {
   emit(LoginLoading());
   try {
-    AuthRepoImplement().login(email: email, password: password);
+    AuthRepoImplement().login(email: email, password: password).then((value){
+    });
     emit(LoginSuccess());
   } on FirebaseAuthException catch  (e) {
     debugPrint('Failed with error code: ${e.code}');

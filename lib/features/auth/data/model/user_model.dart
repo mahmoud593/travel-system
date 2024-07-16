@@ -7,7 +7,7 @@ class UserModel{
   final String rank;
   final String payRollNumber;
   final String userImage;
-  final List<int> airCrafts;
+  final List<dynamic> airCrafts;
 
   UserModel({
     required this.email,
