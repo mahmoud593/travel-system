@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_system/core/helper/app_size_config.dart';
 import 'package:travel_system/core/helper/material_navigation.dart';
-import 'package:travel_system/features/auth/presentaion/cubit/login_cubit/login_cubit.dart';
+import 'package:travel_system/features/auth/presentaion/cubit/auth_cubit/auth_cubit.dart';
 import 'package:travel_system/features/auth/presentaion/view/screens/register/resgister.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
 import 'package:travel_system/styles/text_styles/text_styles.dart';
@@ -16,10 +16,10 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LoginCubit, LoginState>(
+    return BlocConsumer<AuthCubit, AuthState>(
   listener: (context, state) {},
   builder: (context, state) {
-    var cubit = LoginCubit.get(context);
+    var cubit = AuthCubit.get(context);
     return Form(
       key: cubit.formKey,
       child: Column(
@@ -28,7 +28,7 @@ class LoginForm extends StatelessWidget {
           AuthTextFormField(
             labelText: "Email",
             hintText: "Enter your e-mail",
-            controller: cubit.emailController,
+            controller: cubit.loginEmailController,
             validator: (value) {
               if (value!.isEmpty) {
                 return "E-mail is required";
@@ -47,7 +47,7 @@ class LoginForm extends StatelessWidget {
             withSuffix: true,
             labelText: "Password",
             hintText: "Enter your password",
-            controller: cubit.passwordController,
+            controller: cubit.loginPasswordController,
             validator: (value) {
               if (value!.isEmpty) {
                 return "Password is required";
@@ -66,7 +66,7 @@ class LoginForm extends StatelessWidget {
               buttonText: "Login",
               onPressed: () {
                 if (cubit.formKey.currentState!.validate()) {
-                  cubit.login(email: cubit.emailController.text, password: cubit.passwordController.text);
+                  cubit.login(email: cubit.loginEmailController.text, password: cubit.loginPasswordController.text);
                 }
               },
               buttonColor: ColorManager.primaryBlue,

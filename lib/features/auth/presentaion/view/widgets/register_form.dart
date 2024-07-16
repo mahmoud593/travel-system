@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_system/core/helper/app_size_config.dart';
 import 'package:travel_system/core/helper/material_navigation.dart';
-import 'package:travel_system/features/auth/presentaion/cubit/register_cubit/register_cubit.dart';
+import 'package:travel_system/features/auth/presentaion/cubit/auth_cubit/auth_cubit.dart';
 import 'package:travel_system/features/auth/presentaion/view/screens/login/login.dart';
 import 'package:travel_system/features/auth/presentaion/view/widgets/aircraft_gridview_widget.dart';
 import 'package:travel_system/features/auth/presentaion/view/widgets/auth_text_form_field.dart';
@@ -17,10 +17,10 @@ class RegisterForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return BlocConsumer<RegisterCubit, RegisterState>(
+    return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {},
       builder: (context, state) {
-        var cubit = RegisterCubit.get(context);
+        var cubit = AuthCubit.get(context);
         return Form(
           key: cubit.formKey,
           child: Column(
@@ -48,7 +48,7 @@ class RegisterForm extends StatelessWidget {
               AuthTextFormField(
                 labelText: "Email",
                 hintText: "Enter your e-mail",
-                controller:cubit.emailController,
+                controller:cubit.registerEmailController,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "E-mail is required";
@@ -143,7 +143,7 @@ class RegisterForm extends StatelessWidget {
                 withSuffix: true,
                 labelText: "Password",
                 hintText: "Enter your password",
-                controller: cubit.passwordController,
+                controller: cubit.registerPasswordController,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Password is required";
@@ -164,8 +164,8 @@ class RegisterForm extends StatelessWidget {
                   onPressed: () {
                     if (cubit.formKey.currentState!.validate()) {
                       cubit.register(
-                      email: cubit.emailController.text,
-                      password: cubit.passwordController.text,
+                      email: cubit.registerEmailController.text,
+                      password: cubit.registerPasswordController.text,
                       userName:cubit. userNameController.text,
                       phoneNumber:cubit. phoneNumberController.text,
                       beasNumber: cubit.peasController.text,

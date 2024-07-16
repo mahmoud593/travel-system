@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:travel_system/core/helper/material_navigation.dart';
-import 'package:travel_system/features/auth/presentaion/cubit/login_cubit/login_cubit.dart';
+import 'package:travel_system/features/auth/presentaion/cubit/auth_cubit/auth_cubit.dart';
 import 'package:travel_system/features/auth/presentaion/view/widgets/login_form.dart';
 import 'package:travel_system/features/auth/presentaion/view/widgets/logo_in_circular_avatar.dart';
 import 'package:travel_system/features/home_layout/presentation/view/home_layout_screen/screens/home_layout_screen.dart';
@@ -17,7 +17,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isLoading = false;
-    return BlocListener<LoginCubit, LoginState>(
+    return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if(state is LoginLoading){
           isLoading = true;

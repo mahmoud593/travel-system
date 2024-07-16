@@ -1,0 +1,84 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
+import 'package:travel_system/core/local/shared_preferences.dart';
+import 'package:travel_system/features/auth/data/auth_repo/auth_repo.dart';
+import 'package:travel_system/features/auth/data/model/user_model.dart';
+
+class AuthRepoImplement extends AuthRepo{
+  @override
+  Future<void> login({required String email, required String password}) async {
+    UserCredential user = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
+  }
+  @override
+  Future<void> register({
+    required String email,
+    required String password,
+    required String userName,
+    required String phoneNumber,
+    required String beasNumber,
+    required String rank,
+    required String payRollNumber,
+    String? userImage,
+    required List<int> airCrafts
+
+  }) async {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    ).then((value) {
+      UserDataFromStorage.setUserId(value.user!.uid);
+    });
+  }
+
+  UserModel? userModel;
+  @override
+  Future<void> uploadUserDataToFireBase({
+    required String email,
+    required String userName,
+    required String phoneNumber,
+    required String beasNumber,
+    required String rank,
+    required String payRollNumber,
+    required List<int>airCrafts,
+    String? userImage
+  }) async{
+      userModel = UserModel(
+        uid: UserDataFromStorage.userId,
+        email: email,
+        userName: userName,
+        phoneNumber: phoneNumber,
+        beasNumber: beasNumber,
+        rank: rank,
+        payRollNumber: payRollNumber,
+        userImage: userImage??"",
+        airCrafts: airCrafts
+    );
+    final databaseReference = FirebaseDatabase.instance.ref();
+    await databaseReference
+        .child('Users')
+        .child(userModel!.uid)
+        .set(userModel!.toJson());
+  }
+
+  @override
+  Future<void> getUserFromFireBase() async {
+    DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
+    await databaseReference
+        .child('Users/${userModel?.uid ?? UserDataFromStorage.userId}').get().then((user) {
+      if (user.exists) {
+        Map<String, dynamic> userMap = (user.value as Map).map(
+              (key, value) => MapEntry(key.toString(), value),
+        );
+         userModel = UserModel.fromJson(userMap);
+
+        debugPrint("UID From Model****${userModel!.uid}");
+
+        debugPrint("UserName From Firebase****${(user.value as Map)['userName']}****");
+      }else{
+        debugPrint('user not found');
+      }
+    });
+  }
+}
