@@ -1,18 +1,20 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 
 class UserDataFromStorage {
 
-  static late String driverUserName;
-  static late String driverEmail;
-  static String ?driverPhone;
-  static late String driverAbout;
-  static late String driverAddress;
-  static late String driverKind;
+  static late String userName;
+  static late String userEmail;
+  static String ?userPhone;
+  static late String userBaseNumber;
+  static late String userRank;
+  static late String userPayrollNumber;
   static String notLogin='';
-  static late String driverCarImage;
-  static late String driverPersonalImage;
-  static late String driverCity;
+  static late String userCarImage;
+  static late String userPersonalImage;
+  static late String userCity;
   static late String userId;
   static late bool userIsGuest;
   static late bool userIsCompany;
@@ -20,6 +22,8 @@ class UserDataFromStorage {
   static late bool onBoardingIsOpen;
   static String languageCodeFromStorage='en';
   static String languageNameFromStorage="langEnglish";
+
+  static List<dynamic> userAirCrafts=[];
 
 
 
@@ -43,23 +47,35 @@ class UserDataFromStorage {
   static late String changePasswordEmailLimitDate;
 
 
-  static setDriverUserName(String value) {
-    driverUserName=value;
+  static setUserName(String value) {
+    userName=value;
     _setData();
   }
 
-  static setDriverEmail(String value) {
-    driverEmail=value;
+
+  static setUserRank(String value) {
+    userRank=value;
     _setData();
   }
 
-  static setDriverPhone(String value) {
-    driverPhone=value;
+  static setUserAirCrafts(List<dynamic> value) {
+    userAirCrafts=value;
     _setData();
   }
 
-  static setDriverAbout(String value) {
-    driverAbout=value;
+
+  static setUserEmail(String value) {
+    userEmail=value;
+    _setData();
+  }
+
+  static setUserPhone(String value) {
+    userPhone=value;
+    _setData();
+  }
+
+  static setUserBaseNumber(String value) {
+    userBaseNumber=value;
     _setData();
   }
 
@@ -68,13 +84,13 @@ class UserDataFromStorage {
     _setData();
   }
 
-  static setDriverKind(String value) {
-    driverKind=value;
+  static setUserPayrollNumber(String value) {
+    userPayrollNumber=value;
     _setData();
   }
 
-  static setDriverCity(String value) {
-    driverCity=value;
+  static setuserCity(String value) {
+    userCity=value;
     _setData();
   }
   static setUserId(String value) {
@@ -82,13 +98,13 @@ class UserDataFromStorage {
     _setData();
   }
 
-  static setDriverCarImage(String value) {
-    driverCarImage=value;
+  static setuserCarImage(String value) {
+    userCarImage=value;
     _setData();
   }
 
-  static setDriverPersonalImage(String value) {
-    driverPersonalImage=value;
+  static setuserPersonalImage(String value) {
+    userPersonalImage=value;
     _setData();
   }
 
@@ -216,15 +232,15 @@ class UserDataFromStorage {
     prefs.setBool("userIsGuest",userIsGuest);
     prefs.setBool("userIsCompany",userIsCompany);
 
-    prefs.setString('driverUserName',driverUserName);
-    prefs.setString('driverEmail',driverEmail);
-    prefs.setString('driverPhone',driverPhone!);
-    prefs.setString('driverAbout',driverAbout);
-    prefs.setString('driverAddress',driverAddress);
-    prefs.setString('driverKind',driverKind);
-    prefs.setString('driverCarImage',driverCarImage);
-    prefs.setString('driverPersonalImage',driverPersonalImage);
-    prefs.setString('driverCity',driverCity);
+    prefs.setString('userName',userName);
+    prefs.setString('userEmail',userEmail);
+    prefs.setString('userPhone',userPhone!);
+    prefs.setString('userBaseNumber',userBaseNumber);
+    prefs.setString('userRank',userRank);
+    prefs.setString('userPayrollNumber',userPayrollNumber);
+    prefs.setString('userCarImage',userCarImage);
+    prefs.setString('userPersonalImage',userPersonalImage);
+    prefs.setString('userCity',userCity);
     prefs.setString('userId',userId);
     prefs.setString('notLogin',notLogin);
 
@@ -266,15 +282,15 @@ class UserDataFromStorage {
     languageCodeFromStorage = prefs.getString("languageCodeFromStorage")??'en';
     languageNameFromStorage = prefs.getString("languageNameFromStorage")??'langEnglish';
 
-    driverUserName = prefs.getString("driverUserName")??'';
-    driverEmail = prefs.getString("driverEmail")??'';
-    driverPhone = prefs.getString("driverPhone")??'';
-    driverKind = prefs.getString("driverKind")??'';
-    driverAddress = prefs.getString("driverAddress")??'';
-    driverPersonalImage = prefs.getString("driverPersonalImage")??'';
-    driverCarImage = prefs.getString("driverCarImage")??'';
-    driverAbout = prefs.getString("driverAbout")??'';
-    driverCity = prefs.getString("driverCity")??'';
+    userName = prefs.getString("userName")??'';
+    userEmail = prefs.getString("userEmail")??'';
+    userPhone = prefs.getString("userPhone")??'';
+    userPayrollNumber = prefs.getString("userPayrollNumber")??'';
+    userRank = prefs.getString("userRank")??'';
+    userPersonalImage = prefs.getString("userPersonalImage")??'';
+    userCarImage = prefs.getString("userCarImage")??'';
+    userBaseNumber = prefs.getString("userBaseNumber")??'';
+    userCity = prefs.getString("userCity")??'';
     userId = prefs.getString("userId")??'';
     notLogin = prefs.getString("notLogin")??'';
 

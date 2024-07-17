@@ -3,7 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:travel_system/core/local/shared_preferences.dart';
 import 'package:travel_system/features/auth/data/auth_repo_implement/auth_repo_implement.dart';
+import 'package:travel_system/features/auth/data/model/user_model.dart';
+import 'package:travel_system/features/settings/data/edit_profile_repo_implement/edit_profile_repo_implement.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
 import 'package:travel_system/styles/widets/toast.dart';
 part 'auth_state.dart';
@@ -27,7 +30,20 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> login({required String email, required String password}) async {
   emit(LoginLoading());
   try {
-    AuthRepoImplement().login(email: email, password: password).then((value){
+    AuthRepoImplement().login(email: email, password: password).then((value) async{
+      await EditProfileRepoImplement().getUserDataFromFireBase().then((value) {
+        UserModel userModel = UserModel.fromJson(value);
+        UserDataFromStorage.setUserId(userModel.uid);
+        UserDataFromStorage.setUserEmail(userModel.email);
+        UserDataFromStorage.setUserName(userModel.userName);
+        UserDataFromStorage.setUserPhone(userModel.phoneNumber);
+        UserDataFromStorage.setUserBaseNumber(userModel.beasNumber);
+        UserDataFromStorage.setUserRank(userModel.rank!);
+        UserDataFromStorage.setUserPayrollNumber(userModel.payRollNumber);
+        // UserDataFromStorage.setAirCrafts(userModel.airCrafts!);
+        UserDataFromStorage.setuserPersonalImage(userModel.userImage);
+        emit(LoginSuccess());
+      });
     });
     emit(LoginSuccess());
   } on FirebaseAuthException catch  (e) {
