@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_system/core/helper/app_size_config.dart';
 import 'package:travel_system/core/helper/material_navigation.dart';
 import 'package:travel_system/features/new_posts/presentation/view/new_posts_screen/screens/new_posts_screen.dart';
+import 'package:travel_system/features/posts/data/models/post_model.dart';
 import 'package:travel_system/features/posts/presentation/cubit/posts_cubit/posts_cubit.dart';
 import 'package:travel_system/features/posts/presentation/cubit/posts_states/posts_states.dart';
 import 'package:travel_system/features/posts/presentation/view/posts_screen/widgets/post_widget.dart';
@@ -21,6 +22,7 @@ class PostsScreen extends StatelessWidget {
         },
       builder: (context,state){
           var cubit=PostsCubit.get(context);
+          List<PostModel> myFlights=(cubit.flights).toList() ;
           return Column(
             children: [
 
@@ -224,7 +226,7 @@ class PostsScreen extends StatelessWidget {
               Expanded(
                 child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) =>  PostWidget(postModel: cubit.flights[index],),
+                    itemBuilder: (context, index) =>  PostWidget(postModel: myFlights[index],),
                     separatorBuilder: (context, index) => const Divider(),
                     itemCount: cubit.flights.length
                 ),

@@ -10,21 +10,18 @@ class PostsCubit extends Cubit<PostsStates>{
 
   static PostsCubit get(context) => BlocProvider.of(context);
 
-  List<PostModel> flights=[];
+  Set<PostModel> flights={};
 
-  Future<void> getPosts()async {
+  Future<void> getPosts() async {
+    emit(GetPostsLoadingState());
 
-    flights = [];
-     emit(GetPostsLoadingState());
-     await PostsRepoImplement().getPosts().then((value){
-      flights=value;
-      print('Posts : ${flights.length}');
+    try {
+      flights = await PostsRepoImplement().getPosts();
       emit(GetPostsSuccessState());
-     }).catchError((error){
-      print('Error in get posts : ${error.toString()}');
-      emit(GetPostsSuccessState());
-     });
-
+    } catch (error) {
+      print('Error in get posts: ${error.toString()}');
+      emit(GetPostsErrorState());
+    }
   }
 
 }
