@@ -21,11 +21,6 @@ class UserDataFromStorage {
   static String languageCodeFromStorage='en';
   static String languageNameFromStorage="langEnglish";
 
-
-
-
-
-
   static late int signInClickCountFromStorage;
   static late int verifySignUpSeekerClickCount;
   static late int verifySignUpRecruiterClickCount;

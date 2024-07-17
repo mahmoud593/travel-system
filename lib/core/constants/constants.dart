@@ -28,14 +28,12 @@ class Constants{
 
   static List<Widget> homeLayoutScreens=[
     const PostsScreen(),
-     // NewPostsScreen(),
     const SettingsScreen(),
   ];
 
 
   static List<String> homeLayoutTitles=[
     'Posts',
-    'New Posts',
     'Settings',
   ];
 

@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: getApplicationTheme(context),
-        home: const HomeLayoutScreen(),
+        home: const LoginScreen(),
       ),
     );
   }
