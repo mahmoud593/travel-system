@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:travel_system/features/new_posts/data/new_posts_repo_implement/new_posts_repo_implement.dart';
 import 'package:travel_system/features/new_posts/presentation/cubit/new_post_states.dart';
+import 'package:travel_system/features/posts/presentation/cubit/posts_cubit/posts_cubit.dart';
 
 class NewPostCubit extends Cubit<NewPostStates>{
 
@@ -38,39 +39,34 @@ class NewPostCubit extends Cubit<NewPostStates>{
     required value,
   }){
     hoursValue='${value.hour}:${value.minute}';
-    print(hoursValue);
     emit(SelectTimePickerValueState());
   }
 
   void selectDateOfTravel({
     required value,
   }){
-    dateTime=DateFormat.yMd().format(value);
-    print(dateTime);
+    dateTime=DateFormat.yMMMEd().format(value);
     emit(SelectTimePickerValueState());
   }
 
   void selectStartDateTravel({
     required value,
   }){
-    startDate=DateFormat.yMd().format(value);
-    print(startDate);
+    startDate=DateFormat.yMMMEd().format(value);
     emit(SelectTimePickerValueState());
   }
 
   void selectEndDateTravel({
     required value,
   }){
-    endDate=DateFormat.yMd().format(value);
-    print(endDate);
+    endDate=DateFormat.yMMMEd().format(value);
     emit(SelectTimePickerValueState());
   }
 
   void selectWillToFlyTravel({
     required value,
   }){
-    willToFly=DateFormat.yMd().format(value);
-    print(willToFly);
+    willToFly=DateFormat.yMMMEd().format(value);
     emit(SelectTimePickerValueState());
   }
 
@@ -85,11 +81,14 @@ class NewPostCubit extends Cubit<NewPostStates>{
         required String rank,
         required String planeType,
         required String iWantFlight,
-        required String userName}
+        required String userName,
+        context
+      }
       )async{
 
     emit(CreateNewPostsLoadingState());
 
+    print(state);
     NewPostsRepoImplement().uploadNewPosts(
         iHaveFlight: iHaveFlight,
         uid: uid,
@@ -103,7 +102,7 @@ class NewPostCubit extends Cubit<NewPostStates>{
         iWantFlight: iWantFlight,
         userName: userName
     ).then((value){
-
+      print(state);
       print('Create New Post Successfully');
       emit(CreateNewPostsSuccessState());
     }).catchError((error){

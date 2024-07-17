@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel_system/features/posts/data/models/post_model.dart';
 import 'package:travel_system/features/posts/presentation/cubit/posts_cubit/posts_cubit.dart';
+import 'package:travel_system/features/posts/presentation/cubit/posts_states/posts_states.dart';
 import 'package:travel_system/features/posts/presentation/view/posts_screen/widgets/post_widget.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
 import 'package:travel_system/styles/text_styles/text_styles.dart';
@@ -17,12 +20,17 @@ class HistoryScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: ListView.separated(
-          physics: const BouncingScrollPhysics(),
-          itemBuilder: (context, index) =>  PostWidget(postModel: PostsCubit.get(context).flights[index],),
-          separatorBuilder: (context, index) => const Divider(),
-          itemCount: 10
-      ),
+      body: BlocBuilder<PostsCubit,PostsStates>(
+        builder: (context, state) {
+          List<PostModel> myFlight=(PostsCubit.get(context).flights).toList();
+          return ListView.separated(
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (context, index) =>  PostWidget(postModel: myFlight[index],),
+              separatorBuilder: (context, index) => const Divider(),
+              itemCount: 10
+          );
+        },
+      )
     );
   }
 }
