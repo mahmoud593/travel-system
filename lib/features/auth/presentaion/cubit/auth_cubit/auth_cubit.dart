@@ -38,7 +38,7 @@ class AuthCubit extends Cubit<AuthState> {
         UserDataFromStorage.setUserName(userModel.userName);
         UserDataFromStorage.setUserPhone(userModel.phoneNumber);
         UserDataFromStorage.setUserBaseNumber(userModel.beasNumber);
-        UserDataFromStorage.setUserRank(userModel.rank!);
+        UserDataFromStorage.setUserRank(userModel.rank);
         UserDataFromStorage.setUserPayrollNumber(userModel.payRollNumber);
         // UserDataFromStorage.setAirCrafts(userModel.airCrafts!);
         UserDataFromStorage.setuserPersonalImage(userModel.userImage);

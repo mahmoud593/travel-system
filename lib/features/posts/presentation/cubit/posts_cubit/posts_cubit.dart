@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:travel_system/features/posts/data/models/post_model.dart';
 import 'package:travel_system/features/posts/data/posts_repo_implement/posts_repo_implement.dart';
 import '../posts_states/posts_states.dart';
@@ -23,5 +24,42 @@ class PostsCubit extends Cubit<PostsStates>{
       emit(GetPostsErrorState());
     }
   }
+
+
+
+  String hoursFilterValue='';
+  String ?dateTimeFilter;
+  String ?startDateFilter;
+  String ?endDateFilter;
+
+
+  void selectFilterDateTime({
+    required value,
+  }){
+    hoursFilterValue='${value.hour}:${value.minute}';
+    emit(SelectTimePickerValueState());
+  }
+
+  void selectFilterDateOfTravel({
+    required value,
+  }){
+    dateTimeFilter=DateFormat.yMMMEd().format(value);
+    emit(SelectTimePickerValueState());
+  }
+
+  void selectStartDateTravel({
+    required value,
+  }){
+    startDateFilter=DateFormat.yMMMEd().format(value);
+    emit(SelectTimePickerValueState());
+  }
+
+  void selectEndDateTravel({
+    required value,
+  }){
+    endDateFilter=DateFormat.yMMMEd().format(value);
+    emit(SelectTimePickerValueState());
+  }
+
 
 }
