@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_system/core/helper/app_size_config.dart';
 import 'package:travel_system/features/home_layout/presentation/cubit/home_layout_cubit.dart';
 import 'package:travel_system/features/home_layout/presentation/cubit/home_layout_states.dart';
+import 'package:travel_system/features/posts/presentation/cubit/posts_cubit/posts_cubit.dart';
+import 'package:travel_system/features/posts/presentation/cubit/posts_states/posts_states.dart';
 import 'package:travel_system/styles/assets/asset_manager.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -14,9 +16,9 @@ class BottomNavigationBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeLayoutCubit,HomeLayoutStates>(
+    return BlocBuilder<PostsCubit,PostsStates>(
         builder: (context,state){
-          var cubit=HomeLayoutCubit.get(context);
+          var cubit=PostsCubit.get(context);
           return SalomonBottomBar(
             backgroundColor: ColorManager.white,
             currentIndex: cubit.currentIndex,

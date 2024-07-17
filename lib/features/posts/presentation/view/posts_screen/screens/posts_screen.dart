@@ -1,12 +1,15 @@
 import 'package:easy_date_timeline/easy_date_timeline.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_system/core/helper/app_size_config.dart';
 import 'package:travel_system/core/helper/material_navigation.dart';
+import 'package:travel_system/core/local/shared_preferences.dart';
 import 'package:travel_system/features/new_posts/presentation/view/new_posts_screen/screens/new_posts_screen.dart';
 import 'package:travel_system/features/posts/data/models/post_model.dart';
 import 'package:travel_system/features/posts/presentation/cubit/posts_cubit/posts_cubit.dart';
 import 'package:travel_system/features/posts/presentation/cubit/posts_states/posts_states.dart';
+import 'package:travel_system/features/posts/presentation/view/posts_screen/screens/new_posts_screen.dart';
 import 'package:travel_system/features/posts/presentation/view/posts_screen/widgets/post_widget.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
 import 'package:travel_system/styles/text_styles/text_styles.dart';
@@ -23,7 +26,6 @@ class PostsScreen extends StatelessWidget {
         },
       builder: (context,state){
           var cubit=PostsCubit.get(context);
-          List<PostModel> myFlights=(cubit.flights).toList() ;
           return Column(
             children: [
 
@@ -58,7 +60,7 @@ class PostsScreen extends StatelessWidget {
                             SizedBox(height: MediaQuery.sizeOf(context).height*0.012,),
                             Row(
                               children: [
-                                Text('Welcome Mahmoud',style: TextStyles.textStyle24Bold.copyWith(color: ColorManager.primaryBlue),),
+                                Text('Welcome ${UserDataFromStorage.userName}',style: TextStyles.textStyle24Bold.copyWith(color: ColorManager.primaryBlue),),
                                 const Spacer(),
                                 GestureDetector(
                                   onTap: (){
@@ -84,20 +86,20 @@ class PostsScreen extends StatelessWidget {
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Text('Filter By',style: TextStyles.textStyle24Bold.copyWith(color: ColorManager.black),),
-                                                                                        
+
                                                   const Divider(color: Colors.white,),
-                                                                                        
+
                                                   SizedBox(height: SizeConfig.height*.02,),
-                                                                                        
+
                                                   Row(
                                                     children: [
                                                       const Icon(Icons.keyboard_arrow_up_rounded,color: Colors.black,size: 30,),
                                                       Text('Flights',style: TextStyles.textStyle18Bold.copyWith(color: ColorManager.black),),
                                                     ],
                                                   ),
-                                                                                        
+
                                                   SizedBox(height: SizeConfig.height*.02,),
-                                                                                        
+
                                                   GridView.count(
                                                     physics: const NeverScrollableScrollPhysics(),
                                                     shrinkWrap: true,
@@ -120,18 +122,18 @@ class PostsScreen extends StatelessWidget {
                                                       ) ,
                                                     ),),
                                                   ),
-                                                                                        
+
                                                   SizedBox(height: SizeConfig.height*.02,),
-                                                                                        
+
                                                   Row(
                                                     children: [
                                                       const Icon(Icons.keyboard_arrow_up_rounded,color: Colors.black,size: 30,),
                                                       Text('Flight duration',style: TextStyles.textStyle18Bold.copyWith(color: ColorManager.black),),
                                                     ],
                                                   ),
-                                                                                        
+
                                                   SizedBox(height: SizeConfig.height*.02,),
-                                                                                        
+
                                                   GestureDetector(
                                                     onTap: (){
                                                       showTimePicker(
@@ -160,62 +162,62 @@ class PostsScreen extends StatelessWidget {
                                                       ),),
                                                     ),
                                                   ),
-                                                                                        
+
                                                   SizedBox(height: SizeConfig.height*.02,),
-                                                                                        
+
                                                   Row(
                                                     children: [
                                                       const Icon(Icons.keyboard_arrow_up_rounded,color: Colors.black,size: 30,),
                                                       Text('Date Time',style: TextStyles.textStyle18Bold.copyWith(color: ColorManager.black),),
                                                     ],
                                                   ),
-                                                                                        
+
                                                   SizedBox(height: SizeConfig.height*.02,),
-                                                                                        
+
                                                   EasyDateTimeLine(
                                                     initialDate: DateTime.now(),
                                                     onDateChange: (selectedDate) {
                                                       PostsCubit.get(context).selectFilterDateOfTravel(value: selectedDate);
                                                     },
                                                   ),
-                                                                                        
+
                                                   SizedBox(height:  SizeConfig.height * 0.02,),
-                                                                                        
-                                                                                        
+
+
                                                   Row(
                                                     children: [
                                                       const Icon(Icons.keyboard_arrow_up_rounded,color: Colors.black,size: 30,),
                                                       Text('Start Time',style: TextStyles.textStyle18Bold.copyWith(color: ColorManager.black),),
                                                     ],
                                                   ),
-                                                                                        
+
                                                   SizedBox(height: SizeConfig.height*.02,),
-                                                                                        
+
                                                   EasyDateTimeLine(
                                                     initialDate: DateTime.now(),
                                                     onDateChange: (selectedDate) {
-                                                      PostsCubit.get(context).selectStartDateTravel(value: selectedDate);
+                                                      PostsCubit.get(context).selectFilterStartDateTravel(value: selectedDate);
                                                     },
                                                   ),
-                                                                                        
+
                                                   SizedBox(height:  SizeConfig.height * 0.02,),
-                                                                                        
+
                                                   Row(
                                                     children: [
                                                       const Icon(Icons.keyboard_arrow_up_rounded,color: Colors.black,size: 30,),
                                                       Text('End Time',style: TextStyles.textStyle18Bold.copyWith(color: ColorManager.black),),
                                                     ],
                                                   ),
-                                                                                        
+
                                                   SizedBox(height: SizeConfig.height*.02,),
-                                                                                        
+
                                                   EasyDateTimeLine(
                                                     initialDate: DateTime.now(),
                                                     onDateChange: (selectedDate) {
-                                                      PostsCubit.get(context).selectEndDateTravel(value: selectedDate);
+                                                      PostsCubit.get(context).selectFilterEndDateTravel(value: selectedDate);
                                                     },
                                                   ),
-                                                                                        
+
                                                   SizedBox(height:  SizeConfig.height * 0.04,),
 
                                                   Container(
@@ -274,13 +276,16 @@ class PostsScreen extends StatelessWidget {
 
               SizedBox(height: MediaQuery.sizeOf(context).height*0.02,),
 
+              state is GetPostsSuccessState?
               Expanded(
                 child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) =>  PostWidget(postModel: myFlights[index],),
+                    itemBuilder: (context, index) =>  PostWidget(postModel: cubit.flights[index]),
                     separatorBuilder: (context, index) => const Divider(),
                     itemCount: cubit.flights.length
                 ),
+              ):const CupertinoActivityIndicator(
+                color: ColorManager.primaryBlue,
               ),
             ],
           );

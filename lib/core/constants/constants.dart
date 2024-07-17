@@ -59,4 +59,11 @@ class Constants{
     'Oman',
   ];
 
+
+  static List<String> airCraftsList=[
+    '777',
+    '787',
+    '330',
+    '320'
+  ];
 }

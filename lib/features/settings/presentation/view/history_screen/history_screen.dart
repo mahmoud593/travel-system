@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_system/features/posts/data/models/post_model.dart';
@@ -22,10 +23,9 @@ class HistoryScreen extends StatelessWidget {
       ),
       body: BlocBuilder<PostsCubit,PostsStates>(
         builder: (context, state) {
-          List<PostModel> myFlight=(PostsCubit.get(context).flights).toList();
           return ListView.separated(
               physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) =>  PostWidget(postModel: myFlight[index],),
+              itemBuilder: (context, index) =>  state is GetPostsSuccessState ? PostWidget(postModel: PostsCubit.get(context).flights[index],):CupertinoActivityIndicator(),
               separatorBuilder: (context, index) => const Divider(),
               itemCount: 10
           );

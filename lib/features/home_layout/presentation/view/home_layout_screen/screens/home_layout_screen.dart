@@ -8,6 +8,8 @@ import 'package:travel_system/features/home_layout/presentation/cubit/home_layou
 import 'package:travel_system/features/home_layout/presentation/cubit/home_layout_states.dart';
 import 'package:travel_system/features/home_layout/presentation/view/home_layout_Screen/widgets/floating_action_button_widget.dart';
 import 'package:travel_system/features/home_layout/presentation/view/home_layout_screen/widgets/bottom_navigation_bar_widget.dart';
+import 'package:travel_system/features/posts/presentation/cubit/posts_cubit/posts_cubit.dart';
+import 'package:travel_system/features/posts/presentation/cubit/posts_states/posts_states.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
 
 
@@ -16,15 +18,14 @@ class HomeLayoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeLayoutCubit,HomeLayoutStates>(
+    return BlocBuilder<PostsCubit,PostsStates>(
           builder: (context,state){
-            var cubit=HomeLayoutCubit.get(context);
             return Scaffold(
                 backgroundColor: Colors.white,
                 extendBody: true,
                 floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
                 appBar: AppBar(toolbarHeight: 0.0,),
-                body: Constants.homeLayoutScreens[HomeLayoutCubit.get(context).currentIndex],
+                body: Constants.homeLayoutScreens[PostsCubit.get(context).currentIndex],
                 bottomNavigationBar: const BottomNavigationBarWidget()
 
             );

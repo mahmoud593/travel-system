@@ -9,6 +9,7 @@ import 'package:travel_system/features/new_posts/presentation/cubit/new_post_cub
 import 'package:travel_system/features/home_layout/presentation/cubit/home_layout_cubit.dart';
 import 'package:travel_system/features/home_layout/presentation/view/home_layout_screen/screens/home_layout_screen.dart';
 import 'package:travel_system/features/posts/presentation/cubit/posts_cubit/posts_cubit.dart';
+import 'package:travel_system/features/posts/presentation/cubit/posts_states/posts_states.dart';
 import 'package:travel_system/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:travel_system/styles/theme_manger/theme_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,17 +33,19 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => AuthCubit()),
-        BlocProvider(create: (context) => HomeLayoutCubit(),),
         BlocProvider(create: (context) => SettingsCubit()..getUserData(),),
-        BlocProvider(create: (context) => NewPostCubit(),),
-        BlocProvider(create: (context) => PostsCubit()..getPosts(),),
+        BlocProvider(create: (context) => PostsCubit()..getPosts()),
       ],
 
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: getApplicationTheme(context),
-        home: const HomeLayoutScreen(),
-      ),
+      child: BlocBuilder<PostsCubit,PostsStates>(
+        builder: (context, state) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: getApplicationTheme(context),
+            home: const HomeLayoutScreen(),
+          );
+        },
+      )
     );
   }
 }

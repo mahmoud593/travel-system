@@ -51,7 +51,6 @@ class TicketDataWidget extends StatelessWidget {
                   ],
                 ),
 
-
               ],
             ),
           );
