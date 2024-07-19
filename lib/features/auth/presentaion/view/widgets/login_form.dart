@@ -59,7 +59,7 @@ class LoginForm extends StatelessWidget {
           SizedBox(
             height: SizeConfig.height * .02,
           ),
-          /// Register Button
+          /// Login Button
           DefaultButton(
               width: SizeConfig.width,
               buttonText: "Login",
@@ -68,7 +68,6 @@ class LoginForm extends StatelessWidget {
                   cubit.login(email: cubit.loginEmailController.text, password: cubit.loginPasswordController.text).then((value) {
                     cubit.loginPasswordController.clear();
                     cubit.loginEmailController.clear();
-                    // UserDataFromStorage.setUserIsLogin(true);
                   });
                 }
               },

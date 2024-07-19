@@ -6,6 +6,7 @@ import 'package:meta/meta.dart';
 import 'package:travel_system/core/local/shared_preferences.dart';
 import 'package:travel_system/features/auth/data/auth_repo_implement/auth_repo_implement.dart';
 import 'package:travel_system/features/auth/data/model/user_model.dart';
+import 'package:travel_system/features/settings/data/edit_profile_repo_implement/edit_profile_repo_implement.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
 import 'package:travel_system/styles/widets/toast.dart';
 part 'auth_state.dart';
@@ -30,8 +31,8 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> login({required String email, required String password}) async {
     try {
       emit(LoginLoading());
-      await AuthRepoImplement().login(email: email, password: password).then((value) {
-        getUserFromFireBase().then((value){
+       AuthRepoImplement().login(email: email, password: password).then((value)  async{
+      await  EditProfileRepoImplement().getUserDataFromFireBase().then((value){
           UserModel userModel = UserModel.fromJson(value);
           UserDataFromStorage.setUserId(userModel.uid);
           UserDataFromStorage.setUserEmail(userModel.email);
@@ -42,9 +43,8 @@ class AuthCubit extends Cubit<AuthState> {
           UserDataFromStorage.setUserPayrollNumber(userModel.payRollNumber);
           // UserDataFromStorage.setAirCrafts(userModel.airCrafts!);
           UserDataFromStorage.setuserPersonalImage(userModel.userImage);
-        });
-        // UserDataFromStorage.setUserIsLogin(true);
-        debugPrint("***********${UserDataFromStorage.userIsLogin}");
+          UserDataFromStorage.setUserIsLogin(true);
+      });
       },);
       emit(LoginSuccess());
     } on FirebaseAuthException catch (e) {
@@ -87,6 +87,7 @@ class AuthCubit extends Cubit<AuthState> {
         required String payRollNumber,
         required List<int> airCrafts
       }) async {
+    emit(RegisterLoading());
     try {
       emit(RegisterLoading());
       AuthRepoImplement().register(
