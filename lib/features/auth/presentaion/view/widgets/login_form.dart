@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_system/core/helper/app_size_config.dart';
 import 'package:travel_system/core/helper/material_navigation.dart';
+import 'package:travel_system/core/local/shared_preferences.dart';
 import 'package:travel_system/features/auth/presentaion/cubit/auth_cubit/auth_cubit.dart';
 import 'package:travel_system/features/auth/presentaion/view/screens/register/resgister.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
@@ -21,13 +22,12 @@ class LoginForm extends StatelessWidget {
   builder: (context, state) {
     var cubit = AuthCubit.get(context);
     return Form(
-      key: cubit.formKey,
+      key: cubit.loginFormKey,
       child: Column(
         children: [
           /// Email
           AuthTextFormField(
-            labelText: "Email",
-            hintText: "Enter your e-mail",
+             hintText: "E-mail",
             controller: cubit.loginEmailController,
             validator: (value) {
               if (value!.isEmpty) {
@@ -39,14 +39,13 @@ class LoginForm extends StatelessWidget {
             textInputAction: TextInputAction.next,
           ),
           SizedBox(
-            height: SizeConfig.height * .01,
+            height: SizeConfig.height * .02,
           ),
           /// Password
           AuthTextFormField(
             isPassword: true,
             withSuffix: true,
-            labelText: "Password",
-            hintText: "Enter your password",
+             hintText: "Password",
             controller: cubit.loginPasswordController,
             validator: (value) {
               if (value!.isEmpty) {
@@ -65,36 +64,34 @@ class LoginForm extends StatelessWidget {
               width: SizeConfig.width,
               buttonText: "Login",
               onPressed: () {
-                if (cubit.formKey.currentState!.validate()) {
-                  cubit.login(email: cubit.loginEmailController.text, password: cubit.loginPasswordController.text);
+                if (cubit.loginFormKey.currentState!.validate()) {
+                  cubit.login(email: cubit.loginEmailController.text, password: cubit.loginPasswordController.text).then((value) {
+                    cubit.loginPasswordController.clear();
+                    cubit.loginEmailController.clear();
+                    // UserDataFromStorage.setUserIsLogin(true);
+                  });
                 }
               },
               buttonColor: ColorManager.primaryBlue,
-              large: true),
-
+              large: false),
           SizedBox(
             height: SizeConfig.height * .01,
           ),
-          /// Don't have an account
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Don't have an account?",
-                style: TextStyles.textStyle18Regular
-                    .copyWith(color: ColorManager.black),
-              ),
-              GestureDetector(
-                  onTap:  () {
-                    customPushAndRemoveUntil(context, const RegisterScreen());
-                  },
-                  child: Text("  Register",
-                      style: TextStyles.textStyle18Regular.copyWith(
-                          color: ColorManager.primaryBlue
-                      )),
-              ),
-            ],
-          )
+
+          Text("Or ",style: TextStyles.textStyle18Bold.copyWith(color: ColorManager.black,)),
+          SizedBox(
+            height: SizeConfig.height * .01,
+          ),
+          /// Create new account Button
+          DefaultButton(
+              width: SizeConfig.width,
+              buttonText: "Create new account",
+              onPressed: () {
+                customPushNavigator(context, const RegisterScreen());
+              },
+              buttonColor: ColorManager.black,
+              large: false),
+
         ],
       ),
     );

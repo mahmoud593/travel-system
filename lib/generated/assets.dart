@@ -6,6 +6,8 @@ class Assets {
   static const String fontsFonts = 'assets/fonts/fonts.dart';
   static const String iconsHome = 'assets/icons/home.png';
   static const String iconsSettings = 'assets/icons/settings.png';
+  static const String imagesAirplane = 'assets/images/airplane.png';
+  static const String imagesAirplane2 = 'assets/images/airplane2.png';
   static const String imagesAirport = 'assets/images/airport.png';
   static const String imagesBoy = 'assets/images/boy.png';
   static const String imagesEndDate = 'assets/images/end_date.png';
@@ -16,6 +18,7 @@ class Assets {
   static const String imagesOnBoarding1 = 'assets/images/onBoarding1.png';
   static const String imagesOnBoarding2 = 'assets/images/onBoarding2.png';
   static const String imagesPilot = 'assets/images/pilot.png';
+  static const String imagesPlaceholder = 'assets/images/placeholder.png';
   static const String imagesPlane = 'assets/images/plane.png';
   static const String imagesPlaneTicket = 'assets/images/plane-ticket.png';
   static const String imagesStartDate = 'assets/images/start_date.png';

@@ -29,7 +29,7 @@ class _AircraftGridviewWidgetState extends State<AircraftGridviewWidget> {
                 child: Text(
                   "Aircrafts",
                   style: TextStyles.textStyle18Medium
-                      .copyWith(color: ColorManager.black),
+                      .copyWith(color: ColorManager.darkGrey.withOpacity(.5)),
                 ),
               ),
             ),
@@ -37,6 +37,7 @@ class _AircraftGridviewWidgetState extends State<AircraftGridviewWidget> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: Constants.airCraftsModel.length,
+              padding: EdgeInsets.zero ,
               itemBuilder: (context, int index) {
                 return CheckboxListTile(
                   contentPadding: EdgeInsets.zero,
