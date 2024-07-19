@@ -84,7 +84,7 @@ class LoginScreen extends StatelessWidget {
                                 height: MediaQuery.sizeOf(context).height * .03,
                               ),
 
-                              /// Register Form
+                              /// Login Form
                               const LoginForm()
                             ],
                           ),

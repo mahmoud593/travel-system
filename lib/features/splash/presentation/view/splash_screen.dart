@@ -1,8 +1,10 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:travel_system/core/helper/app_size_config.dart';
 import 'package:travel_system/core/helper/material_navigation.dart';
 import 'package:travel_system/core/local/shared_preferences.dart';
+import 'package:travel_system/features/auth/presentaion/view/screens/login/login.dart';
 import 'package:travel_system/features/on_boarding/presentation/view/screen/on_boarding_screen.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
 
@@ -50,13 +52,19 @@ class _SplashScreenState extends State<SplashScreen> {
   void timeDelay({required BuildContext context})  {
     Future.delayed(const Duration(seconds: 3),()
     async{
-      if(UserDataFromStorage.userIsLogin == true ){
-        customPushAndRemoveUntil(context,const HomeLayoutScreen());
+      if(UserDataFromStorage.onBoardingIsOpen==true){
+        if(UserDataFromStorage.userIsLogin == true ){
+          customPushAndRemoveUntil(context,const HomeLayoutScreen());
+        }else{
+          customPushAndRemoveUntil(context, const LoginScreen());
+
+        }
       }else{
+
         customPushAndRemoveUntil(context, const OnBoarding());
-
       }
-    });
+    }
+    );
 
-}
+  }
 }

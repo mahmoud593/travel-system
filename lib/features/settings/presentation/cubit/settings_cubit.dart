@@ -125,6 +125,7 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   userSignOut({required BuildContext context}) async {
     await EditProfileRepoImplement().logout(context: context).then((value){
+      UserDataFromStorage.setUserIsLogin(false);
       debugPrint("User logout successfully");
       emit(UserSignOutSuccessState());
     }).catchError((error){

@@ -31,7 +31,7 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> login({required String email, required String password}) async {
     try {
       emit(LoginLoading());
-       AuthRepoImplement().login(email: email, password: password).then((value)  async{
+       await AuthRepoImplement().login(email: email, password: password).then((value)  async{
       await  EditProfileRepoImplement().getUserDataFromFireBase().then((value){
           UserModel userModel = UserModel.fromJson(value);
           UserDataFromStorage.setUserId(userModel.uid);
@@ -44,6 +44,8 @@ class AuthCubit extends Cubit<AuthState> {
           // UserDataFromStorage.setAirCrafts(userModel.airCrafts!);
           UserDataFromStorage.setuserPersonalImage(userModel.userImage);
           UserDataFromStorage.setUserIsLogin(true);
+          emit(LoginSuccess());
+
       });
       },);
       emit(LoginSuccess());
