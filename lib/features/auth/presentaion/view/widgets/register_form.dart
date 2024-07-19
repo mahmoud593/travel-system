@@ -16,21 +16,36 @@ class RegisterForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = AuthCubit.get(context);
         return Form(
-          key: cubit.formKey,
+          key: cubit.signUpFormKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              Text(
+                "Sign Up",
+                style: TextStyles.textStyle24Bold.copyWith(
+                    color: ColorManager.black,
+                    fontSize: MediaQuery.sizeOf(context).height * .033),
+              ),
+              SizedBox(
+                height: MediaQuery.sizeOf(context).height * .01,
+              ),
+              Text("Enter Your Personal Information",
+                  style: TextStyles.textStyle18Medium.copyWith(
+                    color: ColorManager.darkGrey.withOpacity(.4),
+                  )),
+              SizedBox(
+                height: MediaQuery.sizeOf(context).height * .03,
+              ),
 
               /// User name
               AuthTextFormField(
-                labelText: "Username",
-                hintText: "Enter your name",
-                controller:cubit. userNameController,
+                hintText: "Name",
+                controller: cubit.userNameController,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "User name is required";
@@ -46,9 +61,8 @@ class RegisterForm extends StatelessWidget {
 
               /// Email
               AuthTextFormField(
-                labelText: "Email",
-                hintText: "Enter your e-mail",
-                controller:cubit.registerEmailController,
+                hintText: "E-mail",
+                controller: cubit.registerEmailController,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "E-mail is required";
@@ -64,9 +78,8 @@ class RegisterForm extends StatelessWidget {
 
               /// Phone number
               AuthTextFormField(
-                labelText: "Phone number",
-                hintText: "Enter your phone number",
-                controller:cubit.phoneNumberController,
+                hintText: "Phone Number",
+                controller: cubit.phoneNumberController,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Phone number is required";
@@ -82,8 +95,7 @@ class RegisterForm extends StatelessWidget {
 
               /// Beas number
               AuthTextFormField(
-                labelText: "Beas number",
-                hintText: "Enter your Beas number",
+                hintText: "Beas Number",
                 controller: cubit.peasController,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -100,8 +112,7 @@ class RegisterForm extends StatelessWidget {
 
               /// rank
               AuthTextFormField(
-                labelText: "Rank",
-                hintText: "Enter your rank",
+                hintText: "Rank",
                 controller: cubit.rankController,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -118,12 +129,11 @@ class RegisterForm extends StatelessWidget {
 
               /// PayRoll number
               AuthTextFormField(
-                labelText: "PayRoll number",
-                hintText: "Enter your payroll number",
+                hintText: "Payroll Number",
                 controller: cubit.payrollNumberController,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Rank is required";
+                    return "payroll number is required";
                   }
                   return null;
                 },
@@ -134,15 +144,14 @@ class RegisterForm extends StatelessWidget {
                 height: SizeConfig.height * .01,
               ),
 
+              /// air craft models
               const AircraftGridviewWidget(),
-
 
               /// Password
               AuthTextFormField(
                 isPassword: true,
                 withSuffix: true,
-                labelText: "Password",
-                hintText: "Enter your password",
+                hintText: "Password",
                 controller: cubit.registerPasswordController,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -160,46 +169,51 @@ class RegisterForm extends StatelessWidget {
               /// Register Button
               DefaultButton(
                   width: SizeConfig.width,
-                  buttonText: "Register",
+                  buttonText: "Sign up",
                   onPressed: () {
-                    if (cubit.formKey.currentState!.validate()) {
+                    if (cubit.signUpFormKey.currentState!.validate()) {
                       cubit.register(
-                      email: cubit.registerEmailController.text,
-                      password: cubit.registerPasswordController.text,
-                      userName:cubit. userNameController.text,
-                      phoneNumber:cubit. phoneNumberController.text,
-                      beasNumber: cubit.peasController.text,
-                      rank: cubit.rankController.text,
-                      payRollNumber:cubit. payrollNumberController.text,
-                      airCrafts: cubit.selectedAirCrafts
-                      );
-                    }},
+                          email: cubit.registerEmailController.text,
+                          password: cubit.registerPasswordController.text,
+                          userName: cubit.userNameController.text,
+                          phoneNumber: cubit.phoneNumberController.text,
+                          beasNumber: cubit.peasController.text,
+                          rank: cubit.rankController.text,
+                          payRollNumber: cubit.payrollNumberController.text,
+                          airCrafts: cubit.selectedAirCrafts).then((value) {
+                        cubit.registerPasswordController.clear();
+                        cubit.registerEmailController.clear();
+                        cubit.userNameController.clear();
+                        cubit.phoneNumberController.clear();
+                        cubit.peasController.clear();
+                        cubit.rankController.clear();
+                        cubit.payrollNumberController.clear();
+                          });
+                    }
+                  },
                   buttonColor: ColorManager.primaryBlue,
-                  large: true),
+                  large: false),
 
               SizedBox(
                 height: SizeConfig.height * .01,
               ),
-
-              /// Already have an account
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Already have an account?",
-                    style: TextStyles.textStyle18Regular
-                        .copyWith(color: ColorManager.black),
-                  ),
-                  GestureDetector(
-                      onTap: () {
-                        customPushAndRemoveUntil(context, const LoginScreen());
-                      },
-                      child: Text("  Login",
-                          style: TextStyles.textStyle18Regular.copyWith(
-                              color: ColorManager.primaryBlue
-                          ))),
-                ],
-              )
+              Align(
+                alignment:  Alignment.center,
+                  child: Text("Or ",
+                      style: TextStyles.textStyle18Bold.copyWith(
+                        color: ColorManager.black,
+                      ))),
+              SizedBox(
+                height: SizeConfig.height * .01,
+              ),
+              DefaultButton(
+                  width: SizeConfig.width,
+                  buttonText: "Login",
+                  onPressed: () {
+                    customPushNavigator(context, const LoginScreen());
+                  },
+                  buttonColor: ColorManager.black,
+                  large: false),
             ],
           ),
         );

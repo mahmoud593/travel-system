@@ -11,6 +11,7 @@ class AuthRepoImplement extends AuthRepo{
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password).then((value){
       UserDataFromStorage.setUserId(value.user!.uid);
+      UserDataFromStorage.setUserIsLogin(true);
       debugPrint("User Id ===========================> ${UserDataFromStorage.userId}");
     });
   }
@@ -32,6 +33,7 @@ class AuthRepoImplement extends AuthRepo{
       password: password,
     ).then((value) {
       UserDataFromStorage.setUserId(value.user!.uid);
+      UserDataFromStorage.setUserIsLogin(true);
     });
   }
 

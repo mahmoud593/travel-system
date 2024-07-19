@@ -14,7 +14,7 @@ class UserDataFromStorage {
   static late String driverPersonalImage;
   static late String driverCity;
   static late String userId;
-  static late bool userIsGuest;
+  static late bool userIsLogin;
   static late bool userIsCompany;
   static late bool themeIsDarkMode;
   static late bool onBoardingIsOpen;
@@ -172,8 +172,8 @@ class UserDataFromStorage {
     _setData();
   }
 
-  static setUserIsGuest(bool block) {
-    userIsGuest = block;
+  static setUserIsLogin(bool block) {
+    userIsLogin = block;
     _setData();
   }
   static setThemeIsDarkMode(bool darkMode) {
@@ -213,7 +213,7 @@ class UserDataFromStorage {
   static void _setData()async {
 
     final prefs= await SharedPreferences.getInstance();
-    prefs.setBool("userIsGuest",userIsGuest);
+    prefs.setBool("userIsLogin",userIsLogin);
     prefs.setBool("userIsCompany",userIsCompany);
 
     prefs.setString('driverUserName',driverUserName);
@@ -259,7 +259,7 @@ class UserDataFromStorage {
 
 
     final prefs = await SharedPreferences.getInstance();
-    userIsGuest = prefs.getBool("userIsGuest")?? true;
+    userIsLogin = prefs.getBool("userIsLogin")?? false;
     userIsCompany = prefs.getBool("userIsCompany")?? true;
     themeIsDarkMode = prefs.getBool("themeIsDarkMode")?? false;
     onBoardingIsOpen = prefs.getBool("onBoardingIsOpen")?? false;
