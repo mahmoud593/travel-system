@@ -35,3 +35,5 @@ class GetFavoriteErrorState extends PostsStates{}
 
 
 class CheckIfIsFavorite extends PostsStates {}
+
+class ChangeCountryColorState extends PostsStates{}
