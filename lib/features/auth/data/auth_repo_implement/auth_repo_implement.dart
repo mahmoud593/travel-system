@@ -27,7 +27,7 @@ class AuthRepoImplement extends AuthRepo{
     required String rank,
     required String payRollNumber,
     String? userImage,
-    required List<int> airCrafts
+    required List<String> airCrafts
 
   }) async {
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -48,7 +48,7 @@ class AuthRepoImplement extends AuthRepo{
     required String beasNumber,
     required String rank,
     required String payRollNumber,
-    required List<int>airCrafts,
+    required List<String>airCrafts,
     String? userImage
   }) async{
       userModel = UserModel(

@@ -11,7 +11,7 @@ abstract class AuthRepo{
     required String rank,
     required String payRollNumber,
     String? userImage,
-    required List<int> airCrafts,
+    required List<String> airCrafts,
   });
 
   Future<void> uploadUserDataToFireBase(
@@ -22,7 +22,7 @@ abstract class AuthRepo{
         required String rank,
         required String payRollNumber,
         String? userImage,
-        required List<int> airCrafts});
+        required List<String> airCrafts});
 
   Future<void> getUserFromFireBase();
 

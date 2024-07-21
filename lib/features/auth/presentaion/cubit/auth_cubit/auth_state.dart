@@ -14,7 +14,10 @@ final class LoginFailure extends AuthState {
 
 final class RegisterLoading extends AuthState {}
 final class RegisterSuccess extends AuthState {}
-final class RegisterFailure extends AuthState {}
+final class RegisterFailure extends AuthState {
+  final String errorMessage;
+  RegisterFailure({required this.errorMessage});
+}
 
 final class UploadUserDataLoading extends AuthState {}
 final class UploadUserDataSuccess extends AuthState {}

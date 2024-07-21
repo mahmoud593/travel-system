@@ -41,11 +41,11 @@ class AuthCubit extends Cubit<AuthState> {
           UserDataFromStorage.setUserBaseNumber(userModel.beasNumber);
           UserDataFromStorage.setUserRank(userModel.rank);
           UserDataFromStorage.setUserPayrollNumber(userModel.payRollNumber);
-          // UserDataFromStorage.setAirCrafts(userModel.airCrafts!);
+          UserDataFromStorage.setUserAirCrafts(userModel.airCrafts!);
           UserDataFromStorage.setuserPersonalImage(userModel.userImage);
           UserDataFromStorage.setUserIsLogin(true);
           emit(LoginSuccess());
-
+debugPrint("user Aircrafts ===========================> ${UserDataFromStorage.userAirCrafts}");
       });
       },);
       emit(LoginSuccess());
@@ -79,49 +79,97 @@ class AuthCubit extends Cubit<AuthState> {
       emit(LoginFailure(errorMessage: 'An unknown error occurred.'));
     }
   }
-  Future<void> register(
-      {required String email,
-        required String password,
-        required String userName,
-        required String phoneNumber,
-        required String beasNumber,
-        required String rank,
-        required String payRollNumber,
-        required List<int> airCrafts
-      }) async {
+  Future<void> register({
+    required String email,
+    required String password,
+    required String userName,
+    required String phoneNumber,
+    required String beasNumber,
+    required String rank,
+    required String payRollNumber,
+    required List<String> airCrafts,
+  }) async {
     emit(RegisterLoading());
     try {
-      emit(RegisterLoading());
-      AuthRepoImplement().register(
-          email: email,
-          password: password,
-          userName: userName,
-          phoneNumber: phoneNumber,
-          beasNumber: beasNumber,
-          rank: rank,
-          payRollNumber: payRollNumber,
-          airCrafts: airCrafts).then(
-            (value) {
-          uploadUserDataToFireBase(
-              email: email,
-              userName: userName,
-              phoneNumber: phoneNumber,
-              beasNumber: beasNumber,
-              rank: rank,
-              payRollNumber: payRollNumber,
-              airCrafts: airCrafts
-          );
-          getUserFromFireBase();
-        },
+      await AuthRepoImplement().register(
+        email: email,
+        password: password,
+        userName: userName,
+        phoneNumber: phoneNumber,
+        beasNumber: beasNumber,
+        rank: rank,
+        payRollNumber: payRollNumber,
+        airCrafts: airCrafts,
       );
+
+      await uploadUserDataToFireBase(
+        email: email,
+        userName: userName,
+        phoneNumber: phoneNumber,
+        beasNumber: beasNumber,
+        rank: rank,
+        payRollNumber: payRollNumber,
+        airCrafts: airCrafts,
+      );
+
+      await getUserFromFireBase();
       emit(RegisterSuccess());
-    } on Exception catch (e) {
-      debugPrint(e.toString());
-      emit(RegisterFailure());
+    } on FirebaseAuthException catch (e) {
+      String errorMessage;
+      switch (e.code) {
+        case 'email-already-in-use':
+          errorMessage = 'The account already exists for that email.';
+          customToast(
+            title: errorMessage,
+            color: ColorManager.error,
+          );
+          debugPrint("--------------Failed To Create Account: $errorMessage");
+          break;
+        case 'invalid-email':
+          errorMessage = 'The email address is not valid.';
+          customToast(
+            title: errorMessage,
+            color: ColorManager.error,
+          );
+          debugPrint("--------------Failed To Create Account: $errorMessage");
+          break;
+        case 'weak-password':
+          errorMessage = 'The password provided is too weak.';
+          customToast(
+            title: errorMessage,
+            color: ColorManager.error,
+          );
+          debugPrint("--------------Failed To Create Account: $errorMessage");
+          break;
+        case 'operation-not-allowed':
+          errorMessage = 'Email/password accounts are not enabled.';
+          customToast(
+            title: errorMessage,
+            color: ColorManager.error,
+          );
+          debugPrint("--------------Failed To Create Account: $errorMessage");
+          break;
+        default:
+          errorMessage = 'An unknown error occurred.';
+          customToast(
+            title: errorMessage,
+            color: ColorManager.error,
+          );
+          debugPrint("--------------Failed To Create Account: $errorMessage");
+      }
+      emit(RegisterFailure(errorMessage: errorMessage));
+    } catch (e) {
+      const errorMessage = 'An unknown error occurred.';
+      debugPrint('An error occurred: $e');
+      emit(RegisterFailure(errorMessage: errorMessage));
+      customToast(
+        title: errorMessage,
+        color: ColorManager.error,
+      );
     }
   }
 
-  List<int> selectedAirCrafts=[];
+  List<String> selectedAirCrafts=[];
 
   Future<void> uploadUserDataToFireBase(
       {required String email,
@@ -131,7 +179,7 @@ class AuthCubit extends Cubit<AuthState> {
         required String rank,
         required String payRollNumber,
         String? userImage,
-        required List<int> airCrafts}) async {
+        required List<String> airCrafts}) async {
     try {
       await AuthRepoImplement().uploadUserDataToFireBase(
           email: email,
