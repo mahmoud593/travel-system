@@ -31,7 +31,13 @@ class BottomNavigationBarWidget extends StatelessWidget {
                 selectedColor: ColorManager.primaryBlue,
                 unselectedColor: ColorManager.lightBlue
               ),
-
+              /// Chat
+              SalomonBottomBarItem(
+                  icon: Icon(Icons.chat_rounded),
+                  title: Text("Chat"),
+                  selectedColor: ColorManager.primaryBlue,
+                  unselectedColor: ColorManager.lightBlue
+              ),
               /// Profile
               SalomonBottomBarItem(
                 icon: Icon(Icons.person),
@@ -39,6 +45,8 @@ class BottomNavigationBarWidget extends StatelessWidget {
                 selectedColor: ColorManager.primaryBlue,
                 unselectedColor: ColorManager.lightBlue
               ),
+
+
             ],
           );
         });

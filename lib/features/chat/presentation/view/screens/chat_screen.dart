@@ -7,6 +7,7 @@ import 'package:travel_system/features/chat/presentation/cubit/chat_cubit.dart';
 import 'package:travel_system/features/chat/presentation/view/widgets/send_message_container.dart';
 import 'package:travel_system/features/chat/presentation/view/widgets/sender_message.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
+import 'package:travel_system/styles/text_styles/text_styles.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -27,7 +28,33 @@ class _ChatScreenState extends State<ChatScreen> {
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            title: const Text("Chat"),
+            titleSpacing: 0.0,
+            iconTheme:  const IconThemeData(
+              color: ColorManager.primaryBlue,
+            ),
+            title: Row(
+              children: [
+
+                /// User Image
+                CircleAvatar(
+                  radius: SizeConfig.height * 0.025,
+                  backgroundImage: const AssetImage('assets/images/profile.png'),
+                ),
+                SizedBox(
+                  width: SizeConfig.height * 0.01,
+                ),
+                /// User Name
+                Column(
+                  children: [
+                    Text(
+                      'Ahmed Ali',
+                      style: TextStyles.textStyle24Regular.copyWith(
+                          color: ColorManager.black, fontWeight: FontWeight.w400),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
           body: ModalProgressHUD(
             inAsyncCall: state is GetMessageLoading,

@@ -1,6 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:travel_system/features/new_posts/presentation/view/new_posts_screen/screens/new_posts_screen.dart';
+import 'package:travel_system/features/chat_history/presentation/view/chat_history_screen.dart';
 import 'package:travel_system/features/posts/presentation/view/posts_screen/screens/posts_screen.dart';
 import 'package:travel_system/features/settings/presentation/view/settings_screen/screens/settings_screen.dart';
 import 'package:travel_system/features/on_boarding/data/model/onboarding_model.dart';
@@ -28,7 +28,7 @@ class Constants{
 
   static List<Widget> homeLayoutScreens=[
     const PostsScreen(),
-     // NewPostsScreen(),
+    const ChatHistoryScreen(),
     const SettingsScreen(),
   ];
 
@@ -39,11 +39,11 @@ class Constants{
     'Settings',
   ];
 
-  static List<int> airCraftsModel=[
-    777,
-    787,
-    330,
-    320
+  static List<String> airCraftsModel=[
+    "777",
+    "787",
+    "330",
+    "320"
   ];
 
   static final database = FirebaseDatabase.instance
