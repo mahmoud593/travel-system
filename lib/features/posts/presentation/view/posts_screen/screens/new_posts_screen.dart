@@ -33,6 +33,9 @@ class NewPostsScreen extends StatefulWidget {
 
 class _NewPostsScreenState extends State<NewPostsScreen> {
 
+  var hoursController=TextEditingController();
+  var minutesController=TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -147,32 +150,35 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
 
                                 SizedBox(height:  SizeConfig.height * 0.01,),
 
-                                GestureDetector(
-                                  onTap: (){
-                                    showTimePicker(
-                                        context: context,
-                                        initialTime: TimeOfDay.now()
-                                    ).then((value) {
-                                      cubit.selectDateTime(value: value);
-                                    });
-                                  },
-                                  child: Container(
-                                    width:  SizeConfig.height * 0.26,
-                                    padding: EdgeInsets.only(
-                                      top: SizeConfig.height * 0.015,
-                                      bottom: SizeConfig.height * 0.015,
-                                      right: SizeConfig.height * 0.02,
-                                      left: SizeConfig.height * 0.01,
+
+                                Row(
+                                  children: [
+
+                                    Expanded(
+                                      child: DefaultTextField(
+                                          controller: hoursController,
+                                          hintText: 'Hours',
+                                          validator: (value){},
+                                          keyboardType: TextInputType.number,
+                                          textInputAction: TextInputAction.done,
+                                          fillColor: Colors.white
+                                      )
                                     ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(SizeConfig.height * 0.01),
-                                      color: Colors.white,
+
+                                    SizedBox(width:  SizeConfig.height * 0.02,),
+
+                                    Expanded(
+                                        child: DefaultTextField(
+                                            controller: minutesController,
+                                            hintText: 'Minutes',
+                                            validator: (value){},
+                                            keyboardType: TextInputType.number,
+                                            textInputAction: TextInputAction.done,
+                                            fillColor: Colors.white
+                                        )
                                     ),
-                                    child: Text(cubit.hoursValue == '' ? 'Select your time':cubit.hoursValue,style: TextStyles.textStyle18Medium.copyWith(
-                                      color: Colors.black,
-                                      fontSize: SizeConfig.height * 0.02
-                                    ),),
-                                  ),
+
+                                  ],
                                 ),
 
                                 SizedBox(height:  SizeConfig.height * 0.03,),
@@ -324,7 +330,7 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
                                           dateTime: cubit.dateTime!,
                                           startTime: cubit.startDate!,
                                           endTime: cubit.endDate!,
-                                          hours: cubit.hoursValue,
+                                          hours: '${hoursController.text}${minutesController.text}',
                                           willToFly: cubit.willToFly!,
                                           rank: UserDataFromStorage.userRank,
                                           planeType: cubit.planeType!,

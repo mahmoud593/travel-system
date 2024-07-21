@@ -28,21 +28,22 @@ class AuthCubit extends Cubit<AuthState> {
   TextEditingController userNameController = TextEditingController();
 
 
+  UserModel ?userModel;
   Future<void> login({required String email, required String password}) async {
     try {
       emit(LoginLoading());
        await AuthRepoImplement().login(email: email, password: password).then((value)  async{
       await  EditProfileRepoImplement().getUserDataFromFireBase().then((value){
-          UserModel userModel = UserModel.fromJson(value);
-          UserDataFromStorage.setUserId(userModel.uid);
-          UserDataFromStorage.setUserEmail(userModel.email);
-          UserDataFromStorage.setUserName(userModel.userName);
-          UserDataFromStorage.setUserPhone(userModel.phoneNumber);
-          UserDataFromStorage.setUserBaseNumber(userModel.beasNumber);
-          UserDataFromStorage.setUserRank(userModel.rank);
-          UserDataFromStorage.setUserPayrollNumber(userModel.payRollNumber);
+          userModel = UserModel.fromJson(value);
+          UserDataFromStorage.setUserId(userModel!.uid);
+          UserDataFromStorage.setUserEmail(userModel!.email);
+          UserDataFromStorage.setUserName(userModel!.userName);
+          UserDataFromStorage.setUserPhone(userModel!.phoneNumber);
+          UserDataFromStorage.setUserBaseNumber(userModel!.beasNumber);
+          UserDataFromStorage.setUserRank(userModel!.rank);
+          UserDataFromStorage.setUserPayrollNumber(userModel!.payRollNumber);
           // UserDataFromStorage.setAirCrafts(userModel.airCrafts!);
-          UserDataFromStorage.setuserPersonalImage(userModel.userImage);
+          UserDataFromStorage.setuserPersonalImage(userModel!.userImage);
           UserDataFromStorage.setUserIsLogin(true);
           emit(LoginSuccess());
 

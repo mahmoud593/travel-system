@@ -21,3 +21,5 @@ class SetDropDownValueState extends PostsStates{}
 class CreateNewPostsLoadingState extends PostsStates{}
 class CreateNewPostsSuccessState extends PostsStates{}
 class CreateNewPostsErrorState extends PostsStates{}
+
+class ChangeCountryColorState extends PostsStates{}

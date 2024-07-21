@@ -2,6 +2,7 @@ import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel_system/core/constants/constants.dart';
 import 'package:travel_system/core/helper/app_size_config.dart';
 import 'package:travel_system/core/helper/material_navigation.dart';
 import 'package:travel_system/core/local/shared_preferences.dart';
@@ -14,9 +15,23 @@ import 'package:travel_system/features/posts/presentation/view/posts_screen/widg
 import 'package:travel_system/styles/colors/color_manager.dart';
 import 'package:travel_system/styles/text_styles/text_styles.dart';
 import 'package:travel_system/styles/widets/default_button.dart';
+import 'package:travel_system/styles/widets/default_text_field.dart';
 
-class PostsScreen extends StatelessWidget {
+class PostsScreen extends StatefulWidget {
   const PostsScreen({super.key});
+
+  @override
+  State<PostsScreen> createState() => _PostsScreenState();
+}
+
+class _PostsScreenState extends State<PostsScreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    PostsCubit.get(context).getPosts(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +94,7 @@ class PostsScreen extends StatelessWidget {
                                                 topLeft: Radius.circular(20),
                                                 topRight: Radius.circular(20),
                                               ),
-                                              color: ColorManager.primaryBlue.withOpacity(.4),
+                                              color: Colors.grey[200],
                                             ),
                                             child: SingleChildScrollView(
                                               child: Column(
@@ -107,19 +122,27 @@ class PostsScreen extends StatelessWidget {
                                                     childAspectRatio: 0.5/.2,
                                                     crossAxisSpacing: 10,
                                                     mainAxisSpacing: 10,
-                                                    children: List.generate(8, (index) => Container(
-                                                      decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(50),
-                                                          color: Colors.white
+                                                    children: List.generate(Constants.iHaveLocations.length, (index) => GestureDetector(
+                                                      onTap: (){
+                                                        PostsCubit.get(context).changeCountryColor( index,Constants.iHaveLocations[index]);
+                                                      },
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(50),
+                                                            color: cubit.locationFilterSelected[index] ? ColorManager.primaryBlue : Colors.white
+                                                        ),
+                                                        width: SizeConfig.height *.1,
+                                                        child: Column(
+                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                          children: [
+                                                            Text(Constants.iHaveLocations[index],style:
+                                                            TextStyles.textStyle18Regular.copyWith(
+                                                                color: cubit.locationFilterSelected[index] ? ColorManager.white : ColorManager.primaryBlue
+                                                            ),)
+                                                          ],
+                                                        ) ,
                                                       ),
-                                                      width: SizeConfig.height *.1,
-                                                      child: Column(
-                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                                        children: [
-                                                          Text('Paris',style: TextStyles.textStyle18Regular.copyWith(color: ColorManager.primaryBlue),)
-                                                        ],
-                                                      ) ,
                                                     ),),
                                                   ),
 
@@ -134,34 +157,36 @@ class PostsScreen extends StatelessWidget {
 
                                                   SizedBox(height: SizeConfig.height*.02,),
 
-                                                  GestureDetector(
-                                                    onTap: (){
-                                                      showTimePicker(
-                                                          context: context,
-                                                          initialTime: TimeOfDay.now()
-                                                      ).then((value) {
-                                                        PostsCubit.get(context).selectFilterDateTime(value: value);
-                                                      });
-                                                    },
-                                                    child: Container(
-                                                      width:  SizeConfig.height * 0.26,
-                                                      padding: EdgeInsets.only(
-                                                        top: SizeConfig.height * 0.015,
-                                                        bottom: SizeConfig.height * 0.015,
-                                                        right: SizeConfig.height * 0.02,
-                                                        left: SizeConfig.height * 0.01,
+                                                  Row(
+                                                    children: [
+
+                                                      Expanded(
+                                                          child: DefaultTextField(
+                                                              controller: cubit.hoursFilterController,
+                                                              hintText: 'Hours',
+                                                              validator: (value){},
+                                                              keyboardType: TextInputType.number,
+                                                              textInputAction: TextInputAction.done,
+                                                              fillColor: Colors.white
+                                                          )
                                                       ),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(SizeConfig.height * 0.01),
-                                                        color: Colors.white,
+
+                                                      SizedBox(width:  SizeConfig.height * 0.02,),
+
+                                                      Expanded(
+                                                          child: DefaultTextField(
+                                                              controller: cubit.mintusFilterController,
+                                                              hintText: 'Minutes',
+                                                              validator: (value){},
+                                                              keyboardType: TextInputType.number,
+                                                              textInputAction: TextInputAction.done,
+                                                              fillColor: Colors.white
+                                                          )
                                                       ),
-                                                      child: Text( PostsCubit.get(context).hoursFilterValue == '' ? 'Select your time':
-                                                      PostsCubit.get(context).hoursFilterValue,style: TextStyles.textStyle18Medium.copyWith(
-                                                          color: Colors.black,
-                                                          fontSize: SizeConfig.height * 0.02
-                                                      ),),
-                                                    ),
+
+                                                    ],
                                                   ),
+
 
                                                   SizedBox(height: SizeConfig.height*.02,),
 
@@ -183,40 +208,39 @@ class PostsScreen extends StatelessWidget {
 
                                                   SizedBox(height:  SizeConfig.height * 0.02,),
 
-
-                                                  Row(
-                                                    children: [
-                                                      const Icon(Icons.keyboard_arrow_up_rounded,color: Colors.black,size: 30,),
-                                                      Text('Start Time',style: TextStyles.textStyle18Bold.copyWith(color: ColorManager.black),),
-                                                    ],
-                                                  ),
-
-                                                  SizedBox(height: SizeConfig.height*.02,),
-
-                                                  EasyDateTimeLine(
-                                                    initialDate: DateTime.now(),
-                                                    onDateChange: (selectedDate) {
-                                                      PostsCubit.get(context).selectFilterStartDateTravel(value: selectedDate);
-                                                    },
-                                                  ),
-
-                                                  SizedBox(height:  SizeConfig.height * 0.02,),
-
-                                                  Row(
-                                                    children: [
-                                                      const Icon(Icons.keyboard_arrow_up_rounded,color: Colors.black,size: 30,),
-                                                      Text('End Time',style: TextStyles.textStyle18Bold.copyWith(color: ColorManager.black),),
-                                                    ],
-                                                  ),
-
-                                                  SizedBox(height: SizeConfig.height*.02,),
-
-                                                  EasyDateTimeLine(
-                                                    initialDate: DateTime.now(),
-                                                    onDateChange: (selectedDate) {
-                                                      PostsCubit.get(context).selectFilterEndDateTravel(value: selectedDate);
-                                                    },
-                                                  ),
+                                                  // Row(
+                                                  //   children: [
+                                                  //     const Icon(Icons.keyboard_arrow_up_rounded,color: Colors.black,size: 30,),
+                                                  //     Text('Start Time',style: TextStyles.textStyle18Bold.copyWith(color: ColorManager.black),),
+                                                  //   ],
+                                                  // ),
+                                                  //
+                                                  // SizedBox(height: SizeConfig.height*.02,),
+                                                  //
+                                                  // EasyDateTimeLine(
+                                                  //   initialDate: DateTime.now(),
+                                                  //   onDateChange: (selectedDate) {
+                                                  //     PostsCubit.get(context).selectFilterStartDateTravel(value: selectedDate);
+                                                  //   },
+                                                  // ),
+                                                  //
+                                                  // SizedBox(height:  SizeConfig.height * 0.02,),
+                                                  //
+                                                  // Row(
+                                                  //   children: [
+                                                  //     const Icon(Icons.keyboard_arrow_up_rounded,color: Colors.black,size: 30,),
+                                                  //     Text('End Time',style: TextStyles.textStyle18Bold.copyWith(color: ColorManager.black),),
+                                                  //   ],
+                                                  // ),
+                                                  //
+                                                  // SizedBox(height: SizeConfig.height*.02,),
+                                                  //
+                                                  // EasyDateTimeLine(
+                                                  //   initialDate: DateTime.now(),
+                                                  //   onDateChange: (selectedDate) {
+                                                  //     PostsCubit.get(context).selectFilterEndDateTravel(value: selectedDate);
+                                                  //   },
+                                                  // ),
 
                                                   SizedBox(height:  SizeConfig.height * 0.04,),
 
@@ -226,7 +250,21 @@ class PostsScreen extends StatelessWidget {
                                                     ),
                                                     child: DefaultButton(
                                                         buttonText: 'Filter',
-                                                        onPressed: (){},
+                                                        onPressed: (){
+                                                          cubit.filterPost(
+                                                              city: cubit.countryFilterSelected,
+                                                              context: context,
+                                                              duration: '${cubit.hoursFilterController.text}${cubit.mintusFilterController.text}',
+                                                              dateTime: cubit.dateTimeFilter,
+                                                          ).then((v){
+                                                            cubit.countryFilterSelected='';
+                                                            cubit.dateTimeFilter='';
+                                                            cubit.hoursFilterController.clear();
+                                                            cubit.mintusFilterController.clear();
+                                                            cubit.locationFilterSelected=List.generate(100, (i) => false);
+                                                            Navigator.pop(context);
+                                                          });
+                                                        },
                                                         buttonColor: ColorManager.primaryBlue,
                                                         large: true
                                                     ),

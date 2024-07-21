@@ -1,7 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:travel_system/core/constants/constants.dart';
+import 'package:travel_system/core/local/shared_preferences.dart';
+import 'package:travel_system/features/auth/presentaion/cubit/auth_cubit/auth_cubit.dart';
 import 'package:travel_system/features/posts/data/models/post_model.dart';
 import 'package:travel_system/features/posts/data/posts_repo_implement/posts_repo_implement.dart';
 import '../../../../new_posts/data/new_posts_repo_implement/new_posts_repo_implement.dart';
@@ -13,6 +16,10 @@ class PostsCubit extends Cubit<PostsStates>{
 
   static PostsCubit get(context) => BlocProvider.of(context);
 
+  List<bool> locationFilterSelected=List.generate(100, (i) => false);
+
+  var hoursFilterController=TextEditingController();
+  var mintusFilterController=TextEditingController();
 
   int currentIndex=0;
 
@@ -25,15 +32,26 @@ class PostsCubit extends Cubit<PostsStates>{
 
   List<PostModel> flights=[];
 
-  Future<void> getPosts() async {
+  Future<void> getPosts(context) async {
     flights=[];
     emit(GetPostsLoadingState());
 
     try{
       Constants.database.child('posts').onValue.listen((event) {
         flights=[];
+        print('Lenght of airCrafts: ${AuthCubit.get(context).userModel!.airCrafts.length}');
         event.snapshot.children.forEach((element) {
-          flights.add(PostModel.fromJson(element.value as Map));
+          var post=PostModel.fromJson(element.value as Map);
+          if(post.rank == UserDataFromStorage.userRank){
+            print('True');
+            for(int i=0;i<AuthCubit.get(context).userModel!.airCrafts.length;i++){
+              print('Post ${post.planeType} : ${AuthCubit.get(context).userModel!.airCrafts[i]}');
+              if(post.planeType == '${AuthCubit.get(context).userModel!.airCrafts[i]}'){
+                print('false');
+                flights.add(PostModel.fromJson(element.value as Map));
+              }
+            }
+          }
         });
         emit(GetPostsSuccessState());
       });
@@ -46,7 +64,7 @@ class PostsCubit extends Cubit<PostsStates>{
 
 
   String hoursFilterValue='';
-  String ?dateTimeFilter;
+  String dateTimeFilter='';
   String ?startDateFilter;
   String ?endDateFilter;
 
@@ -144,6 +162,16 @@ class PostsCubit extends Cubit<PostsStates>{
     emit(SetDropDownValueState());
   }
 
+  String countryFilterSelected='';
+  void changeCountryColor(int index,String country){
+
+    locationFilterSelected=List.generate(100, (i) => false);
+    locationFilterSelected[index]=true;
+    countryFilterSelected=country;
+    emit(ChangeCountryColorState());
+
+  }
+
   Future<void> createPosts(
       {required String iHaveFlight,
         required String uid,
@@ -186,5 +214,175 @@ class PostsCubit extends Cubit<PostsStates>{
 
   }
 
+  Future<void> filterPostByCity({
+   required String city  ,
+   context
+  })async{
+
+    emit(GetPostsLoadingState());
+    try{
+      Constants.database.child('posts').onValue.listen((event) {
+        flights=[];
+        event.snapshot.children.forEach((element) {
+          var post=PostModel.fromJson(element.value as Map);
+          if(post.rank == UserDataFromStorage.userRank){
+            for(int i=0;i<AuthCubit.get(context).userModel!.airCrafts.length;i++){
+              if(post.planeType == '${AuthCubit.get(context).userModel!.airCrafts[i]}'){
+                if(city == post.iHaveFlight){
+                  flights.add(PostModel.fromJson(element.value as Map));
+                }
+              }
+            }
+          }
+        });
+        emit(GetPostsSuccessState());
+      });
+    } catch(error){
+      print(error.toString());
+      emit(GetPostsErrorState());
+    }
+
+
+
+  }
+
+  Future<void> filterPostByDuration({
+    required String duration  ,
+    context
+  })async{
+
+    emit(GetPostsLoadingState());
+    try{
+      Constants.database.child('posts').onValue.listen((event) {
+        flights=[];
+        event.snapshot.children.forEach((element) {
+          var post=PostModel.fromJson(element.value as Map);
+          if(post.rank == UserDataFromStorage.userRank){
+            for(int i=0;i<AuthCubit.get(context).userModel!.airCrafts.length;i++){
+              if(post.planeType == '${AuthCubit.get(context).userModel!.airCrafts[i]}'){
+                if(duration == post.hours){
+                  flights.add(PostModel.fromJson(element.value as Map));
+                }
+              }
+            }
+          }
+        });
+        emit(GetPostsSuccessState());
+      });
+    } catch(error){
+      print(error.toString());
+      emit(GetPostsErrorState());
+    }
+
+
+
+  }
+
+
+  Future<void> filterPostByDateTime({
+    required String dateTime  ,
+    context
+  })async{
+
+    emit(GetPostsLoadingState());
+    try{
+      Constants.database.child('posts').onValue.listen((event) {
+        flights=[];
+        event.snapshot.children.forEach((element) {
+          var post=PostModel.fromJson(element.value as Map);
+          if(post.rank == UserDataFromStorage.userRank){
+            for(int i=0;i<AuthCubit.get(context).userModel!.airCrafts.length;i++){
+              if(post.planeType == '${AuthCubit.get(context).userModel!.airCrafts[i]}'){
+                if(dateTime == post.dateTime){
+                  flights.add(PostModel.fromJson(element.value as Map));
+                }
+              }
+            }
+          }
+        });
+        emit(GetPostsSuccessState());
+      });
+    } catch(error){
+      print(error.toString());
+      emit(GetPostsErrorState());
+    }
+
+
+
+  }
+
+  Future<void> filterPost({
+     String ?city  ,
+     String ?duration  ,
+     String ?dateTime  ,
+    context
+  })async{
+
+    emit(GetPostsLoadingState());
+    try{
+      Constants.database.child('posts').onValue.listen((event) {
+        flights=[];
+        event.snapshot.children.forEach((element) {
+          var post=PostModel.fromJson(element.value as Map);
+          if(post.rank == UserDataFromStorage.userRank){
+            for(int i=0;i<AuthCubit.get(context).userModel!.airCrafts.length;i++){
+              if(post.planeType == '${AuthCubit.get(context).userModel!.airCrafts[i]}'){
+                print('city : ${city} , duration : ${duration} , dateTime : ${dateTime}');
+                if(city !='' && duration !='' && dateTime !=''){
+                  print('1');
+                  if(city == post.iHaveFlight && duration == post.hours && dateTime == post.dateTime){
+                    flights.add(PostModel.fromJson(element.value as Map));
+                  }
+                }
+                else if(city !='' && duration !=''){
+                  print('2');
+                  if(city == post.iHaveFlight && duration == post.hours){
+                    flights.add(PostModel.fromJson(element.value as Map));
+                  }
+                }
+                else if(city !='' && dateTime !=''){
+                  print('3');
+                  if(city == post.iHaveFlight && dateTime == post.dateTime){
+                    flights.add(PostModel.fromJson(element.value as Map));
+                  }
+                }
+                else if(duration !='' && dateTime !=''){
+                  print('4');
+                  if(duration == post.hours && dateTime == post.dateTime){
+                    flights.add(PostModel.fromJson(element.value as Map));
+                  }
+                }
+                else if(city !=''){
+                  print('5');
+                  if(city == post.iHaveFlight){
+                    flights.add(PostModel.fromJson(element.value as Map));
+                  }
+                }
+                else if(duration !=''){
+                  print('6');
+                  if(duration == post.hours){
+                    flights.add(PostModel.fromJson(element.value as Map));
+                  }
+                }
+                else if(dateTime !=''){
+                  print('6');
+                  if(dateTime == post.dateTime){
+                    flights.add(PostModel.fromJson(element.value as Map));
+                  }
+                }
+              }
+            }
+          }
+        });
+        emit(GetPostsSuccessState());
+      });
+    } catch(error){
+      print(error.toString());
+      emit(GetPostsErrorState());
+    }
+
+
+
+  }
 
 }
