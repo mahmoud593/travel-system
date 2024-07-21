@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:travel_system/core/helper/friebase_api.dart';
 import 'package:travel_system/core/helper/material_navigation.dart';
 import 'package:travel_system/core/local/shared_preferences.dart';
 import 'package:travel_system/features/auth/presentaion/view/screens/login/login.dart';
+import 'package:travel_system/features/posts/data/models/post_model.dart';
 import 'package:travel_system/features/settings/data/edit_profile_repo/edit_profile_repo.dart';
 
 class EditProfileRepoImplement extends EditProfileRepo{
@@ -73,6 +75,59 @@ class EditProfileRepoImplement extends EditProfileRepo{
     customPushAndRemoveUntil(context, const LoginScreen());
     return Future.value();
   }
+
+  @override
+  Future<void> deleteAccount({required BuildContext context}) async {
+
+    User user = FirebaseAuth.instance.currentUser!;
+
+    if(user.uid.isNotEmpty){
+      user.delete();
+      await FirebaseApi.deleteCall(path: 'Users/${UserDataFromStorage.userId}');
+    }else{
+      debugPrint('Error when deleting account : user not found');
+    }
+
+    customPushAndRemoveUntil(context, const LoginScreen());
+    return Future.value();
+  }
+
+  @override
+  Future<List<PostModel>> getUserFavorites() async{
+    List<PostModel> posts = [];
+    await FirebaseApi.getCall(path: 'Users/${UserDataFromStorage.userId}/favorites').then((value) {
+      posts = value.values.map((e) => PostModel.fromJson(e)).toList();
+    }).catchError((error){
+      debugPrint("Error when get favorites : ${error.toString()}");
+    });
+
+    return posts;
+  }
+
+  @override
+  Future<List<PostModel>> getUserHistory() async{
+    List<PostModel> historyPosts = [];
+    FirebaseApi.getCall(path: "posts").then((value) {
+      List<PostModel> posts = value.values.map((e) => PostModel.fromJson(e)).toList();
+
+      debugPrint("getting history posts ==========> ${value.values.map((e) => PostModel.fromJson(e)).toList()}");
+
+      for (var element in posts) {
+        if(element.uid == UserDataFromStorage.userId){
+          historyPosts.add(element);
+        }
+      }
+      debugPrint("History posts ==========> ${historyPosts.length}");
+    }).catchError((error){
+      debugPrint("Error when get history : ${error.toString()}");
+    });
+
+
+    return historyPosts;
+  }
+  
+  
+  
 
 
 

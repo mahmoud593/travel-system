@@ -10,10 +10,13 @@ import 'package:travel_system/features/posts/presentation/view/posts_screen/widg
 import 'package:travel_system/styles/colors/color_manager.dart';
 
 class PostWidget extends StatelessWidget {
-  const PostWidget({super.key,required this.postModel});
+  final bool isFavorite;
+
+  const PostWidget(
+      {super.key, required this.postModel, required this.isFavorite});
 
   final PostModel postModel;
-  
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PostsCubit, PostsStates>(
@@ -21,7 +24,7 @@ class PostWidget extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.all(10.0),
           child: GestureDetector(
-            onTap: (){},
+            onTap: () {},
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -30,8 +33,9 @@ class PostWidget extends StatelessWidget {
                   height: SizeConfig.height * 0.25,
                   radiusBorder: 15,
                   colorBackground: ColorManager.primaryBlue.withOpacity(.6),
-                  leftChild:  TicketDataWidget(postModel: postModel,),
-                  rightChild: const TicketRightChildWidget(),
+                  leftChild: TicketDataWidget(postModel: postModel,),
+                  rightChild: TicketRightChildWidget(
+                    postModel: postModel, isFavorite: isFavorite,),
                 ),
 
               ],

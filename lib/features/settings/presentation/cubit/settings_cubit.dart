@@ -3,8 +3,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:travel_system/core/constants/constants.dart';
 import 'package:travel_system/core/local/shared_preferences.dart';
 import 'package:travel_system/features/auth/data/model/user_model.dart';
+import 'package:travel_system/features/posts/data/models/post_model.dart';
 import 'package:travel_system/features/settings/data/edit_profile_repo_implement/edit_profile_repo_implement.dart';
 import 'package:travel_system/features/settings/presentation/cubit/settings_state.dart';
 
@@ -132,6 +134,75 @@ class SettingsCubit extends Cubit<SettingsState> {
       debugPrint("Error when user logout ==========> ${error.toString()}");
       emit(UserSignOutErrorState());
     });
+  }
+
+
+
+  deleteUser({required BuildContext context}) async {
+    emit(DeleteUserLoadingState());
+    await EditProfileRepoImplement().deleteAccount(context: context).then((value){
+      UserDataFromStorage.removeAllDataFromStorage();
+      debugPrint("User deleted successfully");
+      emit(DeleteUserSuccessState());
+    }).catchError((error){
+      debugPrint("Error when deleting user ==========> ${error.toString()}");
+      emit(DeleteUserErrorState());
+    });
+  }
+
+
+  List<PostModel> favoritePosts = [];
+
+
+  getFavoritePosts() async {
+    favoritePosts = [];
+    emit(GetFavoritePostsLoadingState());
+    try{
+      Constants.database.child("Users/${UserDataFromStorage.userId}/favorites").onValue.listen((event) {
+        favoritePosts=[];
+        event.snapshot.children.forEach((element) {
+          favoritePosts.add(PostModel.fromJson(element.value as Map));
+        });
+        debugPrint("Favorite posts ==========> ${favoritePosts.toString()}");
+        emit(GetFavoritePostsSuccessState());
+      });
+    }catch(e){
+      debugPrint("Error when getting favorite posts ==========> ${e.toString()}");
+      emit(GetFavoritePostsErrorState());
+    }
+  }
+
+
+  bool checkIfPostIsFavorite({required String postId}) {
+    bool isFavorite = false;
+    for (var element in favoritePosts) {
+      if(element.postId == postId){
+        isFavorite = true;
+      }
+    }
+    debugPrint("post (${postId}) isFavorite ==========> ${isFavorite.toString()}");
+    emit(CheckIfIsFavorite());
+    return isFavorite;
+  }
+
+
+  List<PostModel> historyPosts = [];
+  getHistoryPosts() async {
+    historyPosts = [];
+    emit(GetHistoryPostsLoadingState());
+    try{
+      EditProfileRepoImplement().getUserHistory().then((value){
+        historyPosts = value;
+        debugPrint("History posts ==========> ${value.toString()}");
+        emit(GetHistoryPostsSuccessState());
+      }).catchError((error){
+        debugPrint("Error when getting History posts ==========> ${error.toString()}");
+        emit(GetHistoryPostsErrorState());
+      });
+    }catch(e){
+      debugPrint("Error when getting History posts ==========> ${e.toString()}");
+      emit(GetHistoryPostsErrorState());
+    }
   }
 
 

@@ -21,4 +21,11 @@ abstract class EditProfileRepo{
 
   Future <void> logout({required BuildContext context});
 
+
+  Future <void> deleteAccount({required BuildContext context});
+
+  Future <void> getUserHistory();
+
+  Future <void> getUserFavorites();
+
 }

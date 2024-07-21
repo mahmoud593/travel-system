@@ -18,4 +18,8 @@ abstract class PostsRepo{
   });
 
 
+  Future <void> addPostToFavorites({required PostModel postModel});
+  Future <void> deletePostFromFavorites({required PostModel postModel});
+
+
 }

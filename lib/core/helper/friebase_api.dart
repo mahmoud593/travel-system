@@ -50,6 +50,21 @@ class FirebaseApi {
     }
   }
 
+  // Put
+  static Future<void> putCall({required String path, required Map<String, dynamic> data}) async {
+    final url = Uri.parse('$baseUrl/$path.json');
+    try {
+      final response = await http.put(url, body: json.encode(data));
+      if (response.statusCode == 200) {
+        debugPrint("Put successful $url");
+      } else {
+        throw Exception('Failed to put data ${response.statusCode}');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   // Delete
   static Future<void> deleteCall({required String path}) async {
     final url = Uri.parse('$baseUrl/$path.json');

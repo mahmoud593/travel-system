@@ -24,3 +24,18 @@ class UserSignOutSuccessState extends SettingsState {}
 class UserSignOutErrorState extends SettingsState {}
 
 
+class DeleteUserLoadingState extends SettingsState {}
+class DeleteUserSuccessState extends SettingsState {}
+class DeleteUserErrorState extends SettingsState {}
+
+class GetFavoritePostsLoadingState extends SettingsState {}
+class GetFavoritePostsSuccessState extends SettingsState {}
+class GetFavoritePostsErrorState extends SettingsState {}
+
+class GetHistoryPostsLoadingState extends SettingsState {}
+class GetHistoryPostsSuccessState extends SettingsState {}
+class GetHistoryPostsErrorState extends SettingsState {}
+
+class CheckIfIsFavorite extends SettingsState {}
+
+

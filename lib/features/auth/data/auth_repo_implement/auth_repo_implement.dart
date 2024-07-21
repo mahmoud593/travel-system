@@ -13,6 +13,8 @@ class AuthRepoImplement extends AuthRepo{
       UserDataFromStorage.setUserId(value.user!.uid);
       UserDataFromStorage.setUserIsLogin(true);
       debugPrint("User Id ===========================> ${UserDataFromStorage.userId}");
+    }).catchError((error){
+      debugPrint(error.toString());
     });
   }
   @override

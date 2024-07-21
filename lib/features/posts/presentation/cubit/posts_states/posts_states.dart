@@ -21,3 +21,17 @@ class SetDropDownValueState extends PostsStates{}
 class CreateNewPostsLoadingState extends PostsStates{}
 class CreateNewPostsSuccessState extends PostsStates{}
 class CreateNewPostsErrorState extends PostsStates{}
+
+class AddPostToFavoriteSuccessState extends PostsStates{}
+class AddPostToFavoriteErrorState extends PostsStates{}
+
+class DeletePostFromFavoriteSuccessState extends PostsStates{}
+class DeletePostFromFavoriteErrorState extends PostsStates{}
+
+class GetFavoriteLoadingState extends PostsStates{}
+class GetFavoriteSuccessState extends PostsStates{}
+class GetFavoriteErrorState extends PostsStates{}
+
+
+
+class CheckIfIsFavorite extends PostsStates {}
