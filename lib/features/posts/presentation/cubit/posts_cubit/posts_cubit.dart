@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -39,14 +40,14 @@ class PostsCubit extends Cubit<PostsStates>{
     try{
       Constants.database.child('posts').onValue.listen((event) {
         flights=[];
-        print('Lenght of airCrafts: ${AuthCubit.get(context).userModel!.airCrafts.length}');
+        print('Lenght of airCrafts: ${UserDataFromStorage.userAirCrafts.length}');
         event.snapshot.children.forEach((element) {
           var post=PostModel.fromJson(element.value as Map);
           if(post.rank == UserDataFromStorage.userRank){
             print('True');
-            for(int i=0;i<AuthCubit.get(context).userModel!.airCrafts.length;i++){
-              print('Post ${post.planeType} : ${AuthCubit.get(context).userModel!.airCrafts[i]}');
-              if(post.planeType == '${AuthCubit.get(context).userModel!.airCrafts[i]}'){
+            for(int i=0;i<UserDataFromStorage.userAirCrafts.length;i++){
+              print('Post ${post.planeType} : ${UserDataFromStorage.userAirCrafts[i]}');
+              if(post.planeType == UserDataFromStorage.userAirCrafts[i]){
                 print('false');
                 flights.add(PostModel.fromJson(element.value as Map));
               }
@@ -215,8 +216,8 @@ class PostsCubit extends Cubit<PostsStates>{
   }
 
   Future<void> filterPostByCity({
-   required String city  ,
-   context
+    required String city  ,
+    context
   })async{
 
     emit(GetPostsLoadingState());
@@ -226,8 +227,8 @@ class PostsCubit extends Cubit<PostsStates>{
         event.snapshot.children.forEach((element) {
           var post=PostModel.fromJson(element.value as Map);
           if(post.rank == UserDataFromStorage.userRank){
-            for(int i=0;i<AuthCubit.get(context).userModel!.airCrafts.length;i++){
-              if(post.planeType == '${AuthCubit.get(context).userModel!.airCrafts[i]}'){
+            for(int i=0;i<UserDataFromStorage.userAirCrafts.length;i++){
+              if(post.planeType == '${UserDataFromStorage.userAirCrafts[i]}'){
                 if(city == post.iHaveFlight){
                   flights.add(PostModel.fromJson(element.value as Map));
                 }
@@ -258,8 +259,8 @@ class PostsCubit extends Cubit<PostsStates>{
         event.snapshot.children.forEach((element) {
           var post=PostModel.fromJson(element.value as Map);
           if(post.rank == UserDataFromStorage.userRank){
-            for(int i=0;i<AuthCubit.get(context).userModel!.airCrafts.length;i++){
-              if(post.planeType == '${AuthCubit.get(context).userModel!.airCrafts[i]}'){
+            for(int i=0;i<UserDataFromStorage.userAirCrafts.length;i++){
+              if(post.planeType == UserDataFromStorage.userAirCrafts[i]){
                 if(duration == post.hours){
                   flights.add(PostModel.fromJson(element.value as Map));
                 }
@@ -291,8 +292,8 @@ class PostsCubit extends Cubit<PostsStates>{
         event.snapshot.children.forEach((element) {
           var post=PostModel.fromJson(element.value as Map);
           if(post.rank == UserDataFromStorage.userRank){
-            for(int i=0;i<AuthCubit.get(context).userModel!.airCrafts.length;i++){
-              if(post.planeType == '${AuthCubit.get(context).userModel!.airCrafts[i]}'){
+            for(int i=0;i<UserDataFromStorage.userAirCrafts.length;i++){
+              if(post.planeType == UserDataFromStorage.userAirCrafts[i]){
                 if(dateTime == post.dateTime){
                   flights.add(PostModel.fromJson(element.value as Map));
                 }
@@ -312,9 +313,9 @@ class PostsCubit extends Cubit<PostsStates>{
   }
 
   Future<void> filterPost({
-     String ?city  ,
-     String ?duration  ,
-     String ?dateTime  ,
+    String ?city  ,
+    String ?duration  ,
+    String ?dateTime  ,
     context
   })async{
 
@@ -325,8 +326,8 @@ class PostsCubit extends Cubit<PostsStates>{
         event.snapshot.children.forEach((element) {
           var post=PostModel.fromJson(element.value as Map);
           if(post.rank == UserDataFromStorage.userRank){
-            for(int i=0;i<AuthCubit.get(context).userModel!.airCrafts.length;i++){
-              if(post.planeType == '${AuthCubit.get(context).userModel!.airCrafts[i]}'){
+            for(int i=0;i<UserDataFromStorage.userAirCrafts.length;i++){
+              if(post.planeType == UserDataFromStorage.userAirCrafts[i]){
                 print('city : ${city} , duration : ${duration} , dateTime : ${dateTime}');
                 if(city !='' && duration !='' && dateTime !=''){
                   print('1');

@@ -2,6 +2,7 @@ import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel_system/core/constants/constants.dart';
 import 'package:travel_system/core/helper/app_size_config.dart';
 import 'package:travel_system/core/helper/material_navigation.dart';
 import 'package:travel_system/core/local/shared_preferences.dart';
@@ -14,8 +15,9 @@ import 'package:travel_system/features/posts/presentation/view/posts_screen/widg
 import 'package:travel_system/styles/colors/color_manager.dart';
 import 'package:travel_system/styles/text_styles/text_styles.dart';
 import 'package:travel_system/styles/widets/default_button.dart';
+import 'package:travel_system/styles/widets/default_text_field.dart';
 
-class PostsScreen extends StatelessWidget {
+class PostsScreen extends StatefulWidget {
   const PostsScreen({super.key});
 
   @override
@@ -316,7 +318,7 @@ class _PostsScreenState extends State<PostsScreen> {
               Expanded(
                 child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) =>  PostWidget(postModel: cubit.flights[index]),
+                    itemBuilder: (context, index) =>  PostWidget(postModel: cubit.flights[index],isFavorite: false,),
                     separatorBuilder: (context, index) => const Divider(),
                     itemCount: cubit.flights.length
                 ),
