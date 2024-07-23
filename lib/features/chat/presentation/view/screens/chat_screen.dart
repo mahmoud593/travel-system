@@ -18,6 +18,11 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   @override
+  void initState() {
+ChatCubit.get(context).getMessages();
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<ChatCubit, ChatState>(
       listener: (context, state) {
@@ -28,9 +33,12 @@ class _ChatScreenState extends State<ChatScreen> {
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
             titleSpacing: 0.0,
+            bottomOpacity:  5,
             iconTheme:  const IconThemeData(
-              color: ColorManager.primaryBlue,
+              color: ColorManager.black,
             ),
             title: Row(
               children: [
@@ -64,24 +72,34 @@ class _ChatScreenState extends State<ChatScreen> {
             color: Colors.transparent,
             blur:  0.5,
             opacity:  0.5,
-            child: Column(
-              children: [
-                /// chat body
-                Expanded(
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return SenderMessage(messageContent: cubit.messages[index].message,);
-                    },
-                    separatorBuilder: (context, index) =>
-                        SizedBox(height: SizeConfig.height * 0.01),
-                    itemCount: cubit.messages.length,
+            child: Container(
+              height: double.infinity,
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/chat_bg.jpeg'),
+                  fit: BoxFit.fill,
+                )
+              ),
+              child: Column(
+                children: [
+                  /// chat body
+                  Expanded(
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return SenderMessage(messageContent: cubit.messages[index].message,);
+                      },
+                      separatorBuilder: (context, index) =>
+                          SizedBox(height: SizeConfig.height * 0.01),
+                      itemCount: cubit.messages.length,
+                    ),
                   ),
-                ),
 
-                /// send message text field with send button
-                SendMessageContainer(messageContent:cubit.messageController.text,),
-              ],
+                  /// send message text field with send button
+                  SendMessageContainer(messageContent:cubit.messageController.text,),
+                ],
+              ),
             ),
           ),
         );

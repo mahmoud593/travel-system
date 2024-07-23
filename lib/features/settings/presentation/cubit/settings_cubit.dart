@@ -17,8 +17,6 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   TextEditingController editProfileNameController = TextEditingController();
   TextEditingController editProfileEmailController = TextEditingController();
-  TextEditingController editProfileBaseController = TextEditingController();
-  TextEditingController editProfileRankController = TextEditingController();
   TextEditingController editProfilePayrollNumberController = TextEditingController();
   TextEditingController editProfilePhoneNumberController = TextEditingController();
 
@@ -53,8 +51,8 @@ class SettingsCubit extends Cubit<SettingsState> {
 
       editProfileNameController.text = userModel!.userName;
       editProfileEmailController.text = userModel!.email;
-      editProfileBaseController.text = userModel!.beasNumber;
-      editProfileRankController.text = userModel!.rank;
+      base = userModel!.beasNumber;
+      rank = userModel!.rank;
       editProfilePayrollNumberController.text = userModel!.payRollNumber;
       editProfilePhoneNumberController.text = userModel!.phoneNumber;
       emit(GetUserDataSuccessState());
@@ -88,8 +86,8 @@ class SettingsCubit extends Cubit<SettingsState> {
           email: editProfileEmailController.text,
           userName: editProfileNameController.text,
           phoneNumber: editProfilePhoneNumberController.text,
-          beasNumber: editProfileBaseController.text,
-          rank: editProfileRankController.text,
+          beasNumber: base!,
+          rank: rank!,
           payRollNumber: editProfilePayrollNumberController.text,
           airCrafts: userModel!.airCrafts,
           imageUrl: imageUrl
@@ -105,8 +103,8 @@ class SettingsCubit extends Cubit<SettingsState> {
             email: editProfileEmailController.text,
             userName: editProfileNameController.text,
             phoneNumber: editProfilePhoneNumberController.text,
-            beasNumber: editProfileBaseController.text,
-            rank: editProfileRankController.text,
+            beasNumber: base!,
+            rank: rank!,
             payRollNumber: editProfilePayrollNumberController.text,
             airCrafts: userModel!.airCrafts,
             imageUrl: userModel!.userImage
@@ -205,6 +203,21 @@ class SettingsCubit extends Cubit<SettingsState> {
     }
   }
 
+  String ?rank;
+  String ?base;
 
+  void setRankDropDownValue({
+    required value,
+  }){
+    rank=value;
+    emit(SetRankDropDownEditValueState());
+  }
+
+  void setBeasDropDownValue({
+    required value,
+  }){
+    base=value;
+    emit(SetBaseDropDownEditValueState());
+  }
 
 }

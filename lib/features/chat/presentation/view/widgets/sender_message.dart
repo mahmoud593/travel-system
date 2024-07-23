@@ -13,13 +13,13 @@ class MessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return "0840RkDvzjYURonub6lyoO00TpC3" == message.senderId
+    return UserDataFromStorage.userId == message.senderId
         ? SenderMessage(messageContent: message.message,)
         : const RecieverMessage();
   }
 }
 class SenderMessage extends StatelessWidget {
-  String messageContent = "";
+  String? messageContent;
 
     SenderMessage({required this.messageContent, super.key});
 
@@ -42,7 +42,7 @@ class SenderMessage extends StatelessWidget {
                 maxWidth: MediaQuery.of(context).size.width * 0.7,
               ),
               child: Text(
-                messageContent,
+                messageContent??"no message",
                 style: const TextStyle(color: Colors.white),
               ),
             ),

@@ -10,6 +10,7 @@ class Assets {
   static const String imagesAirplane2 = 'assets/images/airplane2.png';
   static const String imagesAirport = 'assets/images/airport.png';
   static const String imagesBoy = 'assets/images/boy.png';
+  static const String imagesChatBg = 'assets/images/chat_bg.jpeg';
   static const String imagesEndDate = 'assets/images/end_date.png';
   static const String imagesHours = 'assets/images/hours.png';
   static const String imagesIHave = 'assets/images/i_have.png';

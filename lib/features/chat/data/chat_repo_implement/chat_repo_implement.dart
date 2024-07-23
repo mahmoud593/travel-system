@@ -19,7 +19,7 @@ class ChatRepoImplement extends ChatRepo {
     DatabaseReference databaseReference = Constants.database
         .child('Users')
         // .child(UserDataFromStorage.userId).child('Messages')
-        .child('0840RkDvzjYURonub6lyoO00TpC3')
+        .child(UserDataFromStorage.userId)
         .child('Messages').push();
     MessageModel messageModel = MessageModel(
         message: message,
@@ -36,7 +36,7 @@ class ChatRepoImplement extends ChatRepo {
   Future<List<MessageModel>> getMessages() async {
     List<MessageModel> messages = [];
     DatabaseReference databaseReference=  Constants.database.child('Users')
-        .child('0840RkDvzjYURonub6lyoO00TpC3')
+        .child(UserDataFromStorage.userId)
         .child('Messages');
    databaseReference.onValue.listen((event)  {
           debugPrint("valueee ${event.snapshot.value}");

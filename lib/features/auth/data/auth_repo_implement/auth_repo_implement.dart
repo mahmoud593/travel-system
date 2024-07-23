@@ -34,7 +34,28 @@ class AuthRepoImplement extends AuthRepo{
       email: email,
       password: password,
     ).then((value) {
-      UserDataFromStorage.setUserId(value.user!.uid);
+     UserModel userModel = UserModel(
+          uid: value.user!.uid,
+          email: email,
+          userName: userName,
+          phoneNumber: phoneNumber,
+          beasNumber: beasNumber,
+          rank: rank,
+          payRollNumber: payRollNumber,
+          userImage: userImage??"https://firebasestorage.googleapis.com/v0/b/airline-system-4e527.appspot.com/o/plane.png?alt=media&token=df606f6d-7628-4385-bec4-24b31c08c7bf",
+          airCrafts: airCrafts
+      );
+      UserDataFromStorage.setUserId(userModel.uid);
+      UserDataFromStorage.setUserEmail(userModel.email);
+      UserDataFromStorage.setUserName(userModel.userName);
+      UserDataFromStorage.setUserPhone(userModel.phoneNumber);
+      UserDataFromStorage.setUserBaseNumber(userModel.beasNumber);
+      UserDataFromStorage.setUserRank(userModel.rank);
+      UserDataFromStorage.setUserPayrollNumber(userModel.payRollNumber);
+      UserDataFromStorage.setUserAirCrafts(userModel.airCrafts!);
+      UserDataFromStorage.setuserPersonalImage(userModel.userImage);
+      UserDataFromStorage.setUserId(userModel!.uid);
+
       UserDataFromStorage.setUserIsLogin(true);
     });
   }
