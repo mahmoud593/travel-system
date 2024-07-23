@@ -26,3 +26,6 @@ final class UploadUserDataFailure extends AuthState {}
 final class GetUserLoading extends AuthState {}
 final class GetUserSuccess extends AuthState {}
 final class GetUserFailure extends AuthState {}
+
+final class SetRankDropDownValueState extends AuthState {}
+final class SetBaseDropDownValueState extends AuthState {}

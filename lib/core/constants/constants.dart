@@ -66,4 +66,17 @@ class Constants{
     '330',
     '320'
   ];
+
+  static List<String> baseList=[
+    'Cairo',
+    'London',
+    'Qatar',
+    'Oman',
+  ];
+  static List<String> rankList=[
+    'Captain',
+    'First Officer',
+    'Second Officer',
+    'Flight Assistant',
+  ];
 }

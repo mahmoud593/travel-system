@@ -22,8 +22,6 @@ class AuthCubit extends Cubit<AuthState> {
   TextEditingController registerEmailController = TextEditingController();
   TextEditingController registerPasswordController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController peasController = TextEditingController();
-  TextEditingController rankController = TextEditingController();
   TextEditingController payrollNumberController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
 
@@ -207,6 +205,22 @@ debugPrint("user Aircrafts ===========================> ${UserDataFromStorage.us
     }
   }
 
+  String ?rank;
+  String ?base;
+
+  void setRankDropDownValue({
+    required value,
+  }){
+    rank=value;
+    emit(SetRankDropDownValueState());
+  }
+
+  void setBeasDropDownValue({
+    required value,
+  }){
+    base=value;
+    emit(SetBaseDropDownValueState());
+  }
 
 }
 

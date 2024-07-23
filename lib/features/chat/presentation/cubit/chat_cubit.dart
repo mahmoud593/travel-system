@@ -32,7 +32,9 @@ class ChatCubit extends Cubit<ChatState> {
        userImage: userImage,
        time: time,
        dateTime: dateTime
-     );
+     ).then((value){
+       getMessages();
+     });
      debugPrint("====================> Message Uploaded");
      emit(SendMessageSuccess());
    } catch(error){
@@ -46,8 +48,9 @@ class ChatCubit extends Cubit<ChatState> {
 
   Future<void> getMessages() async {
     try {
+      messages = [];
       emit(GetMessageLoading());
-      await ChatRepoImplement().getMessages().then((value)async {
+      await ChatRepoImplement().getMessages().then((value){
         debugPrint("==================== value  $value");
         messages = value;
       });

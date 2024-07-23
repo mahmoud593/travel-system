@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel_system/core/constants/constants.dart';
 import 'package:travel_system/core/helper/app_size_config.dart';
 import 'package:travel_system/core/helper/material_navigation.dart';
 import 'package:travel_system/features/auth/presentaion/cubit/auth_cubit/auth_cubit.dart';
@@ -17,7 +18,15 @@ class RegisterForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is RegisterSuccess){
+          AuthCubit.get(context).registerPasswordController.clear();
+          AuthCubit.get(context).registerEmailController.clear();
+          AuthCubit.get(context).userNameController.clear();
+          AuthCubit.get(context).phoneNumberController.clear();
+          AuthCubit.get(context).payrollNumberController.clear();
+        }
+      },
       builder: (context, state) {
         var cubit = AuthCubit.get(context);
         return Form(
@@ -94,34 +103,67 @@ class RegisterForm extends StatelessWidget {
               ),
 
               /// Beas number
-              AuthTextFormField(
-                hintText: "Beas Number",
-                controller: cubit.peasController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Beas number is required";
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.next,
+              Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF7F8FA),
+                  borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).height*0.01),
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    hint: Text('Beas',style: TextStyles.textStyle18Regular
+                        .copyWith(color: ColorManager.darkGrey.withOpacity(.5)),),
+                    icon: const Icon(Icons.arrow_drop_down),
+                    elevation: 5,
+                    padding: EdgeInsets.only(left: SizeConfig.height * 0.01,),
+                    dropdownColor: Colors.white,
+                    value:cubit.base,
+                    style: TextStyles.textStyle18Regular.copyWith(color: ColorManager.darkGrey.withOpacity(.5)),
+                    onChanged: (String? newValue) {
+                      cubit.setBeasDropDownValue(value: newValue);
+                    },
+                    items: Constants.baseList
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value, style: TextStyles.textStyle18Regular.copyWith(color: ColorManager.black.withOpacity(.5)),),
+                      );
+                    }).toList(),
+                  ),
+                ),
               ),
+
               SizedBox(
                 height: SizeConfig.height * .01,
               ),
 
               /// rank
-              AuthTextFormField(
-                hintText: "Rank",
-                controller: cubit.rankController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Rank is required";
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.text,
-                textInputAction: TextInputAction.next,
+              Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF7F8FA),
+                  borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).height*0.01),
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    hint: Text('Rank',style: TextStyles.textStyle18Regular
+                        .copyWith(color: ColorManager.darkGrey.withOpacity(.5)),),
+                    icon: const Icon(Icons.arrow_drop_down),
+                    elevation: 5,
+                    padding: EdgeInsets.only(left: SizeConfig.height * 0.01,),
+                    dropdownColor: Colors.white,
+                    value:cubit.rank,
+                      style: TextStyles.textStyle18Regular.copyWith(color: ColorManager.darkGrey.withOpacity(.5)),
+                    onChanged: (String? newValue) {
+                      cubit.setRankDropDownValue(value: newValue);
+                    },
+                    items: Constants.rankList
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value, style: TextStyles.textStyle18Regular.copyWith(color: ColorManager.black.withOpacity(.5)),),
+                      );
+                    }).toList(),
+                  ),
+                ),
               ),
               SizedBox(
                 height: SizeConfig.height * .01,
@@ -177,18 +219,10 @@ class RegisterForm extends StatelessWidget {
                           password: cubit.registerPasswordController.text,
                           userName: cubit.userNameController.text,
                           phoneNumber: cubit.phoneNumberController.text,
-                          beasNumber: cubit.peasController.text,
-                          rank: cubit.rankController.text,
+                          beasNumber: cubit.base!,
+                          rank: cubit.rank!,
                           payRollNumber: cubit.payrollNumberController.text,
-                          airCrafts: cubit.selectedAirCrafts).then((value) {
-                        cubit.registerPasswordController.clear();
-                        cubit.registerEmailController.clear();
-                        cubit.userNameController.clear();
-                        cubit.phoneNumberController.clear();
-                        cubit.peasController.clear();
-                        cubit.rankController.clear();
-                        cubit.payrollNumberController.clear();
-                          });
+                          airCrafts: cubit.selectedAirCrafts);
                     }
                   },
                   buttonColor: ColorManager.primaryBlue,

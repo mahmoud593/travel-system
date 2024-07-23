@@ -47,7 +47,7 @@ class _SendMessageContainerState extends State<SendMessageContainer> {
                           cubit.uploadMessageToFireBase(
                               messageContent: value.trim(),
                               senderId: UserDataFromStorage.userId,
-                              userName: "userName",
+                              userName: UserDataFromStorage.userName,
                               userImage: "userImage",
                               time: intl.DateFormat('hh:mm a')
                                   .format(DateTime.now()),

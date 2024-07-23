@@ -38,4 +38,7 @@ class GetHistoryPostsErrorState extends SettingsState {}
 
 class CheckIfIsFavorite extends SettingsState {}
 
+class SetRankDropDownEditValueState extends SettingsState {}
+class SetBaseDropDownEditValueState extends SettingsState {}
+
 
