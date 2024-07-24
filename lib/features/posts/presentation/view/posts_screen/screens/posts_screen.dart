@@ -318,7 +318,7 @@ class _PostsScreenState extends State<PostsScreen> {
               Expanded(
                 child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) =>  PostWidget(postModel: cubit.flights[index],isFavorite: false,),
+                    itemBuilder: (context, index) =>  PostWidget(postModel: cubit.flights[index], isFavorite: false,),
                     separatorBuilder: (context, index) => const Divider(),
                     itemCount: cubit.flights.length
                 ),

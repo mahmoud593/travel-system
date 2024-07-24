@@ -40,8 +40,8 @@ class PostsCubit extends Cubit<PostsStates>{
     try{
       Constants.database.child('posts').onValue.listen((event) {
         flights=[];
-        print('Lenght of airCrafts: ${UserDataFromStorage.userAirCrafts.length}');
         event.snapshot.children.forEach((element) {
+          print('Length : ${event.snapshot.children.length}');
           var post=PostModel.fromJson(element.value as Map);
           if(post.rank == UserDataFromStorage.userRank){
             print('True');
@@ -215,107 +215,10 @@ class PostsCubit extends Cubit<PostsStates>{
 
   }
 
-  Future<void> filterPostByCity({
-    required String city  ,
-    context
-  })async{
-
-    emit(GetPostsLoadingState());
-    try{
-      Constants.database.child('posts').onValue.listen((event) {
-        flights=[];
-        event.snapshot.children.forEach((element) {
-          var post=PostModel.fromJson(element.value as Map);
-          if(post.rank == UserDataFromStorage.userRank){
-            for(int i=0;i<UserDataFromStorage.userAirCrafts.length;i++){
-              if(post.planeType == '${UserDataFromStorage.userAirCrafts[i]}'){
-                if(city == post.iHaveFlight){
-                  flights.add(PostModel.fromJson(element.value as Map));
-                }
-              }
-            }
-          }
-        });
-        emit(GetPostsSuccessState());
-      });
-    } catch(error){
-      print(error.toString());
-      emit(GetPostsErrorState());
-    }
-
-
-
-  }
-
-  Future<void> filterPostByDuration({
-    required String duration  ,
-    context
-  })async{
-
-    emit(GetPostsLoadingState());
-    try{
-      Constants.database.child('posts').onValue.listen((event) {
-        flights=[];
-        event.snapshot.children.forEach((element) {
-          var post=PostModel.fromJson(element.value as Map);
-          if(post.rank == UserDataFromStorage.userRank){
-            for(int i=0;i<UserDataFromStorage.userAirCrafts.length;i++){
-              if(post.planeType == UserDataFromStorage.userAirCrafts[i]){
-                if(duration == post.hours){
-                  flights.add(PostModel.fromJson(element.value as Map));
-                }
-              }
-            }
-          }
-        });
-        emit(GetPostsSuccessState());
-      });
-    } catch(error){
-      print(error.toString());
-      emit(GetPostsErrorState());
-    }
-
-
-
-  }
-
-
-  Future<void> filterPostByDateTime({
-    required String dateTime  ,
-    context
-  })async{
-
-    emit(GetPostsLoadingState());
-    try{
-      Constants.database.child('posts').onValue.listen((event) {
-        flights=[];
-        event.snapshot.children.forEach((element) {
-          var post=PostModel.fromJson(element.value as Map);
-          if(post.rank == UserDataFromStorage.userRank){
-            for(int i=0;i<UserDataFromStorage.userAirCrafts.length;i++){
-              if(post.planeType == UserDataFromStorage.userAirCrafts[i]){
-                if(dateTime == post.dateTime){
-                  flights.add(PostModel.fromJson(element.value as Map));
-                }
-              }
-            }
-          }
-        });
-        emit(GetPostsSuccessState());
-      });
-    } catch(error){
-      print(error.toString());
-      emit(GetPostsErrorState());
-    }
-
-
-
-  }
-
   Future<void> filterPost({
-    String ?city  ,
-    String ?duration  ,
-    String ?dateTime  ,
+     String ?city  ,
+     String ?duration  ,
+     String ?dateTime  ,
     context
   })async{
 
