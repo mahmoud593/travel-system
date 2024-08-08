@@ -10,10 +10,11 @@ abstract class PostsRepo{
     required String startTime,
     required String endTime,
     required String hours,
-    required String willToFly,
+    required List<String> willToFly,
     required String rank,
     required String planeType,
     required String iWantFlight,
+    required String phoneNumber,
     required String userName
   });
 

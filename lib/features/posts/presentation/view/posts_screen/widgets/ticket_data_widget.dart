@@ -43,10 +43,10 @@ class TicketDataWidget extends StatelessWidget {
                     TicketRowDateWidget(category: 'E-Time',value: postModel.endTime,),
 
                     /// Hours
-                    TicketRowDateWidget(category: 'Hours',value: postModel.hours,),
+                    // TicketRowDateWidget(category: 'Hours',value: postModel.,),
 
                     /// Willing to fly
-                    TicketRowDateWidget(category: 'W-Fly',value:postModel.willToFly,),
+                    // TicketRowDateWidget(category: 'W-Fly',value:postModel.,),
 
                   ],
                 ),

@@ -5,10 +5,15 @@ class PostModel{
   final String dateTime;
   final String startTime;
   final String endTime;
-  final String hours;
-  final String willToFly;
+  final String iWantHours;
+  final String iHaveHours;
+  final String iHaveLav;
+  final String iWantLav;
+  final String visa;
+  final List<String> willToFly;
   final String rank;
   final String planeType;
+  final String phoneNumber;
   final String iWantFlight;
   final String userName;
 
@@ -18,12 +23,17 @@ class PostModel{
     required this.dateTime,
     required this.startTime,
     required this.endTime,
-    required this.hours,
+    required this.iWantHours,
+    required this.iHaveHours,
+    required this.iHaveLav,
+    required this.iWantLav,
+    required this.visa,
     required this.willToFly,
     required this.rank,
     required this.planeType,
     required this.iWantFlight,
     required this.postId,
+    required this.phoneNumber,
     required this.userName
   });
   PostModel.fromJson(Map<dynamic, dynamic> json)
@@ -32,13 +42,21 @@ class PostModel{
     iHaveFlight: json['iHaveFlight'],
     dateTime: json['dateTime'],
     startTime: json['startTime'],
+    iWantHours: json['iWantHours'],
+    iHaveHours: json['iHaveHours'],
+    iWantLav: json['iWantLav'],
+    iHaveLav: json['iHaveLav'],
+    visa: json['visa'],
     endTime: json['endTime'],
-    hours: json['hours'],
-    willToFly: json['willToFly'],
+    willToFly: (json['willToFly'] as List<dynamic>?)
+        ?.map((item) => item.toString())
+        .toList() ??
+        [],
     rank: json['rank'],
     planeType: json['planeType'],
     iWantFlight: json['iWantFlight'],
     postId: json['postId'],
+    phoneNumber: json['phoneNumber'],
     userName: json['userName'],
   );
 
@@ -48,10 +66,15 @@ class PostModel{
     'dateTime' : dateTime,
     'startTime' : startTime,
     'endTime' : endTime,
-    'hours' : hours,
+    'iWantHours' : iWantHours,
+    'iHaveHours' : iHaveHours,
+    'iWantLav' : iWantLav,
+    'iHaveLav' : iHaveLav,
+    'visa' : visa,
     'willToFly' : willToFly,
     'postId' : postId,
     'rank' : rank,
+    'phoneNumber' : phoneNumber,
     'planeType' : planeType,
     'iWantFlight' : iWantFlight,
     'userName' : userName,

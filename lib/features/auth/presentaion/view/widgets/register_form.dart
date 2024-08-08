@@ -90,9 +90,10 @@ class RegisterForm extends StatelessWidget {
                 hintText: "Phone Number",
                 controller: cubit.phoneNumberController,
                 validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Phone number is required";
+                  if(!value!.startsWith('+')){
+                    return "please enter your phone number start with +";
                   }
+
                   return null;
                 },
                 keyboardType: TextInputType.phone,

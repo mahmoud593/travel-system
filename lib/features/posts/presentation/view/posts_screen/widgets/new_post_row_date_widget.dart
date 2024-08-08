@@ -32,8 +32,10 @@ class NewPostRowDateWidget extends StatelessWidget {
           ],
         ),
 
+        description==''?Container():
         SizedBox(height: SizeConfig.height * 0.01,),
 
+        description==''?Container():
         Text(description,style: TextStyles.textStyle18Medium.copyWith(
             color: Colors.black
         ),),

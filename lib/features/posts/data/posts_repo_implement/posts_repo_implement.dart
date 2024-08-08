@@ -21,32 +21,34 @@ class PostsRepoImplement implements PostsRepo{
         required String startTime,
         required String endTime,
         required String hours,
-        required String willToFly,
+        required List<String> willToFly,
         required String rank,
         required String planeType,
         required String iWantFlight,
+        required String phoneNumber,
         required String userName
       }
       ) async{
 
     DatabaseReference  databaseReference = Constants.database.child('posts').push();
 
-    PostModel postModel = PostModel(
-        iHaveFlight: iHaveFlight,
-        uid: uid,
-        dateTime: dateTime,
-        startTime: startTime,
-        endTime: endTime,
-        hours: hours,
-        willToFly: willToFly,
-        rank: rank,
-        planeType: planeType,
-        iWantFlight: iWantFlight,
-        postId: databaseReference.key!,
-        userName: userName
-    );
+    // PostModel postModel = PostModel(
+    //     iHaveFlight: iHaveFlight,
+    //     uid: uid,
+    //     dateTime: dateTime,
+    //     phoneNumber: phoneNumber,
+    //     startTime: startTime,
+    //     endTime: endTime,
+    //     iWantHours: hours,
+    //     willToFly: willToFly,
+    //     rank: rank,
+    //     planeType: planeType,
+    //     iWantFlight: iWantFlight,
+    //     postId: databaseReference.key!,
+    //     userName: userName
+    // );
 
-    databaseReference.set(postModel.toJson());
+    // databaseReference.set(postModel.toJson());
 
   }
 

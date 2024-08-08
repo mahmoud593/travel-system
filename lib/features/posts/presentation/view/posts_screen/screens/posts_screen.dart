@@ -7,6 +7,7 @@ import 'package:travel_system/core/helper/app_size_config.dart';
 import 'package:travel_system/core/helper/material_navigation.dart';
 import 'package:travel_system/core/local/shared_preferences.dart';
 import 'package:travel_system/features/new_posts/presentation/view/new_posts_screen/screens/new_posts_screen.dart';
+import 'package:travel_system/features/post_info/presentation/screens/post_details.dart';
 import 'package:travel_system/features/posts/data/models/post_model.dart';
 import 'package:travel_system/features/posts/presentation/cubit/posts_cubit/posts_cubit.dart';
 import 'package:travel_system/features/posts/presentation/cubit/posts_states/posts_states.dart';

@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:travel_system/core/constants/constants.dart';
 import 'package:travel_system/core/helper/app_size_config.dart';
 import 'package:travel_system/core/helper/material_navigation.dart';
@@ -145,11 +147,49 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
 
                                 SizedBox(height:  SizeConfig.height * 0.03,),
 
+                                const NewPostRowDateWidget(icon: AssetsManager.iHaveImage,text: 'I Have',description: 'Choose location of your flight that you have',),
+
+                                SizedBox(height:  SizeConfig.height * 0.03,),
+
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: ListTile(
+                                        title: const Text('Layover'),
+                                        leading: Radio<int>(
+                                          value: 1,
+                                          activeColor: ColorManager.primaryBlue,
+                                          groupValue: 0,
+                                          onChanged: (value) {
+                                            // cubit.setSelectedValue(value!);
+                                          },
+                                        ),
+                                      ),
+                                    ),
+
+                                    Expanded(
+                                      child: ListTile(
+                                        title: const Text('Round Trip'),
+                                        leading: Radio<int>(
+                                          value: 2,
+                                          activeColor: ColorManager.primaryBlue,
+                                          groupValue: 0,
+                                          onChanged: (value) {
+                                            // cubit.setSelectedValue(value!);
+                                          },
+                                        ),
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+
+                                SizedBox(height:  SizeConfig.height * 0.03,),
+
                                 /// Hours
-                                const NewPostRowDateWidget(icon: AssetsManager.hoursImage,text: 'Hours',description: 'Enter hours of flight that you have',),
+                                const NewPostRowDateWidget(icon: AssetsManager.hoursImage,text: 'Layover hours',description: 'Enter hours of flight that you have',),
 
                                 SizedBox(height:  SizeConfig.height * 0.01,),
-
 
                                 Row(
                                   children: [
@@ -165,48 +205,61 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
                                       )
                                     ),
 
-                                    SizedBox(width:  SizeConfig.height * 0.02,),
+                                    SizedBox(width:  SizeConfig.height * 0.01,),
 
-                                    Expanded(
-                                        child: DefaultTextField(
-                                            controller: minutesController,
-                                            hintText: 'Minutes',
-                                            validator: (value){},
-                                            keyboardType: TextInputType.number,
-                                            textInputAction: TextInputAction.done,
-                                            fillColor: Colors.white
-                                        )
-                                    ),
+                                    Text('hr',style: TextStyles.textStyle18Regular),
 
                                   ],
                                 ),
 
                                 SizedBox(height:  SizeConfig.height * 0.03,),
 
-                                /// Date Time
-                                const NewPostRowDateWidget(icon: AssetsManager.travelDateImage,text: 'Date Time',description: 'Choose date time of flight that you have',),
-
-                                SizedBox(height:  SizeConfig.height * 0.01,),
-
-                                EasyDateTimeLine(
-                                  initialDate: DateTime.now(),
-                                  onDateChange: (selectedDate) {
-                                    cubit.selectDateOfTravel(value: selectedDate);
-                                  },
-                                ),
-
-                                SizedBox(height:  SizeConfig.height * 0.03,),
+                                // /// Date Time
+                                // const NewPostRowDateWidget(icon: AssetsManager.travelDateImage,text: 'Date Time',description: 'Choose date time of flight that you have',),
+                                //
+                                // SizedBox(height:  SizeConfig.height * 0.01,),
+                                //
+                                // EasyDateTimeLine(
+                                //   initialDate: DateTime.now(),
+                                //   onDateChange: (selectedDate) {
+                                //     cubit.selectDateOfTravel(value: selectedDate);
+                                //   },
+                                // ),
+                                //
+                                // SizedBox(height:  SizeConfig.height * 0.03,),
 
                                 /// Report Start Time
                                 const NewPostRowDateWidget(icon: AssetsManager.startDateImage,text: 'Report Start Time',description: 'Choose date time of report start time',),
 
                                 SizedBox(height:  SizeConfig.height * 0.01,),
 
-                                EasyDateTimeLine(
-                                  initialDate: DateTime.now(),
-                                  onDateChange: (selectedDate) {
-                                    cubit.selectStartDateTravel(value: selectedDate);
-                                  },
+                                // EasyDateTimeLine(
+                                //   initialDate: DateTime.now(),
+                                //   onDateChange: (selectedDate) {
+                                //     cubit.selectStartDateTravel(value: selectedDate);
+                                //   },
+                                // ),
+
+                                ElevatedButton(
+                                  onPressed: () {
+
+                                       DatePicker.showDatePicker(
+                                        context,
+                                        dateFormat: 'dd MMMM yyyy HH:mm',
+                                        initialDateTime: DateTime.now(),
+                                        minDateTime: DateTime(2000),
+                                        maxDateTime: DateTime(3000),
+                                        onMonthChangeStartWithFirstDate: true,
+                                        onConfirm: (dateTime, List<int> index) {
+                                          DateTime selectdate = dateTime;
+                                          final selIOS = DateFormat('dd-MMM-yyyy - HH:mm').format(selectdate);
+                                          print(selIOS);
+                                          cubit.selectStartDateTravel(value: selIOS);
+                                        },
+                                      );
+
+                                    },
+                                  child: Text('Pick Date-Time'),
                                 ),
 
                                 SizedBox(height:  SizeConfig.height * 0.03,),
@@ -216,11 +269,33 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
 
                                 SizedBox(height:  SizeConfig.height * 0.01,),
 
-                                EasyDateTimeLine(
-                                  initialDate: DateTime.now(),
-                                  onDateChange: (selectedDate) {
-                                    cubit.selectEndDateTravel(value: selectedDate);
+                                // EasyDateTimeLine(
+                                //   initialDate: DateTime.now(),
+                                //   onDateChange: (selectedDate) {
+                                //     cubit.selectEndDateTravel(value: selectedDate);
+                                //   },
+                                // ),
+
+                                ElevatedButton(
+                                  onPressed: () {
+
+                                    DatePicker.showDatePicker(
+                                      context,
+                                      dateFormat: 'dd MMMM yyyy HH:mm',
+                                      initialDateTime: DateTime.now(),
+                                      minDateTime: DateTime(2000),
+                                      maxDateTime: DateTime(3000),
+                                      onMonthChangeStartWithFirstDate: true,
+                                      onConfirm: (dateTime, List<int> index) {
+                                        DateTime selectdate = dateTime;
+                                        final selIOS = DateFormat('dd-MMM-yyyy - HH:mm').format(selectdate);
+                                        print(selIOS);
+                                        cubit.selectEndDateTravel(value: selIOS);
+                                      },
+                                    );
+
                                   },
+                                  child: Text('Pick Date-Time'),
                                 ),
 
                                 SizedBox(height:  SizeConfig.height * 0.03,),
@@ -269,12 +344,27 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
 
                                 SizedBox(height:  SizeConfig.height * 0.01,),
 
-                                EasyDateTimeLine(
-                                  initialDate: DateTime.now(),
-                                  onDateChange: (selectedDate) {
-                                    cubit.selectWillToFlyTravel(value: selectedDate);
+                                SfDateRangePicker(
+                                  showNavigationArrow: true,
+                                  showTodayButton: true,
+                                  selectionRadius: 20,
+                                  todayHighlightColor: ColorManager.primaryBlue,
+                                  selectionColor: ColorManager.primaryBlue,
+                                  onSelectionChanged: (v){
+                                    setState(() {
+                                      cubit.setWillToFlyDaysTravel(value: v.value.toString());
+                                    });
                                   },
+                                  selectionMode: DateRangePickerSelectionMode.multiple,
+
                                 ),
+
+                                // EasyDateTimeLine(
+                                //   initialDate: DateTime.now(),
+                                //   onDateChange: (selectedDate) {
+                                //     cubit.selectWillToFlyTravel(value: selectedDate);
+                                //   },
+                                // ),
 
                                 SizedBox(height:  SizeConfig.height * 0.03,),
 
@@ -316,7 +406,117 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
                                   ),
                                 ),
 
-                                SizedBox(height:  SizeConfig.height * 0.05,),
+
+                                SizedBox(height:  SizeConfig.height * 0.03,),
+
+
+                                const NewPostRowDateWidget(icon: AssetsManager.iHaveImage,text: 'I Have',description: 'Choose location of your flight that you have',),
+
+                                SizedBox(height:  SizeConfig.height * 0.03,),
+
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: ListTile(
+                                        title: const Text('Layover'),
+                                        leading: Radio<int>(
+                                          value: 1,
+                                          activeColor: ColorManager.primaryBlue,
+                                          groupValue: 0,
+                                          onChanged: (value) {
+                                            // cubit.setSelectedValue(value!);
+                                          },
+                                        ),
+                                      ),
+                                    ),
+
+                                    Expanded(
+                                      child: ListTile(
+                                        title: const Text('Round Trip'),
+                                        leading: Radio<int>(
+                                          value: 2,
+                                          activeColor: ColorManager.primaryBlue,
+                                          groupValue: 0,
+                                          onChanged: (value) {
+                                            // cubit.setSelectedValue(value!);
+                                          },
+                                        ),
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+
+                                SizedBox(height:  SizeConfig.height * 0.03,),
+
+
+                                /// Hours
+                                const NewPostRowDateWidget(icon: AssetsManager.hoursImage,text: 'Layover hours',description: 'Enter hours of flight that you have',),
+
+                                SizedBox(height:  SizeConfig.height * 0.01,),
+
+                                Row(
+                                  children: [
+
+                                    Expanded(
+                                        child: DefaultTextField(
+                                            controller: hoursController,
+                                            hintText: 'Hours',
+                                            validator: (value){},
+                                            keyboardType: TextInputType.number,
+                                            textInputAction: TextInputAction.done,
+                                            fillColor: Colors.white
+                                        )
+                                    ),
+
+                                    SizedBox(width:  SizeConfig.height * 0.01,),
+
+                                    Text('hr',style: TextStyles.textStyle18Regular),
+
+                                  ],
+                                ),
+
+                                SizedBox(height:  SizeConfig.height * 0.03,),
+
+
+                                const NewPostRowDateWidget(icon: AssetsManager.iHaveImage,text: 'Visa',description: 'Choose location of your flight that you have',),
+
+                                SizedBox(height:  SizeConfig.height * 0.03,),
+
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: ListTile(
+                                        title: const Text('CHINA'),
+                                        leading: Radio<int>(
+                                          value: 1,
+                                          activeColor: ColorManager.primaryBlue,
+                                          groupValue: 0,
+                                          onChanged: (value) {
+                                            // cubit.setSelectedValue(value!);
+                                          },
+                                        ),
+                                      ),
+                                    ),
+
+                                    Expanded(
+                                      child: ListTile(
+                                        title: const Text('USA'),
+                                        leading: Radio<int>(
+                                          value: 2,
+                                          activeColor: ColorManager.primaryBlue,
+                                          groupValue: 0,
+                                          onChanged: (value) {
+                                            // cubit.setSelectedValue(value!);
+                                          },
+                                        ),
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+
+                                SizedBox(height:  SizeConfig.height * 0.03,),
 
                                 state is CreateNewPostsLoadingState?
                                 const CupertinoActivityIndicator():
@@ -331,10 +531,11 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
                                           startTime: cubit.startDate!,
                                           endTime: cubit.endDate!,
                                           hours: '${hoursController.text}${minutesController.text}',
-                                          willToFly: cubit.willToFly!,
+                                          willToFly: cubit.willToFlyDays,
                                           rank: UserDataFromStorage.userRank,
                                           planeType: cubit.planeType!,
                                           iWantFlight: cubit.iWantValue!,
+                                          phoneNumber: UserDataFromStorage.userPhone!,
                                           userName: UserDataFromStorage.userName
                                       );
                                     },

@@ -138,6 +138,7 @@ class PostsCubit extends Cubit<PostsStates>{
     required value,
   }){
     startDate=DateFormat.yMMMEd().format(value);
+    print(startDate);
     emit(SelectTimePickerValueState());
   }
 
@@ -152,6 +153,16 @@ class PostsCubit extends Cubit<PostsStates>{
     required value,
   }){
     willToFly=DateFormat.yMMMEd().format(value);
+    emit(SelectTimePickerValueState());
+  }
+
+  List<String> willToFlyDays=[];
+  void setWillToFlyDaysTravel({
+    required value,
+  }){
+    willToFlyDays=[];
+    willToFlyDays.add(value);
+    print(willToFlyDays);
     emit(SelectTimePickerValueState());
   }
 
@@ -180,11 +191,12 @@ class PostsCubit extends Cubit<PostsStates>{
         required String startTime,
         required String endTime,
         required String hours,
-        required String willToFly,
+        required List<String> willToFly,
         required String rank,
         required String planeType,
         required String iWantFlight,
         required String userName,
+        required String phoneNumber,
         context
       }
       )async{
@@ -202,6 +214,7 @@ class PostsCubit extends Cubit<PostsStates>{
         rank: rank,
         planeType: planeType,
         iWantFlight: iWantFlight,
+        phoneNumber: phoneNumber,
         userName: userName
     ).then((value){
       print(state);
@@ -234,13 +247,13 @@ class PostsCubit extends Cubit<PostsStates>{
                 print('city : ${city} , duration : ${duration} , dateTime : ${dateTime}');
                 if(city !='' && duration !='' && dateTime !=''){
                   print('1');
-                  if(city == post.iHaveFlight && duration == post.hours && dateTime == post.dateTime){
+                  if(city == post.iHaveFlight && duration == post.iWantHours && dateTime == post.dateTime){
                     flights.add(PostModel.fromJson(element.value as Map));
                   }
                 }
                 else if(city !='' && duration !=''){
                   print('2');
-                  if(city == post.iHaveFlight && duration == post.hours){
+                  if(city == post.iHaveFlight && duration == post.iWantHours){
                     flights.add(PostModel.fromJson(element.value as Map));
                   }
                 }
@@ -252,7 +265,7 @@ class PostsCubit extends Cubit<PostsStates>{
                 }
                 else if(duration !='' && dateTime !=''){
                   print('4');
-                  if(duration == post.hours && dateTime == post.dateTime){
+                  if(duration == post.iWantHours && dateTime == post.dateTime){
                     flights.add(PostModel.fromJson(element.value as Map));
                   }
                 }
@@ -264,7 +277,7 @@ class PostsCubit extends Cubit<PostsStates>{
                 }
                 else if(duration !=''){
                   print('6');
-                  if(duration == post.hours){
+                  if(duration == post.iWantHours){
                     flights.add(PostModel.fromJson(element.value as Map));
                   }
                 }
@@ -348,5 +361,22 @@ class PostsCubit extends Cubit<PostsStates>{
     return isFavorite;
   }
 
+
+   var iWantDetailsController = TextEditingController();
+   var iHaveDetailsController = TextEditingController();
+   var hoursDetailsController = TextEditingController();
+   var sDateDetailsController = TextEditingController();
+   var eDateDetailsController = TextEditingController();
+   var willToFlyDetailsController = TextEditingController();
+   var planeTypeDetailsController = TextEditingController();
+
+  void setPostDetails({required  PostModel postModel}){
+    iWantDetailsController.text = postModel.iWantFlight;
+    iHaveDetailsController.text = postModel.iHaveFlight;
+    hoursDetailsController.text = postModel.iWantHours;
+    sDateDetailsController.text = postModel.startTime;
+    eDateDetailsController.text = postModel.endTime;
+    planeTypeDetailsController.text = postModel.planeType;
+  }
 
 }
