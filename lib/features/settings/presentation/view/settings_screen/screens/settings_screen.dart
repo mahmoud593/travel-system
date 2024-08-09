@@ -35,31 +35,31 @@ class SettingsScreen extends StatelessWidget {
               height: SizeConfig.height,
               width: SizeConfig.width,
 
-              decoration: const BoxDecoration(
-                  color: ColorManager.white,
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    opacity: .6,
-                    image: NetworkImage('https://img.freepik.com/premium-photo/travel-world-monument-concept_1097408-13.jpg?w=740'),
-                  )
-              ),
+              // decoration: const BoxDecoration(
+              //     color: ColorManager.white,
+              //     image: DecorationImage(
+              //       fit: BoxFit.cover,
+              //       opacity: .6,
+              //       image: NetworkImage('https://img.freepik.com/premium-photo/travel-world-monument-concept_1097408-13.jpg?w=740'),
+              //     )
+              // ),
             ),
 
             Container(
               height: SizeConfig.height,
               width: SizeConfig.width,
 
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: ColorManager.white,
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                    ColorManager.white.withOpacity(0.9),
-                    ColorManager.white,
-                  ],
-                )
+                // gradient: LinearGradient(
+                //   begin: Alignment.topCenter,
+                //   end: Alignment.bottomCenter,
+                //   colors: [
+                //     Colors.transparent,
+                //     ColorManager.white.withOpacity(0.9),
+                //     ColorManager.white,
+                //   ],
+                // )
               ),
 
               child: Padding(
@@ -68,7 +68,6 @@ class SettingsScreen extends StatelessWidget {
                   children: [
                     SizedBox(height: screenHeight * 0.03,),
 
-
                     /// user info card
                     UserInfoCard(
                       name: UserDataFromStorage.userName,
@@ -76,7 +75,7 @@ class SettingsScreen extends StatelessWidget {
                       image: UserDataFromStorage.userPersonalImage,
                     ),
 
-                    SizedBox(height: screenHeight * 0.05,),
+                    SizedBox(height: screenHeight * 0.08,),
 
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -87,7 +86,7 @@ class SettingsScreen extends StatelessWidget {
                           icon: Icons.person_outline,
                           onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfileScreen())),
                         ),
-                        SizedBox(height: SizeConfig.height * 0.01,),
+                        SizedBox(height: SizeConfig.height * 0.022,),
 
                         /// History
                         SettingsItem(
@@ -95,26 +94,26 @@ class SettingsScreen extends StatelessWidget {
                           icon: Icons.history_outlined,
                           onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context) => const HistoryScreen())),
                         ),
-                        SizedBox(height: SizeConfig.height * 0.01,),
 
+                        SizedBox(height: SizeConfig.height * 0.022,),
 
-                        ///Notifications
-                        SettingsItem(
-                          title: 'Notifications',
-                          icon: Icons.notifications_outlined,
-                          onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationsScreen())),
-                        ),
-                        SizedBox(height: SizeConfig.height * 0.01,),
-
-
-                        ///Favorite
-                        SettingsItem(
-                          title: 'Favorite',
-                          icon: Icons.favorite_outline,
-                          onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context) => const FavoriteScreen())),
-                        ),
-                        SizedBox(height: SizeConfig.height * 0.01,),
-
+                        //
+                        // ///Notifications
+                        // SettingsItem(
+                        //   title: 'Notifications',
+                        //   icon: Icons.notifications_outlined,
+                        //   onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationsScreen())),
+                        // ),
+                        // SizedBox(height: SizeConfig.height * 0.01,),
+                        //
+                        //
+                        // ///Favorite
+                        // SettingsItem(
+                        //   title: 'Favorite',
+                        //   icon: Icons.favorite_outline,
+                        //   onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context) => const FavoriteScreen())),
+                        // ),
+                        // SizedBox(height: SizeConfig.height * 0.01,),
 
                         /// Delete Account
                         SettingsItem(
@@ -124,7 +123,7 @@ class SettingsScreen extends StatelessWidget {
                               await SettingsCubit.get(context).deleteUser(context: context);
                             },
                         ),
-                        SizedBox(height: SizeConfig.height * 0.01,),
+                        SizedBox(height: SizeConfig.height * 0.022,),
 
                         /// Logout
                         SettingsItem(

@@ -49,8 +49,32 @@ class PostDetails extends StatelessWidget {
                     ),
 
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
+                        GestureDetector(
+                          onTap: () {
+                            cubit.isFavorite==false?
+                            PostsCubit.get(context).addPostToFavorites(postModel:postModel):
+                            PostsCubit.get(context).deletePostFromFavorites(postModel:postModel);
+                          },
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                              clipBehavior:  Clip.antiAlias,
+                              height:  SizeConfig.height * 0.045,
+                              decoration: const BoxDecoration(
+                                shape:  BoxShape.circle,
+                              ),
+                              child:  CircleAvatar(
+                                  backgroundColor: ColorManager.primaryBlue,
+                                  child:  cubit.isFavorite==true?
+                                  const Icon(Icons.favorite,color: Colors.white,):
+                                  const Icon(Icons.favorite_outline,color: Colors.white,)
+                              )
+                            ),
+                          ),
+                        ),
+                        const Spacer(),
                         GestureDetector(
                           onTap: () {
                             launch('https://wa.me/${postModel.phoneNumber}');
@@ -115,6 +139,10 @@ class PostDetails extends StatelessWidget {
                               )),
                         ),
                       ],
+                    ),
+
+                    SizedBox(
+                      height: SizeConfig.height * 0.02,
                     ),
 
                     const NewPostRowDateWidget(

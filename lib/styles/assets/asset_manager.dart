@@ -25,6 +25,7 @@ class AssetsManager{
   static const String airportImage = "assets/images/airport.png";
   static const String travelImage = "assets/images/travel.png";
   static const String planeTicketImage = "assets/images/plane-ticket.png";
+  static const String routeImage = "assets/images/route.png";
 
 
 }

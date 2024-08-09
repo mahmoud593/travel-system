@@ -32,6 +32,7 @@ class _PostsScreenState extends State<PostsScreen> {
     // TODO: implement initState
     super.initState();
     PostsCubit.get(context).getPosts(context);
+    // PostsCubit.get(context).getFavoritePosts();
   }
 
   @override
@@ -160,29 +161,43 @@ class _PostsScreenState extends State<PostsScreen> {
 
                                                   Row(
                                                     children: [
-
                                                       Expanded(
-                                                          child: DefaultTextField(
-                                                              controller: cubit.hoursFilterController,
-                                                              hintText: 'Hours',
-                                                              validator: (value){},
-                                                              keyboardType: TextInputType.number,
-                                                              textInputAction: TextInputAction.done,
-                                                              fillColor: Colors.white
-                                                          )
+                                                        child:  Row(
+                                                          children: [
+                                                            Radio<int>(
+                                                              value: 1,
+                                                              activeColor: ColorManager.primaryBlue,
+                                                              groupValue: cubit.filterLayover,
+                                                              onChanged: (value) {
+                                                                cubit.setFilterLayover(value: value!);
+                                                              },
+                                                            ),
+                                                            Text('Layover',style: TextStyles.textStyle18Medium.copyWith(
+                                                                color: Colors.black
+                                                            ))  ,
+
+                                                          ],
+                                                        ),
+
                                                       ),
 
-                                                      SizedBox(width:  SizeConfig.height * 0.02,),
-
                                                       Expanded(
-                                                          child: DefaultTextField(
-                                                              controller: cubit.mintusFilterController,
-                                                              hintText: 'Minutes',
-                                                              validator: (value){},
-                                                              keyboardType: TextInputType.number,
-                                                              textInputAction: TextInputAction.done,
-                                                              fillColor: Colors.white
-                                                          )
+                                                        child:  Row(
+                                                          children: [
+                                                            Radio<int>(
+                                                              value: 2,
+                                                              activeColor: ColorManager.primaryBlue,
+                                                              groupValue: cubit.filterLayover,
+                                                              onChanged: (value) {
+                                                                cubit.setFilterLayover(value: value!);
+                                                              },
+                                                            ),
+                                                            Text('Round Trip',style: TextStyles.textStyle18Medium.copyWith(
+                                                                color: Colors.black
+                                                            ))  ,
+
+                                                          ],
+                                                        ),
                                                       ),
 
                                                     ],
@@ -194,7 +209,7 @@ class _PostsScreenState extends State<PostsScreen> {
                                                   Row(
                                                     children: [
                                                       const Icon(Icons.keyboard_arrow_up_rounded,color: Colors.black,size: 30,),
-                                                      Text('Date Time',style: TextStyles.textStyle18Bold.copyWith(color: ColorManager.black),),
+                                                      Text('Start Time',style: TextStyles.textStyle18Bold.copyWith(color: ColorManager.black),),
                                                     ],
                                                   ),
 
@@ -203,6 +218,7 @@ class _PostsScreenState extends State<PostsScreen> {
                                                   EasyDateTimeLine(
                                                     initialDate: DateTime.now(),
                                                     onDateChange: (selectedDate) {
+                                                      print(selectedDate);
                                                       PostsCubit.get(context).selectFilterDateOfTravel(value: selectedDate);
                                                     },
                                                   ),
@@ -255,7 +271,7 @@ class _PostsScreenState extends State<PostsScreen> {
                                                           cubit.filterPost(
                                                               city: cubit.countryFilterSelected,
                                                               context: context,
-                                                              duration: '${cubit.hoursFilterController.text}${cubit.mintusFilterController.text}',
+                                                              duration: cubit.filterLayover==1?'Layover':'Round Trip',
                                                               dateTime: cubit.dateTimeFilter,
                                                           ).then((v){
                                                             cubit.countryFilterSelected='';

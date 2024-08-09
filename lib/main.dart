@@ -35,8 +35,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ChatCubit()..getMessages(),),
         BlocProvider(create: (context) => PostsCubit()..getPosts(context),),
         BlocProvider(create: (context) => CommentsCubit()),
+        BlocProvider(create: (context) => CommentsCubit()),
       ],
-
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: getApplicationTheme(context),

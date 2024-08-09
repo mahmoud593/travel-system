@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:travel_system/core/constants/constants.dart';
@@ -53,6 +55,9 @@ class SettingsCubit extends Cubit<SettingsState> {
       editProfileEmailController.text = userModel!.email;
       base = userModel!.beasNumber;
       rank = userModel!.rank;
+      UserDataFromStorage.setuserPersonalImage(userModel!.userImage);
+      UserDataFromStorage.setUserEmail(userModel!.email);
+      UserDataFromStorage.setUserName(userModel!.userName);
       editProfilePayrollNumberController.text = userModel!.payRollNumber;
       editProfilePhoneNumberController.text = userModel!.phoneNumber;
       emit(GetUserDataSuccessState());
@@ -74,25 +79,23 @@ class SettingsCubit extends Cubit<SettingsState> {
       emit(UpdateUserProfileLoadingState());
 
       if(uploadedProfileImage != null){
-        emit(UploadImageSuccessState());
+        emit(UpdateUserProfileLoadingState());
         try{
           imageUrl = await EditProfileRepoImplement().uploadUserProfileImage(imageFile: uploadedProfileImage!);
-          emit(UploadImageSuccessState());
+          emit(UpdateUserProfileLoadingState());
         }catch(e){
           debugPrint("Error when uploading image ==========> ${e.toString()}");
-          emit(UploadImageErrorState());
+          emit(UpdateUserProfileLoadingState());
         }
         await EditProfileRepoImplement().updateUserProfileData(
           email: editProfileEmailController.text,
           userName: editProfileNameController.text,
           phoneNumber: editProfilePhoneNumberController.text,
-          beasNumber: base!,
-          rank: rank!,
           payRollNumber: editProfilePayrollNumberController.text,
           airCrafts: userModel!.airCrafts,
           imageUrl: imageUrl
         ).then((value) async{
-          debugPrint("User data updated successfully =====> ${value.toString()}");
+          debugPrint("User data updated =====> ${value.toString()}");
           await getUserData();
           emit(UpdateUserProfileSuccessState());
         });
@@ -103,8 +106,6 @@ class SettingsCubit extends Cubit<SettingsState> {
             email: editProfileEmailController.text,
             userName: editProfileNameController.text,
             phoneNumber: editProfilePhoneNumberController.text,
-            beasNumber: base!,
-            rank: rank!,
             payRollNumber: editProfilePayrollNumberController.text,
             airCrafts: userModel!.airCrafts,
             imageUrl: userModel!.userImage
@@ -203,21 +204,22 @@ class SettingsCubit extends Cubit<SettingsState> {
     }
   }
 
-  String ?rank;
-  String ?base;
+  String ?rank ;
+  String ?base ;
+  TextEditingController contractType = TextEditingController();
 
-  void setRankDropDownValue({
-    required value,
-  }){
-    rank=value;
-    emit(SetRankDropDownEditValueState());
-  }
+  // void setRankDropDownValue({
+  //   required value,
+  // }){
+  //   rank=value;
+  //   emit(SetRankDropDownEditValueState());
+  // }
 
-  void setBeasDropDownValue({
-    required value,
-  }){
-    base=value;
-    emit(SetBaseDropDownEditValueState());
-  }
+  // void setBeasDropDownValue({
+  //   required value,
+  // }){
+  //   base=value;
+  //   emit(SetBaseDropDownEditValueState());
+  // }
 
 }

@@ -2,7 +2,6 @@ class PostModel{
   final String uid;
   final String postId;
   final String iHaveFlight;
-  final String dateTime;
   final String startTime;
   final String endTime;
   final String iWantHours;
@@ -20,7 +19,6 @@ class PostModel{
   PostModel({
     required this.iHaveFlight,
     required this.uid,
-    required this.dateTime,
     required this.startTime,
     required this.endTime,
     required this.iWantHours,
@@ -40,7 +38,6 @@ class PostModel{
       : this(
     uid: json['uid']??'',
     iHaveFlight: json['iHaveFlight']??'',
-    dateTime: json['dateTime']??'',
     startTime: json['startTime']??'',
     iWantHours: json['iWantHours']??'',
     iHaveHours: json['iHaveHours']??'',
@@ -63,7 +60,6 @@ class PostModel{
   Map<String, dynamic> toJson() => {
     'uid' : uid,
     'iHaveFlight' : iHaveFlight,
-    'dateTime' : dateTime,
     'startTime' : startTime,
     'endTime' : endTime,
     'iWantHours' : iWantHours,

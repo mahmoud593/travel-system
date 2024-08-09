@@ -17,7 +17,7 @@ class TicketRowDateWidget extends StatelessWidget {
           child: Text(
               '$category : ',
               textAlign: TextAlign.start,
-              style: TextStyles.textStyle18Regular.copyWith(color: Colors.white)
+              style: TextStyles.textStyle18Bold.copyWith(color: Colors.white)
           ),
         ),
 
@@ -26,7 +26,7 @@ class TicketRowDateWidget extends StatelessWidget {
           child: Text(
               value,
               textAlign: TextAlign.start,
-              style:TextStyles.textStyle18Regular.copyWith(
+              style:TextStyles.textStyle18Medium.copyWith(
                   color: Colors.white
               )
           ),

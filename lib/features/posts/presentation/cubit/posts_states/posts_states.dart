@@ -37,3 +37,8 @@ class GetFavoriteErrorState extends PostsStates{}
 class CheckIfIsFavorite extends PostsStates {}
 
 class ChangeCountryColorState extends PostsStates{}
+
+class ChangeIHaveLayoverState extends PostsStates{}
+class ChangeIHaveRoundTripState extends PostsStates{}
+class ChangeIWantRoundTripState extends PostsStates{}
+class ChangeIWantLayoverState extends PostsStates{}

@@ -35,8 +35,8 @@ class NewPostsScreen extends StatefulWidget {
 
 class _NewPostsScreenState extends State<NewPostsScreen> {
 
-  var hoursController=TextEditingController();
-  var minutesController=TextEditingController();
+  var haveHoursController=TextEditingController();
+  var wantHoursController=TextEditingController();
 
 
   @override
@@ -134,8 +134,7 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
                                       onChanged: (String? newValue) {
                                         cubit.setDropDownHaveValue(value: newValue);
                                       },
-                                      items: Constants.iHaveLocations
-                                          .map<DropdownMenuItem<String>>((String value) {
+                                      items: Constants.iHaveLocations.map<DropdownMenuItem<String>>((String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
                                           child: Text(value),
@@ -147,37 +146,48 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
 
                                 SizedBox(height:  SizeConfig.height * 0.03,),
 
-                                const NewPostRowDateWidget(icon: AssetsManager.iHaveImage,text: 'I Have',description: 'Choose location of your flight that you have',),
+                                const NewPostRowDateWidget(icon: AssetsManager.routeImage,text: 'Kind of flight',description: 'Choose type of your flight that you have',),
 
-                                SizedBox(height:  SizeConfig.height * 0.03,),
+                                SizedBox(height:  SizeConfig.height * 0.01,),
 
                                 Row(
                                   children: [
                                     Expanded(
-                                      child: ListTile(
-                                        title: const Text('Layover'),
-                                        leading: Radio<int>(
-                                          value: 1,
-                                          activeColor: ColorManager.primaryBlue,
-                                          groupValue: 0,
-                                          onChanged: (value) {
-                                            // cubit.setSelectedValue(value!);
-                                          },
-                                        ),
+                                      child:  Row(
+                                        children: [
+                                           Radio<int>(
+                                            value: 1,
+                                            activeColor: ColorManager.primaryBlue,
+                                            groupValue: cubit.iHaveLayover,
+                                            onChanged: (value) {
+                                              cubit.setIHaveLayover(value: value!);
+                                            },
+                                          ),
+                                          Text('Layover',style: TextStyles.textStyle18Medium.copyWith(
+                                              color: Colors.black
+                                          ))  ,
+
+                                        ],
                                       ),
+
                                     ),
 
                                     Expanded(
-                                      child: ListTile(
-                                        title: const Text('Round Trip'),
-                                        leading: Radio<int>(
-                                          value: 2,
-                                          activeColor: ColorManager.primaryBlue,
-                                          groupValue: 0,
-                                          onChanged: (value) {
-                                            // cubit.setSelectedValue(value!);
-                                          },
-                                        ),
+                                      child:  Row(
+                                        children: [
+                                          Radio<int>(
+                                            value: 2,
+                                            activeColor: ColorManager.primaryBlue,
+                                            groupValue: cubit.iHaveLayover,
+                                            onChanged: (value) {
+                                              cubit.setIHaveLayover(value: value!);
+                                            },
+                                          ),
+                                          Text('Round Trip',style: TextStyles.textStyle18Medium.copyWith(
+                                            color: Colors.black
+                                          ))  ,
+
+                                        ],
                                       ),
                                     ),
 
@@ -196,7 +206,7 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
 
                                     Expanded(
                                       child: DefaultTextField(
-                                          controller: hoursController,
+                                          controller: haveHoursController,
                                           hintText: 'Hours',
                                           validator: (value){},
                                           keyboardType: TextInputType.number,
@@ -207,7 +217,9 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
 
                                     SizedBox(width:  SizeConfig.height * 0.01,),
 
-                                    Text('hr',style: TextStyles.textStyle18Regular),
+                                    Text('hr',style: TextStyles.textStyle18Regular.copyWith(
+                                      color: Colors.black
+                                    )),
 
                                   ],
                                 ),
@@ -268,13 +280,6 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
                                 const NewPostRowDateWidget(icon: AssetsManager.endDateImage,text: 'Release End Time',description: 'Choose date time of release end time',),
 
                                 SizedBox(height:  SizeConfig.height * 0.01,),
-
-                                // EasyDateTimeLine(
-                                //   initialDate: DateTime.now(),
-                                //   onDateChange: (selectedDate) {
-                                //     cubit.selectEndDateTravel(value: selectedDate);
-                                //   },
-                                // ),
 
                                 ElevatedButton(
                                   onPressed: () {
@@ -352,6 +357,20 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
                                   selectionColor: ColorManager.primaryBlue,
                                   onSelectionChanged: (v){
                                     setState(() {
+                                      // print(v.value.length.toString());
+                                      // // Parse the date part and handle the time manually
+                                      // print(v.value.toString());
+                                      // String date = v.value.toString();
+                                      // DateTime parsedDate = DateTime.parse(date.split(' ')[0]);
+                                      // int hour = int.parse(date.split(' ')[1]);
+                                      //
+                                      // // Create the DateTime object with the time
+                                      // DateTime finalDateTime = DateTime(parsedDate.year, parsedDate.month, parsedDate.day, hour);
+                                      //
+                                      // // Format the time part
+                                      // String formattedTime = finalDateTime.toString().split(' ')[1];
+
+                                      // print(formattedTime); // Outputs: 00:00:00.000
                                       cubit.setWillToFlyDaysTravel(value: v.value.toString());
                                     });
                                   },
@@ -359,17 +378,10 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
 
                                 ),
 
-                                // EasyDateTimeLine(
-                                //   initialDate: DateTime.now(),
-                                //   onDateChange: (selectedDate) {
-                                //     cubit.selectWillToFlyTravel(value: selectedDate);
-                                //   },
-                                // ),
-
                                 SizedBox(height:  SizeConfig.height * 0.03,),
 
 
-                                /// I Want
+                                /// Plane Type
                                 const NewPostRowDateWidget(icon: AssetsManager.planeTicketImage,text: 'Plane type',description: 'Choose plane type of your flight that you have',),
 
                                 SizedBox(height:  SizeConfig.height * 0.01,),
@@ -410,37 +422,48 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
                                 SizedBox(height:  SizeConfig.height * 0.03,),
 
 
-                                const NewPostRowDateWidget(icon: AssetsManager.iHaveImage,text: 'I Have',description: 'Choose location of your flight that you have',),
+                                const NewPostRowDateWidget(icon: AssetsManager.routeImage,text: 'I Want',description: 'Choose location of your flight that you need',),
 
-                                SizedBox(height:  SizeConfig.height * 0.03,),
+                                SizedBox(height:  SizeConfig.height * 0.01,),
 
                                 Row(
                                   children: [
                                     Expanded(
-                                      child: ListTile(
-                                        title: const Text('Layover'),
-                                        leading: Radio<int>(
-                                          value: 1,
-                                          activeColor: ColorManager.primaryBlue,
-                                          groupValue: 0,
-                                          onChanged: (value) {
-                                            // cubit.setSelectedValue(value!);
-                                          },
-                                        ),
+                                      child:  Row(
+                                        children: [
+                                          Radio<int>(
+                                            value: 1,
+                                            activeColor: ColorManager.primaryBlue,
+                                            groupValue: cubit.iWantLayover,
+                                            onChanged: (value) {
+                                              cubit.setIWantLayover(value: value!);
+                                            },
+                                          ),
+                                          Text('Layover',style: TextStyles.textStyle18Medium.copyWith(
+                                              color: Colors.black
+                                          ))  ,
+
+                                        ],
                                       ),
+
                                     ),
 
                                     Expanded(
-                                      child: ListTile(
-                                        title: const Text('Round Trip'),
-                                        leading: Radio<int>(
-                                          value: 2,
-                                          activeColor: ColorManager.primaryBlue,
-                                          groupValue: 0,
-                                          onChanged: (value) {
-                                            // cubit.setSelectedValue(value!);
-                                          },
-                                        ),
+                                      child:  Row(
+                                        children: [
+                                          Radio<int>(
+                                            value: 2,
+                                            activeColor: ColorManager.primaryBlue,
+                                            groupValue: cubit.iWantLayover,
+                                            onChanged: (value) {
+                                              cubit.setIWantLayover(value: value!);
+                                            },
+                                          ),
+                                          Text('Round Trip',style: TextStyles.textStyle18Medium.copyWith(
+                                              color: Colors.black
+                                          ))  ,
+
+                                        ],
                                       ),
                                     ),
 
@@ -451,7 +474,7 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
 
 
                                 /// Hours
-                                const NewPostRowDateWidget(icon: AssetsManager.hoursImage,text: 'Layover hours',description: 'Enter hours of flight that you have',),
+                                const NewPostRowDateWidget(icon: AssetsManager.hoursImage,text: 'Layover hours',description: 'Enter hours of flight that you need',),
 
                                 SizedBox(height:  SizeConfig.height * 0.01,),
 
@@ -460,7 +483,7 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
 
                                     Expanded(
                                         child: DefaultTextField(
-                                            controller: hoursController,
+                                            controller: wantHoursController,
                                             hintText: 'Hours',
                                             validator: (value){},
                                             keyboardType: TextInputType.number,
@@ -471,7 +494,9 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
 
                                     SizedBox(width:  SizeConfig.height * 0.01,),
 
-                                    Text('hr',style: TextStyles.textStyle18Regular),
+                                    Text('hr',style: TextStyles.textStyle18Regular.copyWith(
+                                      color: Colors.black,
+                                    )),
 
                                   ],
                                 ),
@@ -481,35 +506,46 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
 
                                 const NewPostRowDateWidget(icon: AssetsManager.iHaveImage,text: 'Visa',description: 'Choose location of your flight that you have',),
 
-                                SizedBox(height:  SizeConfig.height * 0.03,),
+                                SizedBox(height:  SizeConfig.height * 0.01,),
 
                                 Row(
                                   children: [
                                     Expanded(
-                                      child: ListTile(
-                                        title: const Text('CHINA'),
-                                        leading: Radio<int>(
-                                          value: 1,
-                                          activeColor: ColorManager.primaryBlue,
-                                          groupValue: 0,
-                                          onChanged: (value) {
-                                            // cubit.setSelectedValue(value!);
-                                          },
-                                        ),
+                                      child:  Row(
+                                        children: [
+                                          Radio<int>(
+                                            value: 1,
+                                            activeColor: ColorManager.primaryBlue,
+                                            groupValue: cubit.setVisa,
+                                            onChanged: (value) {
+                                              cubit.setVisaTrip(value: value!);
+                                            },
+                                          ),
+                                          Text('CHINA',style: TextStyles.textStyle18Medium.copyWith(
+                                              color: Colors.black
+                                          ))  ,
+
+                                        ],
                                       ),
+
                                     ),
 
                                     Expanded(
-                                      child: ListTile(
-                                        title: const Text('USA'),
-                                        leading: Radio<int>(
-                                          value: 2,
-                                          activeColor: ColorManager.primaryBlue,
-                                          groupValue: 0,
-                                          onChanged: (value) {
-                                            // cubit.setSelectedValue(value!);
-                                          },
-                                        ),
+                                      child:  Row(
+                                        children: [
+                                          Radio<int>(
+                                            value: 2,
+                                            activeColor: ColorManager.primaryBlue,
+                                            groupValue: cubit.setVisa,
+                                            onChanged: (value) {
+                                              cubit.setVisaTrip(value: value!);
+                                            },
+                                          ),
+                                          Text('USA',style: TextStyles.textStyle18Medium.copyWith(
+                                              color: Colors.black
+                                          ))  ,
+
+                                        ],
                                       ),
                                     ),
 
@@ -523,20 +559,44 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
                                 DefaultButton(
                                     buttonText: 'Add Post',
                                     onPressed: (){
+
+                                      // Remove the square brackets and split the string by comma
+                                      String cleanedString = cubit.willToFlyDays.toString().replaceAll(RegExp(r'[\[\]]'), '');
+                                      List<String> dateTimeParts = cleanedString.split(',').map((part) => part.trim()).toList();
+
+                                      print('//////////------------********');
+
+                                      print(dateTimeParts);
+
+                                      // Parse each date-time string into DateTime objects
+                                      List<DateTime> dateTimes = dateTimeParts.map((part) => DateTime.parse(part)).toList();
+
+                                      List<String> selectedDates=[];
+                                      // Print the extracted DateTime objects
+                                      for (DateTime dateTime in dateTimes) {
+                                        String formattedDate = DateFormat.d().format(dateTime);
+                                        selectedDates.add(formattedDate);
+                                        print('//////////------------********');
+                                        print(formattedDate); // Outputs: 14-Aug-2024 and 21-Aug-2024
+                                      }
+
                                       cubit.createPosts(
                                           context: context,
                                           iHaveFlight: cubit.iHaveValue!,
                                           uid: UserDataFromStorage.userId,
-                                          dateTime: cubit.dateTime!,
                                           startTime: cubit.startDate!,
                                           endTime: cubit.endDate!,
-                                          hours: '${hoursController.text}${minutesController.text}',
-                                          willToFly: cubit.willToFlyDays,
+                                          willToFly: selectedDates,
                                           rank: UserDataFromStorage.userRank,
                                           planeType: cubit.planeType!,
                                           iWantFlight: cubit.iWantValue!,
                                           phoneNumber: UserDataFromStorage.userPhone!,
-                                          userName: UserDataFromStorage.userName
+                                          userName: UserDataFromStorage.userName,
+                                          iHaveHours: haveHoursController.text==''?'0':haveHoursController.text,
+                                          iHaveLav: cubit.iHaveLayover==1?'Layover':'Round Trip',
+                                          iWantHours: wantHoursController.text==''?'0':wantHoursController.text,
+                                          iWantLav: cubit.iWantLayover==1?'Layover':'Round Trip',
+                                          visa: cubit.setVisa==1?'CHINA':'USA',
                                       );
                                     },
                                     buttonColor: ColorManager.primaryBlue,

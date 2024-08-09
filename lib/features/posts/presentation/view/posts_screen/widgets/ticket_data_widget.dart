@@ -7,6 +7,8 @@ import 'package:travel_system/features/posts/presentation/cubit/posts_states/pos
 import 'package:travel_system/features/posts/presentation/view/posts_screen/widgets/ticket_row_date_widget.dart';
 import 'package:travel_system/styles/text_styles/text_styles.dart';
 
+import '../../../../../../core/helper/app_size_config.dart';
+
 class TicketDataWidget extends StatelessWidget {
   const TicketDataWidget({super.key,required this.postModel});
 
@@ -22,31 +24,72 @@ class TicketDataWidget extends StatelessWidget {
                 vertical: 15
             ),
             child:  Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
 
                 Column(
                   children: [
 
-                    /// Name
-                    TicketRowDateWidget(category: 'Name',value: postModel.userName,),
-
                     /// I Have
-                    TicketRowDateWidget(category: 'Flight',value: postModel.iHaveFlight,),
+                    Row(
+                      children: [
+                        TicketRowDateWidget(category: 'I Have ',value: postModel.iHaveFlight,),
 
-                    /// Date
-                    TicketRowDateWidget(category: 'Date',value: postModel.dateTime,),
+                        SizedBox(width:SizeConfig.width*0.1,),
+
+                        Text(postModel.iHaveLav,style: TextStyles.textStyle18Bold.
+                        copyWith(color: Colors.white),),
+                      ],
+                    ),
 
                     /// Report Start Time
                     TicketRowDateWidget(category: 'S-Time',value: postModel.startTime,),
 
-                    /// Release End Time
-                    TicketRowDateWidget(category: 'E-Time',value: postModel.endTime,),
 
-                    /// Hours
-                    // TicketRowDateWidget(category: 'Hours',value: postModel.,),
+                    postModel.iHaveLav=='Layover'?
+                    TicketRowDateWidget(category: 'Layover ',value: '${postModel.iHaveHours} hr',):
+                    Container(),
+
+                    /// I Want
+                    Row(
+                      children: [
+                        TicketRowDateWidget(category: 'I Want ',value: postModel.iWantFlight,),
+
+                        SizedBox(width:SizeConfig.width*0.1,),
+
+                        Text(postModel.iWantLav,style: TextStyles.textStyle18Bold.
+                        copyWith(color: Colors.white),),
+                      ],
+                    ),
+
+                    postModel.iWantLav=='Layover'?
+                    TicketRowDateWidget(category: 'Layover ',value: '${postModel.iWantHours} hr',):
+                    Container(),
 
                     /// Willing to fly
-                    // TicketRowDateWidget(category: 'W-Fly',value:postModel.,),
+
+                    Align(
+                        alignment: Alignment.topLeft,
+                        child: Text('WTF',style: TextStyles.textStyle18Bold,)
+                    ),
+
+                    Container(
+                      height: 20,
+                      child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: ( context, index) {
+                            return Text(postModel.willToFly[index],style: TextStyles.textStyle18Regular,);
+
+                          },
+                          separatorBuilder: ( context, index){
+                            return Text(' - ',style: TextStyles.textStyle18Regular,);
+                          },
+                          itemCount: postModel.willToFly.length
+                      ),
+                    ),
+
+                    SizedBox(height:  SizeConfig.height*0.01,),
+
 
                   ],
                 ),

@@ -33,8 +33,8 @@ class BottomNavigationBarWidget extends StatelessWidget {
               ),
               /// Chat
               SalomonBottomBarItem(
-                  icon: Icon(Icons.chat_rounded),
-                  title: Text("Chat"),
+                  icon: Icon(Icons.favorite),
+                  title: Text("Favorites"),
                   selectedColor: ColorManager.primaryBlue,
                   unselectedColor: ColorManager.lightBlue
               ),

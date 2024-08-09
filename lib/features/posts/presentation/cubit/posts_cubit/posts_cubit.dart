@@ -26,7 +26,6 @@ class PostsCubit extends Cubit<PostsStates>{
 
   void switchBottomNav(int index){
     currentIndex=index;
-    print(currentIndex);
     emit(HomeLayoutChangeBottomNavState());
   }
 
@@ -50,6 +49,7 @@ class PostsCubit extends Cubit<PostsStates>{
               if(post.planeType == UserDataFromStorage.userAirCrafts[i]){
                 print('false');
                 flights.add(PostModel.fromJson(element.value as Map));
+
               }
             }
           }
@@ -80,7 +80,8 @@ class PostsCubit extends Cubit<PostsStates>{
   void selectFilterDateOfTravel({
     required value,
   }){
-    dateTimeFilter=DateFormat.yMMMEd().format(value);
+    dateTimeFilter=DateFormat('dd-MMM-yyyy').format(value);
+    print(dateTimeFilter);
     emit(SelectTimePickerValueState());
   }
 
@@ -137,15 +138,14 @@ class PostsCubit extends Cubit<PostsStates>{
   void selectStartDateTravel({
     required value,
   }){
-    startDate=DateFormat.yMMMEd().format(value);
-    print(startDate);
+    startDate=value;
     emit(SelectTimePickerValueState());
   }
 
   void selectEndDateTravel({
     required value,
   }){
-    endDate=DateFormat.yMMMEd().format(value);
+    endDate=value;
     emit(SelectTimePickerValueState());
   }
 
@@ -185,18 +185,22 @@ class PostsCubit extends Cubit<PostsStates>{
   }
 
   Future<void> createPosts(
-      {required String iHaveFlight,
+      {
+        required String iHaveFlight,
         required String uid,
-        required String dateTime,
         required String startTime,
         required String endTime,
-        required String hours,
         required List<String> willToFly,
         required String rank,
         required String planeType,
         required String iWantFlight,
         required String userName,
         required String phoneNumber,
+        required String iHaveLav,
+        required String iWantLav,
+        required String visa,
+        required String iWantHours,
+        required String iHaveHours,
         context
       }
       )async{
@@ -206,16 +210,19 @@ class PostsCubit extends Cubit<PostsStates>{
     PostsRepoImplement().uploadNewPosts(
         iHaveFlight: iHaveFlight,
         uid: uid,
-        dateTime: dateTime,
         startTime: startTime,
         endTime: endTime,
-        hours: hours,
         willToFly: willToFly,
         rank: rank,
         planeType: planeType,
         iWantFlight: iWantFlight,
         phoneNumber: phoneNumber,
-        userName: userName
+        userName: userName,
+        iWantHours: iWantHours,
+        iHaveHours: iHaveHours,
+        iHaveLav: iHaveLav,
+        iWantLav: iWantLav,
+        visa: visa,
     ).then((value){
       print(state);
       print('Create New Post Successfully');
@@ -245,27 +252,32 @@ class PostsCubit extends Cubit<PostsStates>{
             for(int i=0;i<UserDataFromStorage.userAirCrafts.length;i++){
               if(post.planeType == UserDataFromStorage.userAirCrafts[i]){
                 print('city : ${city} , duration : ${duration} , dateTime : ${dateTime}');
+
+                List<String> parts = post.startTime.split(' - ');
+
+                String datePart = parts[0];
+                print(datePart);
+
                 if(city !='' && duration !='' && dateTime !=''){
-                  print('1');
-                  if(city == post.iHaveFlight && duration == post.iWantHours && dateTime == post.dateTime){
+                  if(city == post.iHaveFlight && duration == post.iHaveLav && dateTime == datePart){
                     flights.add(PostModel.fromJson(element.value as Map));
                   }
                 }
                 else if(city !='' && duration !=''){
                   print('2');
-                  if(city == post.iHaveFlight && duration == post.iWantHours){
+                  if(city == post.iHaveFlight && duration == post.iHaveLav){
                     flights.add(PostModel.fromJson(element.value as Map));
                   }
                 }
                 else if(city !='' && dateTime !=''){
                   print('3');
-                  if(city == post.iHaveFlight && dateTime == post.dateTime){
+                  if(city == post.iHaveFlight && dateTime == datePart){
                     flights.add(PostModel.fromJson(element.value as Map));
                   }
                 }
                 else if(duration !='' && dateTime !=''){
                   print('4');
-                  if(duration == post.iWantHours && dateTime == post.dateTime){
+                  if(duration == post.iHaveLav && dateTime == datePart){
                     flights.add(PostModel.fromJson(element.value as Map));
                   }
                 }
@@ -277,13 +289,13 @@ class PostsCubit extends Cubit<PostsStates>{
                 }
                 else if(duration !=''){
                   print('6');
-                  if(duration == post.iWantHours){
+                  if(duration == post.iHaveLav){
                     flights.add(PostModel.fromJson(element.value as Map));
                   }
                 }
                 else if(dateTime !=''){
                   print('6');
-                  if(dateTime == post.dateTime){
+                  if(dateTime == datePart){
                     flights.add(PostModel.fromJson(element.value as Map));
                   }
                 }
@@ -309,11 +321,12 @@ class PostsCubit extends Cubit<PostsStates>{
     emit(GetFavoriteLoadingState());
     try{
       FirebaseDatabase database = FirebaseDatabase.instance;
-      database.ref('posts').onValue.listen((event) {
+      database.ref('Users').child('${UserDataFromStorage.userId}').child('favorites').onValue.listen((event) {
         favoritePosts=[];
         for (var element in event.snapshot.children) {
           favoritePosts.add(PostModel.fromJson(element.value as Map));
         }
+        print('Get Favorite Posts Successfully');
         emit(GetFavoriteSuccessState());
       });
     }catch(e){
@@ -327,6 +340,7 @@ class PostsCubit extends Cubit<PostsStates>{
     try{
       PostsRepoImplement().addPostToFavorites(postModel: postModel);
       await getFavoritePosts();
+      isFavorite = true;
       emit(AddPostToFavoriteSuccessState());
     }catch(error){
       debugPrint("Error in Add post to favorites ============> ${error.toString()}");
@@ -339,6 +353,7 @@ class PostsCubit extends Cubit<PostsStates>{
     try{
       PostsRepoImplement().deletePostFromFavorites(postModel: postModel);
       await getFavoritePosts();
+      isFavorite = false;
       emit(DeletePostFromFavoriteSuccessState());
     }catch(error){
       debugPrint("Error in Add post to favorites ============> ${error.toString()}");
@@ -348,9 +363,9 @@ class PostsCubit extends Cubit<PostsStates>{
   }
 
 
+  bool isFavorite = false;
 
   bool checkIfPostIsFavorite({required String postId}){
-    bool isFavorite = false;
     for (var element in favoritePosts) {
       if(element.postId == postId){
         isFavorite = true;
@@ -378,5 +393,39 @@ class PostsCubit extends Cubit<PostsStates>{
     eDateDetailsController.text = postModel.endTime;
     planeTypeDetailsController.text = postModel.planeType;
   }
+
+  int iHaveLayover=0;
+  int iHaveRoundTrip=0;
+  int iWantLayover=0;
+  int filterLayover=0;
+  int setVisa=0;
+
+  void setIHaveLayover({required int value}){
+    iHaveLayover=value;
+    emit(ChangeIHaveLayoverState());
+  }
+
+  void setIHaveRoundTrip({required int value}){
+    iHaveRoundTrip=value;
+    emit(ChangeIHaveRoundTripState());
+  }
+
+
+  void setIWantLayover({required int value}){
+    iWantLayover=value;
+    emit(ChangeIWantLayoverState());
+  }
+
+  void setFilterLayover({required int value}){
+    filterLayover=value;
+    emit(ChangeIWantLayoverState());
+  }
+
+  void setVisaTrip({required int value}){
+    setVisa=value;
+    emit(ChangeIWantRoundTripState());
+  }
+
+
 
 }

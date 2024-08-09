@@ -35,6 +35,7 @@ class PostWidget extends StatelessWidget {
                 leftChild: GestureDetector(
                   onTap: (){
                     PostsCubit.get(context).setPostDetails(postModel: postModel);
+                    PostsCubit.get(context).checkIfPostIsFavorite(postId: postModel.postId);
                     customPushNavigator(context, PostDetails(postModel: postModel,));
                   },
                     child: TicketDataWidget(postModel: postModel,)

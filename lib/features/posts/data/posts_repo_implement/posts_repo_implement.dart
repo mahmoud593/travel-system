@@ -18,38 +18,44 @@ class PostsRepoImplement implements PostsRepo{
       {
         required String iHaveFlight,
         required String uid,
-        required String dateTime,
         required String startTime,
         required String endTime,
-        required String hours,
         required List<String> willToFly,
         required String rank,
         required String planeType,
         required String iWantFlight,
+        required String userName,
         required String phoneNumber,
-        required String userName
+        required String iHaveLav,
+        required String iWantLav,
+        required String visa,
+        required String iWantHours,
+        required String iHaveHours,
       }
       ) async{
 
     DatabaseReference  databaseReference = Constants.database.child('posts').push();
 
-    // PostModel postModel = PostModel(
-    //     iHaveFlight: iHaveFlight,
-    //     uid: uid,
-    //     dateTime: dateTime,
-    //     phoneNumber: phoneNumber,
-    //     startTime: startTime,
-    //     endTime: endTime,
-    //     iWantHours: hours,
-    //     willToFly: willToFly,
-    //     rank: rank,
-    //     planeType: planeType,
-    //     iWantFlight: iWantFlight,
-    //     postId: databaseReference.key!,
-    //     userName: userName
-    // );
+    PostModel postModel = PostModel(
+        iHaveFlight: iHaveFlight,
+        uid: uid,
+        phoneNumber: phoneNumber,
+        startTime: startTime,
+        endTime: endTime,
+        iWantHours: iWantHours,
+        willToFly: willToFly,
+        rank: rank,
+        planeType: planeType,
+        iWantFlight: iWantFlight,
+        postId: databaseReference.key!,
+        userName: userName,
+        iHaveHours: iHaveHours,
+        iHaveLav: iHaveLav,
+        iWantLav: iWantLav,
+        visa: visa
+    );
 
-    // databaseReference.set(postModel.toJson());
+    databaseReference.set(postModel.toJson());
 
   }
 

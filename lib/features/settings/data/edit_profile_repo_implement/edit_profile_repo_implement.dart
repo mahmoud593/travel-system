@@ -30,8 +30,8 @@ class EditProfileRepoImplement extends EditProfileRepo{
     String imageUrl = '';
     await FirebaseStorage.instance.ref()
         .child('UserImages/${Uri.file(imageFile.path)
-        .pathSegments.last}').putFile(imageFile).then((p0){
-      p0.ref.getDownloadURL().then((value) {
+        .pathSegments.last}').putFile(imageFile).then((p0)async{
+      await p0.ref.getDownloadURL().then((value) async{
         imageUrl = value;
         debugPrint("Image Url ==========> $imageUrl");
       }).catchError((error) {
@@ -48,11 +48,10 @@ class EditProfileRepoImplement extends EditProfileRepo{
     required String email,
     required String userName,
     required String phoneNumber,
-    required String beasNumber,
-    required String rank,
     required String payRollNumber,
     required List<dynamic> airCrafts,
-    required String imageUrl}) {
+    required String imageUrl
+  }) {
     
     return FirebaseApi.updateCall(
        path: 'Users/${UserDataFromStorage.userId}',
@@ -60,11 +59,9 @@ class EditProfileRepoImplement extends EditProfileRepo{
       'email' : email,
       'userName' : userName,
       'phoneNumber' : phoneNumber,
-      'beasNumber' : beasNumber,
-      'rank' : rank,
       'payRollNumber' : payRollNumber,
       'airCrafts' : airCrafts,
-      'imageUrl' : imageUrl
+      'userImage' : imageUrl
     });
     
   }

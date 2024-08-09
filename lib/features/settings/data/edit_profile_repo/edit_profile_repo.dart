@@ -12,8 +12,6 @@ abstract class EditProfileRepo{
     required String email,
     required String userName,
     required String phoneNumber,
-    required String beasNumber,
-    required String rank,
     required String payRollNumber,
     required List<dynamic> airCrafts,
     required String imageUrl
