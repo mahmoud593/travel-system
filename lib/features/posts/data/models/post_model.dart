@@ -38,26 +38,26 @@ class PostModel{
   });
   PostModel.fromJson(Map<dynamic, dynamic> json)
       : this(
-    uid: json['uid'],
-    iHaveFlight: json['iHaveFlight'],
-    dateTime: json['dateTime'],
-    startTime: json['startTime'],
-    iWantHours: json['iWantHours'],
-    iHaveHours: json['iHaveHours'],
-    iWantLav: json['iWantLav'],
-    iHaveLav: json['iHaveLav'],
-    visa: json['visa'],
-    endTime: json['endTime'],
+    uid: json['uid']??'',
+    iHaveFlight: json['iHaveFlight']??'',
+    dateTime: json['dateTime']??'',
+    startTime: json['startTime']??'',
+    iWantHours: json['iWantHours']??'',
+    iHaveHours: json['iHaveHours']??'',
+    iWantLav: json['iWantLav']??  '',
+    iHaveLav: json['iHaveLav']??  '',
+    visa: json['visa']??  '',
+    endTime: json['endTime']??  '',
     willToFly: (json['willToFly'] as List<dynamic>?)
         ?.map((item) => item.toString())
         .toList() ??
         [],
-    rank: json['rank'],
-    planeType: json['planeType'],
-    iWantFlight: json['iWantFlight'],
-    postId: json['postId'],
-    phoneNumber: json['phoneNumber'],
-    userName: json['userName'],
+    rank: json['rank']??  '',
+    planeType: json['planeType']??  '',
+    iWantFlight: json['iWantFlight']??  '',
+    postId: json['postId']??  '',
+    phoneNumber: json['phoneNumber']??  '',
+    userName: json['userName']??  '',
   );
 
   Map<String, dynamic> toJson() => {

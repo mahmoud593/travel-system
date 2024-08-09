@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travel_system/core/local/shared_preferences.dart';
 import 'package:travel_system/features/auth/presentaion/cubit/auth_cubit/auth_cubit.dart';
+import 'package:travel_system/features/post_info/presentation/cubit/comments_cubit.dart';
 import 'package:travel_system/features/posts/presentation/cubit/posts_cubit/posts_cubit.dart';
 import 'package:travel_system/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:travel_system/features/splash/presentation/view/splash_screen.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => SettingsCubit()..getUserData()..getFavoritePosts()..getHistoryPosts(),),
         BlocProvider(create: (context) => ChatCubit()..getMessages(),),
         BlocProvider(create: (context) => PostsCubit()..getPosts(context),),
+        BlocProvider(create: (context) => CommentsCubit()),
       ],
 
       child: MaterialApp(

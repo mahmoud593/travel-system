@@ -25,6 +25,7 @@ class Assets {
   static const String imagesStartDate = 'assets/images/start_date.png';
   static const String imagesTravel = 'assets/images/travel.png';
   static const String imagesTravelDate = 'assets/images/travel_date.png';
+  static const String imagesWhatsapp = 'assets/images/whatsapp.png';
   static const String imagesWillToFly = 'assets/images/will_to_fly.png';
 
 }
