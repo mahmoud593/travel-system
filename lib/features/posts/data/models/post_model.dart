@@ -7,13 +7,14 @@ class PostModel{
   final String iWantHours;
   final String iHaveHours;
   final String iHaveLav;
-  final String iWantLav;
-  final String visa;
+  final String PRN;
+  final List<String> iWantLav;
+  final List<String> visa;
   final List<String> willToFly;
   final String rank;
   final String planeType;
   final String phoneNumber;
-  final String iWantFlight;
+  final List<String> iWantFlight;
   final String userName;
 
   PostModel({
@@ -23,6 +24,7 @@ class PostModel{
     required this.endTime,
     required this.iWantHours,
     required this.iHaveHours,
+    required this.PRN,
     required this.iHaveLav,
     required this.iWantLav,
     required this.visa,
@@ -39,11 +41,18 @@ class PostModel{
     uid: json['uid']??'',
     iHaveFlight: json['iHaveFlight']??'',
     startTime: json['startTime']??'',
+    PRN: json['PRN']??'',
     iWantHours: json['iWantHours']??'',
     iHaveHours: json['iHaveHours']??'',
-    iWantLav: json['iWantLav']??  '',
+    iWantLav:  (json['iWantLav'] as List<dynamic>?)
+        ?.map((item) => item.toString())
+        .toList() ??
+        [],
     iHaveLav: json['iHaveLav']??  '',
-    visa: json['visa']??  '',
+    visa:  (json['visa'] as List<dynamic>?)
+        ?.map((item) => item.toString())
+        .toList() ??
+        [],
     endTime: json['endTime']??  '',
     willToFly: (json['willToFly'] as List<dynamic>?)
         ?.map((item) => item.toString())
@@ -51,7 +60,10 @@ class PostModel{
         [],
     rank: json['rank']??  '',
     planeType: json['planeType']??  '',
-    iWantFlight: json['iWantFlight']??  '',
+    iWantFlight:(json['iWantFlight'] as List<dynamic>?)
+        ?.map((item) => item.toString())
+        .toList() ??
+        [],
     postId: json['postId']??  '',
     phoneNumber: json['phoneNumber']??  '',
     userName: json['userName']??  '',
@@ -66,6 +78,7 @@ class PostModel{
     'iHaveHours' : iHaveHours,
     'iWantLav' : iWantLav,
     'iHaveLav' : iHaveLav,
+    'PRN' : PRN,
     'visa' : visa,
     'willToFly' : willToFly,
     'postId' : postId,

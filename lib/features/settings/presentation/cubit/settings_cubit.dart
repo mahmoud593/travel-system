@@ -210,7 +210,7 @@ class SettingsCubit extends Cubit<SettingsState> {
     }
   }
 
-  getNotifications({required BuildContext context}) async {
+  Future<void> getNotifications({required BuildContext context}) async {
     notifications = [];
     emit(GetNotificationsLoadingState());
 
@@ -221,21 +221,24 @@ class SettingsCubit extends Cubit<SettingsState> {
           int percent = 0;
 
           if(historyElement.postId != postElement.postId){
-            if(historyElement.iWantFlight == postElement.iHaveFlight ||
-                historyElement.visa == postElement.visa ||
+            if(
+                historyElement.iWantFlight.any((element) => postElement.iHaveFlight == element) ||
+                historyElement.visa.any((element) => postElement.visa.contains(element)) ||
                 historyElement.startTime == postElement.startTime ||
-                historyElement.willToFly.any((element) => postElement.willToFly.contains(element))){
+                historyElement.willToFly.any((element) => postElement.willToFly.contains(element)))
+            {
 
               if(!notifications.contains(postElement)){
 
                 notifications.add(postElement);
 
 
-                if(historyElement.iWantFlight == postElement.iHaveFlight){
+                if(historyElement.iWantFlight.any((element) => postElement.iHaveFlight == element)){
+                  print('1');
                   percent += 25;
                 }
 
-                if(historyElement.visa == postElement.visa){
+                if(historyElement.visa.any((element) => postElement.visa.contains(element))){
                   percent += 25;
                 }
 

@@ -124,9 +124,9 @@ class _PostsScreenState extends State<PostsScreen> {
                                                     childAspectRatio: 0.5/.2,
                                                     crossAxisSpacing: 10,
                                                     mainAxisSpacing: 10,
-                                                    children: List.generate(Constants.iHaveLocations.length, (index) => GestureDetector(
+                                                    children: List.generate(cubit.iHaveList.length, (index) => GestureDetector(
                                                       onTap: (){
-                                                        PostsCubit.get(context).changeCountryColor( index,Constants.iHaveLocations[index]);
+                                                        PostsCubit.get(context).changeCountryColor( index,cubit.iHaveList[index]);
                                                       },
                                                       child: Container(
                                                         decoration: BoxDecoration(
@@ -138,7 +138,7 @@ class _PostsScreenState extends State<PostsScreen> {
                                                           mainAxisAlignment: MainAxisAlignment.center,
                                                           crossAxisAlignment: CrossAxisAlignment.center,
                                                           children: [
-                                                            Text(Constants.iHaveLocations[index],style:
+                                                            Text(cubit.iHaveList[index],style:
                                                             TextStyles.textStyle18Regular.copyWith(
                                                                 color: cubit.locationFilterSelected[index] ? ColorManager.white : ColorManager.primaryBlue
                                                             ),)
@@ -216,6 +216,7 @@ class _PostsScreenState extends State<PostsScreen> {
                                                   SizedBox(height: SizeConfig.height*.02,),
 
                                                   EasyDateTimeLine(
+                                                    activeColor: cubit.dateTimeFilter==''?  Colors.grey[200] : ColorManager.primaryBlue,
                                                     initialDate: DateTime.now(),
                                                     onDateChange: (selectedDate) {
                                                       print(selectedDate);
@@ -271,11 +272,12 @@ class _PostsScreenState extends State<PostsScreen> {
                                                           cubit.filterPost(
                                                               city: cubit.countryFilterSelected,
                                                               context: context,
-                                                              duration: cubit.filterLayover==1?'Layover':'Round Trip',
+                                                              duration: cubit.filterLayover==1?'Layover':cubit.filterLayover==3?'':'Round Trip',
                                                               dateTime: cubit.dateTimeFilter,
                                                           ).then((v){
                                                             cubit.countryFilterSelected='';
                                                             cubit.dateTimeFilter='';
+                                                            cubit.filterLayover=3;
                                                             cubit.hoursFilterController.clear();
                                                             cubit.mintusFilterController.clear();
                                                             cubit.locationFilterSelected=List.generate(100, (i) => false);
@@ -331,7 +333,10 @@ class _PostsScreenState extends State<PostsScreen> {
 
               SizedBox(height: MediaQuery.sizeOf(context).height*0.02,),
 
-              state is GetPostsSuccessState?
+              state is GetPostsLoadingState?
+              const CupertinoActivityIndicator(
+                color: ColorManager.primaryBlue,
+              ):
               Expanded(
                 child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
@@ -339,9 +344,7 @@ class _PostsScreenState extends State<PostsScreen> {
                     separatorBuilder: (context, index) => const Divider(),
                     itemCount: cubit.flights.length
                 ),
-              ):const CupertinoActivityIndicator(
-                color: ColorManager.primaryBlue,
-              ),
+              )
             ],
           );
       },

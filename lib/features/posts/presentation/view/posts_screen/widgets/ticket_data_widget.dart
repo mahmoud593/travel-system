@@ -38,7 +38,8 @@ class TicketDataWidget extends StatelessWidget {
                         SizedBox(width:SizeConfig.width*0.1,),
 
                         Text(postModel.iHaveLav,style: TextStyles.textStyle18Bold.
-                        copyWith(color: Colors.white),),
+                        copyWith(color: Colors.white,fontSize: 14
+                        ),),
                       ],
                     ),
 
@@ -50,45 +51,88 @@ class TicketDataWidget extends StatelessWidget {
                     TicketRowDateWidget(category: 'Layover ',value: '${postModel.iHaveHours} hr',):
                     Container(),
 
+                    SizedBox(height:SizeConfig.height*0.005,),
+
+                    Divider(),
+
+                    SizedBox(height:SizeConfig.height*0.005,),
+
                     /// I Want
+
                     Row(
                       children: [
-                        TicketRowDateWidget(category: 'I Want ',value: postModel.iWantFlight,),
+                        Align(
+                            alignment: Alignment.topLeft,
+                            child: Text('I Want :',style: TextStyles.textStyle18Bold,)
+                        ),
 
-                        SizedBox(width:SizeConfig.width*0.1,),
+                        SizedBox(width:SizeConfig.width*0.09,),
 
-                        Text(postModel.iWantLav,style: TextStyles.textStyle18Bold.
-                        copyWith(color: Colors.white),),
+                        Expanded(
+                          child: SizedBox(
+                            height: 20,
+                            child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: ( context, index) {
+                                  return Text(postModel.iWantLav[index],style: TextStyles.textStyle18Bold.copyWith(
+                                    fontSize: 14
+                                  ),);
+                          
+                                },
+                                separatorBuilder: ( context, index){
+                                  return Text(' - ',style: TextStyles.textStyle18Regular,);
+                                },
+                                itemCount: postModel.iWantLav.length
+                            ),
+                          ),
+                        ),
+
                       ],
                     ),
 
-                    postModel.iWantLav=='Layover'?
-                    TicketRowDateWidget(category: 'Layover ',value: '${postModel.iWantHours} hr',):
-                    Container(),
-
-                    /// Willing to fly
-
-                    Align(
-                        alignment: Alignment.topLeft,
-                        child: Text('WTF',style: TextStyles.textStyle18Bold,)
-                    ),
-
                     Container(
+                      padding: EdgeInsets.zero,
                       height: 20,
                       child: ListView.separated(
                           scrollDirection: Axis.horizontal,
                           itemBuilder: ( context, index) {
-                            return Text(postModel.willToFly[index],style: TextStyles.textStyle18Regular,);
+                            return Text(postModel.iWantFlight[index],style: TextStyles.textStyle18Regular,);
 
                           },
                           separatorBuilder: ( context, index){
                             return Text(' - ',style: TextStyles.textStyle18Regular,);
                           },
-                          itemCount: postModel.willToFly.length
+                          itemCount: postModel.iWantFlight.length
                       ),
                     ),
 
-                    SizedBox(height:  SizeConfig.height*0.01,),
+
+                    SizedBox(height:SizeConfig.height*0.005,),
+
+                    postModel.iWantLav.contains('Layover')?
+                    TicketRowDateWidget(category: 'Layover ',value: '${postModel.iWantHours} hr',):
+                    Container(),
+
+                    /// Willing to fly
+                    // Align(
+                    //     alignment: Alignment.topLeft,
+                    //     child: Text('WTF',style: TextStyles.textStyle18Bold,)
+                    // ),
+                    //
+                    // Container(
+                    //   height: 20,
+                    //   child: ListView.separated(
+                    //       scrollDirection: Axis.horizontal,
+                    //       itemBuilder: ( context, index) {
+                    //         return Text(postModel.willToFly[index],style: TextStyles.textStyle18Regular,);
+                    //
+                    //       },
+                    //       separatorBuilder: ( context, index){
+                    //         return Text(' - ',style: TextStyles.textStyle18Regular,);
+                    //       },
+                    //       itemCount: postModel.willToFly.length
+                    //   ),
+                    // ),
 
 
                   ],

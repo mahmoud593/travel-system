@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => AuthCubit()),
         BlocProvider(create: (context) => SettingsCubit()..getUserData()..getFavoritePosts()..getHistoryPosts(),),
         BlocProvider(create: (context) => ChatCubit()..getMessages(),),
-        BlocProvider(create: (context) => PostsCubit()..getPosts(context),),
+        BlocProvider(create: (context) => PostsCubit()..fetchIHaveList()..fetchIWantList()..getPosts(context),),
         BlocProvider(create: (context) => CommentsCubit()),
         BlocProvider(create: (context) => CommentsCubit()),
       ],

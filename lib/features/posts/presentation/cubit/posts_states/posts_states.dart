@@ -42,3 +42,9 @@ class ChangeIHaveLayoverState extends PostsStates{}
 class ChangeIHaveRoundTripState extends PostsStates{}
 class ChangeIWantRoundTripState extends PostsStates{}
 class ChangeIWantLayoverState extends PostsStates{}
+
+final class FetchIHaveLoadingState extends PostsStates {}
+final class FetchIHaveSuccessState extends PostsStates {}
+
+final class FetchIWantLoadingState extends PostsStates {}
+final class FetchIWantSuccessState extends PostsStates {}

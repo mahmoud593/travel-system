@@ -134,7 +134,7 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
                                       onChanged: (String? newValue) {
                                         cubit.setDropDownHaveValue(value: newValue);
                                       },
-                                      items: Constants.iHaveLocations.map<DropdownMenuItem<String>>((String value) {
+                                      items: cubit.iHaveList.map<DropdownMenuItem<String>>((String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
                                           child: Text(value),
@@ -310,37 +310,37 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
 
                                 SizedBox(height:  SizeConfig.height * 0.01,),
 
-                                Container(
-                                  padding: EdgeInsets.only(
-                                      left: SizeConfig.height * 0.02,
-                                      right: SizeConfig.height * 0.02
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: Colors.grey[300],
-                                  ),
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton<String>(
-                                      hint: Text('Enter Your Location',style: TextStyles.textStyle18Regular.copyWith(
-                                          color: Colors.black54
-                                      )),
-                                      icon: const Icon(Icons.arrow_drop_down),
-                                      elevation: 5,
-                                      value:cubit.iWantValue,
-                                      style: const TextStyle(color: Colors.black, fontSize: 16),
-                                      onChanged: (String? newValue) {
-                                        cubit.setDropDownWantValue(value: newValue);
-                                      },
-                                      items: Constants.iHaveLocations
-                                          .map<DropdownMenuItem<String>>((String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      }).toList(),
+                                GridView.count(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  crossAxisCount: 4,
+                                  childAspectRatio: 0.5/.2,
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 10,
+                                  children: List.generate(cubit.iWantList.length, (index) => GestureDetector(
+                                    onTap: (){
+                                      PostsCubit.get(context).changeIWantSelectedColor( index,cubit.iWantList[index]);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(50),
+                                          color: cubit.locationIWantSelected[index] ? ColorManager.primaryBlue : Colors.white
+                                      ),
+                                      width: SizeConfig.height *.1,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Text(cubit.iWantList[index],style:
+                                          TextStyles.textStyle18Regular.copyWith(
+                                              color: cubit.locationIWantSelected[index] ? ColorManager.white : ColorManager.primaryBlue
+                                          ),)
+                                        ],
+                                      ) ,
                                     ),
-                                  ),
+                                  ),),
                                 ),
+
 
                                 SizedBox(height:  SizeConfig.height * 0.03,),
 
@@ -431,13 +431,12 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
                                     Expanded(
                                       child:  Row(
                                         children: [
-                                          Radio<int>(
-                                            value: 1,
-                                            activeColor: ColorManager.primaryBlue,
-                                            groupValue: cubit.iWantLayover,
-                                            onChanged: (value) {
-                                              cubit.setIWantLayover(value: value!);
-                                            },
+                                          Checkbox(
+                                              activeColor: ColorManager.primaryBlue,
+                                              value: cubit.setIWantLav,
+                                              onChanged: (value){
+                                                cubit.setIWantLavTrip(value: value!);
+                                              }
                                           ),
                                           Text('Layover',style: TextStyles.textStyle18Medium.copyWith(
                                               color: Colors.black
@@ -451,13 +450,12 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
                                     Expanded(
                                       child:  Row(
                                         children: [
-                                          Radio<int>(
-                                            value: 2,
-                                            activeColor: ColorManager.primaryBlue,
-                                            groupValue: cubit.iWantLayover,
-                                            onChanged: (value) {
-                                              cubit.setIWantLayover(value: value!);
-                                            },
+                                          Checkbox(
+                                              activeColor: ColorManager.primaryBlue,
+                                              value: cubit.setIWantRad,
+                                              onChanged: (value){
+                                                cubit.setIWantRodTrip(value: value!);
+                                              }
                                           ),
                                           Text('Round Trip',style: TextStyles.textStyle18Medium.copyWith(
                                               color: Colors.black
@@ -513,13 +511,12 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
                                     Expanded(
                                       child:  Row(
                                         children: [
-                                          Radio<int>(
-                                            value: 1,
-                                            activeColor: ColorManager.primaryBlue,
-                                            groupValue: cubit.setVisa,
-                                            onChanged: (value) {
-                                              cubit.setVisaTrip(value: value!);
-                                            },
+                                          Checkbox(
+                                              activeColor: ColorManager.primaryBlue,
+                                              value: cubit.setVisaChine,
+                                              onChanged: (value){
+                                                cubit.setVisaChineTrip(value: value!);
+                                              }
                                           ),
                                           Text('CHINA',style: TextStyles.textStyle18Medium.copyWith(
                                               color: Colors.black
@@ -533,13 +530,12 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
                                     Expanded(
                                       child:  Row(
                                         children: [
-                                          Radio<int>(
-                                            value: 2,
-                                            activeColor: ColorManager.primaryBlue,
-                                            groupValue: cubit.setVisa,
-                                            onChanged: (value) {
-                                              cubit.setVisaTrip(value: value!);
-                                            },
+                                          Checkbox(
+                                              activeColor: ColorManager.primaryBlue,
+                                              value: cubit.setVisaUsa,
+                                              onChanged: (value){
+                                                cubit.setVisaUsaTrip(value: value!);
+                                              }
                                           ),
                                           Text('USA',style: TextStyles.textStyle18Medium.copyWith(
                                               color: Colors.black
@@ -580,8 +576,11 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
                                         print(formattedDate); // Outputs: 14-Aug-2024 and 21-Aug-2024
                                       }
 
+                                      print(cubit.selectVisaList);
+
                                       cubit.createPosts(
                                           context: context,
+                                          PRN: UserDataFromStorage.userPayrollNumber,
                                           iHaveFlight: cubit.iHaveValue!,
                                           uid: UserDataFromStorage.userId,
                                           startTime: cubit.startDate!,
@@ -589,14 +588,14 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
                                           willToFly: selectedDates,
                                           rank: UserDataFromStorage.userRank,
                                           planeType: cubit.planeType!,
-                                          iWantFlight: cubit.iWantValue!,
+                                          iWantFlight: cubit.countryIWantSelected,
                                           phoneNumber: UserDataFromStorage.userPhone!,
                                           userName: UserDataFromStorage.userName,
                                           iHaveHours: haveHoursController.text==''?'0':haveHoursController.text,
                                           iHaveLav: cubit.iHaveLayover==1?'Layover':'Round Trip',
                                           iWantHours: wantHoursController.text==''?'0':wantHoursController.text,
-                                          iWantLav: cubit.iWantLayover==1?'Layover':'Round Trip',
-                                          visa: cubit.setVisa==1?'CHINA':'USA',
+                                          iWantLav: cubit.selectIWantLavList,
+                                          visa: cubit.selectVisaList,
                                       );
                                     },
                                     buttonColor: ColorManager.primaryBlue,

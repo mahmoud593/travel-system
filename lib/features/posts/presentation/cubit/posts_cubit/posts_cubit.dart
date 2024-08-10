@@ -18,6 +18,7 @@ class PostsCubit extends Cubit<PostsStates>{
   static PostsCubit get(context) => BlocProvider.of(context);
 
   List<bool> locationFilterSelected=List.generate(100, (i) => false);
+  List<bool> locationIWantSelected=List.generate(100, (i) => false);
 
   var hoursFilterController=TextEditingController();
   var mintusFilterController=TextEditingController();
@@ -35,24 +36,33 @@ class PostsCubit extends Cubit<PostsStates>{
   Future<void> getPosts(context) async {
     flights=[];
     emit(GetPostsLoadingState());
-
     try{
       Constants.database.child('posts').onValue.listen((event) {
         flights=[];
         event.snapshot.children.forEach((element) {
           print('Length : ${event.snapshot.children.length}');
           var post=PostModel.fromJson(element.value as Map);
-          if(post.rank == UserDataFromStorage.userRank){
-            print('True');
-            for(int i=0;i<UserDataFromStorage.userAirCrafts.length;i++){
-              print('Post ${post.planeType} : ${UserDataFromStorage.userAirCrafts[i]}');
-              if(post.planeType == UserDataFromStorage.userAirCrafts[i]){
-                print('false');
-                flights.add(PostModel.fromJson(element.value as Map));
 
+          DateTime dateTimeToday = DateTime.now();
+          String formattedDatetime = DateFormat("dd-MMM-yyyy - HH:00").format(dateTimeToday);
+          print(formattedDatetime);
+          DateTime todayDate = DateFormat("dd-MMM-yyyy - HH:mm").parse(formattedDatetime);
+          DateTime endDate = DateFormat("dd-MMM-yyyy - HH:mm").parse(post.endTime);
+
+          if(endDate.isAfter(todayDate)){
+            if(post.rank == UserDataFromStorage.userRank){
+              print('True');
+              for(int i=0;i<UserDataFromStorage.userAirCrafts.length;i++){
+                print('Post ${post.planeType} : ${UserDataFromStorage.userAirCrafts[i]}');
+                if(post.planeType == UserDataFromStorage.userAirCrafts[i]){
+                  print('false');
+                  flights.add(PostModel.fromJson(element.value as Map));
+
+                }
               }
             }
           }
+
         });
         emit(GetPostsSuccessState());
       });
@@ -184,6 +194,25 @@ class PostsCubit extends Cubit<PostsStates>{
 
   }
 
+  List<String> countryIWantSelected=[];
+  void changeIWantSelectedColor(int index,String country){
+
+    // locationIWantSelected=List.generate(100, (i) => false);
+    if(countryIWantSelected.contains(country)){
+      locationIWantSelected[index]=false;
+      countryIWantSelected.remove(country);
+      print(countryIWantSelected);
+
+    }else{
+      locationIWantSelected[index]=true;
+      countryIWantSelected.add(country);
+      print(countryIWantSelected);
+    }
+
+    emit(ChangeCountryColorState());
+
+  }
+
   Future<void> createPosts(
       {
         required String iHaveFlight,
@@ -193,12 +222,13 @@ class PostsCubit extends Cubit<PostsStates>{
         required List<String> willToFly,
         required String rank,
         required String planeType,
-        required String iWantFlight,
+        required String PRN,
+        required List<String> iWantFlight,
         required String userName,
         required String phoneNumber,
         required String iHaveLav,
-        required String iWantLav,
-        required String visa,
+        required List<String> iWantLav,
+        required List<String> visa,
         required String iWantHours,
         required String iHaveHours,
         context
@@ -210,6 +240,7 @@ class PostsCubit extends Cubit<PostsStates>{
     PostsRepoImplement().uploadNewPosts(
         iHaveFlight: iHaveFlight,
         uid: uid,
+        PRN: PRN,
         startTime: startTime,
         endTime: endTime,
         willToFly: willToFly,
@@ -366,6 +397,7 @@ class PostsCubit extends Cubit<PostsStates>{
   bool isFavorite = false;
 
   bool checkIfPostIsFavorite({required String postId}){
+    isFavorite=false;
     for (var element in favoritePosts) {
       if(element.postId == postId){
         isFavorite = true;
@@ -379,16 +411,23 @@ class PostsCubit extends Cubit<PostsStates>{
 
    var iWantDetailsController = TextEditingController();
    var iHaveDetailsController = TextEditingController();
-   var hoursDetailsController = TextEditingController();
+   var prnDetailsController = TextEditingController();
+   var iHaveLavHoursDetailsController = TextEditingController();
+   var iWantLavHoursDetailsController = TextEditingController();
    var sDateDetailsController = TextEditingController();
    var eDateDetailsController = TextEditingController();
    var willToFlyDetailsController = TextEditingController();
    var planeTypeDetailsController = TextEditingController();
+   var visaDetailsController = TextEditingController();
+   var iHaveLavDetailsController = TextEditingController();
 
   void setPostDetails({required  PostModel postModel}){
-    iWantDetailsController.text = postModel.iWantFlight;
+    // iWantDetailsController.text = postModel.iWantFlight;
     iHaveDetailsController.text = postModel.iHaveFlight;
-    hoursDetailsController.text = postModel.iWantHours;
+    prnDetailsController.text = postModel.PRN;
+    iHaveLavDetailsController.text = postModel.iHaveLav;
+    iHaveLavHoursDetailsController.text = postModel.iHaveHours;
+    iWantLavHoursDetailsController.text = postModel.iWantHours;
     sDateDetailsController.text = postModel.startTime;
     eDateDetailsController.text = postModel.endTime;
     planeTypeDetailsController.text = postModel.planeType;
@@ -396,9 +435,12 @@ class PostsCubit extends Cubit<PostsStates>{
 
   int iHaveLayover=0;
   int iHaveRoundTrip=0;
-  int iWantLayover=0;
-  int filterLayover=0;
-  int setVisa=0;
+  bool iWantLayover=false;
+  bool iWantRoundTrip=false;
+  int filterLayover=3;
+  bool setVisaChine=false;
+  bool setVisaUsa=false;
+  List<String> selectVisaList=[];
 
   void setIHaveLayover({required int value}){
     iHaveLayover=value;
@@ -412,7 +454,7 @@ class PostsCubit extends Cubit<PostsStates>{
 
 
   void setIWantLayover({required int value}){
-    iWantLayover=value;
+    // iWantLayover=value;
     emit(ChangeIWantLayoverState());
   }
 
@@ -421,11 +463,92 @@ class PostsCubit extends Cubit<PostsStates>{
     emit(ChangeIWantLayoverState());
   }
 
-  void setVisaTrip({required int value}){
-    setVisa=value;
+  void setVisaChineTrip({required bool value}){
+    if(value== true){
+      setVisaChine=value;
+      selectVisaList.add('CHINA');
+    }else{
+      setVisaChine=value;
+      selectVisaList.remove('CHINA');
+    }
     emit(ChangeIWantRoundTripState());
   }
 
+  bool setIWantLav=false;
+  bool setIWantRad=false;
+  List<String> selectIWantLavList=[];
+  void setIWantLavTrip({required bool value}){
+    if(value== true){
+      setIWantLav=value;
+      selectIWantLavList.add('Layover');
+    }else{
+      setIWantLav=value;
+      selectIWantLavList.remove('Layover');
+    }
+    emit(ChangeIWantRoundTripState());
+  }
+
+  void setIWantRodTrip({required bool value}){
+    if(value== true){
+      setIWantRad=value;
+      selectIWantLavList.add('Round Trip');
+    }else{
+      setIWantRad=value;
+      selectIWantLavList.remove('Round Trip');
+    }
+    emit(ChangeIWantRoundTripState());
+  }
+
+  void setVisaUsaTrip({required bool value}){
+    if(value== true){
+      setVisaUsa=value;
+      selectVisaList.add('USA');
+    }else{
+      setVisaUsa=value;
+      selectVisaList.remove('USA');
+    }
+    emit(ChangeIWantRoundTripState());
+  }
+
+
+  List<String> iHaveList=[];
+  List<String> iWantList=[];
+
+  Future<void> fetchIWantList() async{
+
+    iWantList=[];
+    emit(FetchIWantLoadingState());
+    Constants.database.child('iWant').onValue.listen((event) {
+
+      event.snapshot.children.forEach((element) {
+        iWantList.add((element.value as Map)['name']);
+      });
+
+      print('IWantList ==========> ${iWantList.toString()}');
+
+      emit(FetchIWantSuccessState());
+
+    });
+
+  }
+
+  Future<void> fetchIHaveList() async{
+
+    iHaveList=[];
+    emit(FetchIHaveLoadingState());
+    Constants.database.child('iHave').onValue.listen((event) {
+
+      event.snapshot.children.forEach((element) {
+        iHaveList.add((element.value as Map)['name']);
+      });
+
+      print('iHaveList  ==========> ${iHaveList.toString()}');
+
+      emit(FetchIHaveSuccessState());
+
+    });
+
+  }
 
 
 }

@@ -52,15 +52,14 @@ class TicketRightChildWidget extends StatelessWidget {
 
           SizedBox(height:  SizeConfig.height*0.01,),
 
-          Align(
-            child: Text(
-                postModel.visa,
-                textAlign: TextAlign.start,
-                style:TextStyles.textStyle18Medium.copyWith(
-                    color: Colors.white
-                )
-            ),
-          ),
+         Text(postModel.visa[0],style: TextStyles.textStyle18Regular,textAlign: TextAlign.center,),
+
+          SizedBox(height:  SizeConfig.height*0.01,),
+
+         postModel.visa.length==2?
+         Text(postModel.visa[1],style: TextStyles.textStyle18Regular,textAlign: TextAlign.center,):
+         Container(),
+
         ],
         ),
 

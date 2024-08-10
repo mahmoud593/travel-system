@@ -122,7 +122,7 @@ class RegisterForm extends StatelessWidget {
                     onChanged: (String? newValue) {
                       cubit.setBeasDropDownValue(value: newValue);
                     },
-                    items: Constants.baseList
+                    items: cubit.baseList
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -156,7 +156,7 @@ class RegisterForm extends StatelessWidget {
                     onChanged: (String? newValue) {
                       cubit.setRankDropDownValue(value: newValue);
                     },
-                    items: Constants.rankList
+                    items: cubit.ranksList
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -183,6 +183,7 @@ class RegisterForm extends StatelessWidget {
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
               ),
+
               SizedBox(
                 height: SizeConfig.height * .01,
               ),

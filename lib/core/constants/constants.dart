@@ -10,19 +10,19 @@ class Constants{
 
   static List onBoardingScreens=[
     OnBoardingModel(
-        title: 'Freelancer',
-        content: 'A freelancer is a self-employed individual who offers services to clients on a project basis, often working remotely and managing their own business',
+        title: 'Flight Trades',
+        content: 'Simplify your schedule with effortless flight exchanges. Post your available flights and find the perfect swap in just a few taps.',
         image: 'assets/images/onBoarding1.png'
     ),
     OnBoardingModel(
-        title: 'Investment',
-        content: 'We ate constantly adding your favourite restaurant throughout the territory and around your area carefully selected',
-        image: 'assets/images/pilot.png'
+        title: 'Stay Notified',
+        content: 'Never miss an opportunity! Get instant notifications when a flight matching your preferences becomes available, so you can secure your ideal exchange.',
+        image: 'assets/images/onBoarding2.png'
     ),
     OnBoardingModel(
-        title: 'Social Media',
-        content: ' it is easy to determine the exact number of calories consumed at each meal',
-        image: 'assets/images/onBoarding2.png'
+        title: 'Connect & Exchange',
+        content: 'Seamlessly connect with fellow pilots to arrange your swaps. Communicate, negotiate, and finalize details directly within the app.',
+        image: 'assets/images/pilot.png'
     ),
 
   ];

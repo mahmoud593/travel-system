@@ -11,8 +11,21 @@ import 'package:travel_system/styles/colors/color_manager.dart';
 import 'package:travel_system/styles/text_styles/text_styles.dart';
 import 'package:travel_system/styles/widets/toast.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    AuthCubit.get(context).fetchBaseList();
+    AuthCubit.get(context).fetchRanksList();
+  }
 
   @override
   Widget build(BuildContext context) {

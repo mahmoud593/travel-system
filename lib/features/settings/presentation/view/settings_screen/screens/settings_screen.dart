@@ -103,7 +103,9 @@ class SettingsScreen extends StatelessWidget {
                           title: 'Notifications',
                           icon: Icons.notifications_outlined,
                           onTap: () async {
-                            await SettingsCubit.get(context).getNotifications(context: context).then((value) => Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationsScreen())));
+                            await SettingsCubit.get(context).getNotifications(context: context).then((value) {
+                              return  Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationsScreen()));
+                            });
                           },
                         ),
                         SizedBox(height: SizeConfig.height * 0.022,),

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:travel_system/core/constants/constants.dart';
 import 'package:travel_system/core/local/shared_preferences.dart';
 import 'package:travel_system/features/auth/data/auth_repo_implement/auth_repo_implement.dart';
 import 'package:travel_system/features/auth/data/model/user_model.dart';
@@ -221,6 +222,49 @@ debugPrint("user Aircrafts ===========================> ${UserDataFromStorage.us
     base=value;
     emit(SetBaseDropDownValueState());
   }
+
+
+  List<String> ranksList=[];
+  List<String> baseList=[];
+
+
+
+  Future<void> fetchRanksList() async{
+
+    ranksList=[];
+    emit(FetchRanksLoadingState());
+    Constants.database.child('ranks').onValue.listen((event) {
+
+      event.snapshot.children.forEach((element) {
+        ranksList.add((element.value as Map)['name']);
+      });
+
+      print('ranksList ==========> ${ranksList.toString()}');
+
+      emit(FetchRanksSuccessState());
+
+    });
+
+  }
+
+  Future<void> fetchBaseList() async{
+
+    baseList=[];
+    emit(FetchBaseLoadingState());
+    Constants.database.child('baseNumber').onValue.listen((event) {
+
+      event.snapshot.children.forEach((element) {
+        baseList.add((element.value as Map)['name']);
+      });
+
+      print('baseList ==========> ${baseList.toString()}');
+
+      emit(FetchBaseSuccessState());
+    });
+
+  }
+
+
 
 }
 

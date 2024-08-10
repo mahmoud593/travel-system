@@ -29,3 +29,10 @@ final class GetUserFailure extends AuthState {}
 
 final class SetRankDropDownValueState extends AuthState {}
 final class SetBaseDropDownValueState extends AuthState {}
+
+final class FetchRanksLoadingState extends AuthState {}
+final class FetchRanksSuccessState extends AuthState {}
+
+final class FetchBaseLoadingState extends AuthState {}
+final class FetchBaseSuccessState extends AuthState {}
+

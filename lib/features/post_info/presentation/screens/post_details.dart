@@ -10,6 +10,7 @@ import 'package:travel_system/features/posts/presentation/cubit/posts_states/pos
 import 'package:travel_system/features/settings/presentation/view/settings_screen/widgets/user_info_card.dart';
 import 'package:travel_system/styles/assets/asset_manager.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
+import 'package:travel_system/styles/text_styles/text_styles.dart';
 import 'package:travel_system/styles/widets/default_text_field.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -146,6 +147,29 @@ class PostDetails extends StatelessWidget {
                     ),
 
                     const NewPostRowDateWidget(
+                      icon: AssetsManager.airportImage,
+                      text: 'PRN',
+                      description: '',
+                    ),
+
+                    SizedBox(
+                      height: SizeConfig.height * 0.02,
+                    ),
+
+                    DefaultTextField(
+                        enable: false,
+                        controller: cubit.prnDetailsController,
+                        hintText: 'PRN',
+                        validator: (v) {},
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.done,
+                        fillColor: Colors.grey[300]),
+
+                    SizedBox(
+                      height: SizeConfig.height * 0.03,
+                    ),
+
+                    const NewPostRowDateWidget(
                       icon: AssetsManager.iHaveImage,
                       text: 'I Have',
                       description: '',
@@ -167,6 +191,57 @@ class PostDetails extends StatelessWidget {
                     SizedBox(
                       height: SizeConfig.height * 0.03,
                     ),
+
+                    const NewPostRowDateWidget(
+                      icon: AssetsManager.routeImage,
+                      text: 'I Have Flight duration',
+                      description: '',
+                    ),
+
+                    SizedBox(
+                      height: SizeConfig.height * 0.02,
+                    ),
+
+                    DefaultTextField(
+                        enable: false,
+                        controller: cubit.iHaveLavDetailsController,
+                        hintText: 'I Have Flight duration',
+                        validator: (v) {},
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.done,
+                        fillColor: Colors.grey[300]),
+
+                    SizedBox(
+                      height: SizeConfig.height * 0.03,
+                    ),
+
+
+                    cubit.iHaveLavDetailsController.text !='Round Trip'?
+                    const NewPostRowDateWidget(
+                      icon: AssetsManager.routeImage,
+                      text: 'Layover Hours',
+                      description: '',
+                    ):Container(),
+
+                    cubit.iHaveLavDetailsController.text !='Round Trip'?
+                    SizedBox(
+                      height: SizeConfig.height * 0.02,
+                    ):Container(),
+
+                    cubit.iHaveLavDetailsController.text !='Round Trip'?
+                    DefaultTextField(
+                        enable: false,
+                        controller: cubit.iHaveLavHoursDetailsController,
+                        hintText: 'I Have Flight duration',
+                        validator: (v) {},
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.done,
+                        fillColor: Colors.grey[300]):Container(),
+
+                    cubit.iHaveLavDetailsController.text !='Round Trip'?
+                    SizedBox(
+                      height: SizeConfig.height * 0.03,
+                    ):Container(),
 
                     const NewPostRowDateWidget(
                       icon: AssetsManager.startDateImage,
@@ -210,28 +285,6 @@ class PostDetails extends StatelessWidget {
                         textInputAction: TextInputAction.done,
                         fillColor: Colors.grey[300]),
 
-                    SizedBox(
-                      height: SizeConfig.height * 0.03,
-                    ),
-
-                    const NewPostRowDateWidget(
-                      icon: AssetsManager.hoursImage,
-                      text: 'Hours',
-                      description: '',
-                    ),
-
-                    SizedBox(
-                      height: SizeConfig.height * 0.02,
-                    ),
-
-                    DefaultTextField(
-                        enable: false,
-                        controller: cubit.hoursDetailsController,
-                        hintText: 'Hours',
-                        validator: (v) {},
-                        keyboardType: TextInputType.text,
-                        textInputAction: TextInputAction.done,
-                        fillColor: Colors.grey[300]),
 
                     SizedBox(
                       height: SizeConfig.height * 0.03,
@@ -270,19 +323,112 @@ class PostDetails extends StatelessWidget {
                       height: SizeConfig.height * 0.02,
                     ),
 
-                    DefaultTextField(
-                        enable: false,
-                        controller: cubit.iWantDetailsController,
-                        hintText: 'I Want',
-                        validator: (v) {},
-                        keyboardType: TextInputType.text,
-                        textInputAction: TextInputAction.done,
-                        fillColor: Colors.grey[300]),
+                    Container(
+                      alignment: Alignment.center,
+                      height: SizeConfig.height * 0.06,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.sizeOf(context).height*0.022,
+                          vertical: MediaQuery.sizeOf(context).height*0.015
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300]!.withOpacity(0.8),
+                        borderRadius: BorderRadius.circular(SizeConfig.height * 0.05),
+                      ),
+                      child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: ( context, index) {
+                            return Text(postModel.iWantFlight[index],style: TextStyles.textStyle18Regular.copyWith(
+                                color: Colors.black
+                            ),textAlign: TextAlign.center,);
+
+                          },
+                          separatorBuilder: ( context, index){
+                            return Text(' , ',style: TextStyles.textStyle18Regular.copyWith(
+                                color: Colors.black
+                            ),);
+                          },
+                          itemCount: postModel.iWantFlight.length
+                      ),
+                    ),
+
 
                     SizedBox(
                       height: SizeConfig.height * 0.03,
                     ),
 
+                    /// I Want Lav
+                    const NewPostRowDateWidget(
+                      icon: AssetsManager.routeImage,
+                      text: 'I Want flight duration',
+                      description: '',
+                    ),
+
+                    SizedBox(
+                      height: SizeConfig.height * 0.02,
+                    ),
+
+                    Container(
+                      alignment: Alignment.center,
+                      height: SizeConfig.height * 0.06,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.sizeOf(context).height*0.022,
+                          vertical: MediaQuery.sizeOf(context).height*0.015
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300]!.withOpacity(0.8),
+                        borderRadius: BorderRadius.circular(SizeConfig.height * 0.05),
+                      ),
+                      child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: ( context, index) {
+                            return Text(postModel.iWantLav[index],style: TextStyles.textStyle18Regular.copyWith(
+                                color: Colors.black
+                            ),textAlign: TextAlign.center,);
+
+                          },
+                          separatorBuilder: ( context, index){
+                            return Text(' , ',style: TextStyles.textStyle18Regular.copyWith(
+                                color: Colors.black
+                            ),);
+                          },
+                          itemCount: postModel.iWantLav.length
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: SizeConfig.height * 0.03,
+                    ),
+
+
+                    /// I Want Lav Hours
+                    postModel.iWantLav.contains('Layover')?
+                    const NewPostRowDateWidget(
+                      icon: AssetsManager.hoursImage,
+                      text: 'Layover Hours',
+                      description: '',
+                    ):Container(),
+
+                    postModel.iWantLav.contains('Layover')?
+                    SizedBox(
+                      height: SizeConfig.height * 0.02,
+                    ):Container(),
+
+                    postModel.iWantLav.contains('Layover')?
+                    DefaultTextField(
+                        enable: false,
+                        controller: cubit.iWantLavHoursDetailsController,
+                        hintText: 'Layover Hours',
+                        validator: (v) {},
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.done,
+                        fillColor: Colors.grey[300]):Container(),
+
+                    postModel.iWantLav.contains('Layover')?
+                    SizedBox(
+                      height: SizeConfig.height * 0.03,
+                    ):Container(),
+
+                    /// Willing to fly
                     const NewPostRowDateWidget(
                       icon: AssetsManager.willToFlyImage,
                       text: 'Will To Fly',
@@ -293,14 +439,76 @@ class PostDetails extends StatelessWidget {
                       height: SizeConfig.height * 0.02,
                     ),
 
-                    DefaultTextField(
-                        enable: false,
-                        controller: cubit.willToFlyDetailsController,
-                        hintText: 'Will To Fly',
-                        validator: (v) {},
-                        keyboardType: TextInputType.text,
-                        textInputAction: TextInputAction.done,
-                        fillColor: Colors.grey[300]),
+                    Container(
+                      alignment: Alignment.center,
+                      height: SizeConfig.height * 0.06,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.sizeOf(context).height*0.022,
+                          vertical: MediaQuery.sizeOf(context).height*0.015
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300]!.withOpacity(0.8),
+                        borderRadius: BorderRadius.circular(SizeConfig.height * 0.05),
+                      ),
+                      child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: ( context, index) {
+                            return Text(postModel.willToFly[index],style: TextStyles.textStyle18Regular.copyWith(
+                              color: Colors.black
+                            ),textAlign: TextAlign.center,);
+
+                          },
+                          separatorBuilder: ( context, index){
+                            return Text(' , ',style: TextStyles.textStyle18Regular.copyWith(
+                                color: Colors.black
+                            ),);
+                          },
+                          itemCount: postModel.willToFly.length
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: SizeConfig.height * 0.03,
+                    ),
+
+                    /// Visa
+                    const NewPostRowDateWidget(
+                      icon: AssetsManager.travelImage,
+                      text: 'Visa',
+                      description: '',
+                    ),
+
+                    SizedBox(
+                      height: SizeConfig.height * 0.02,
+                    ),
+
+                    Container(
+                      alignment: Alignment.center,
+                      height: SizeConfig.height * 0.06,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.sizeOf(context).height*0.022,
+                          vertical: MediaQuery.sizeOf(context).height*0.015
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300]!.withOpacity(0.8),
+                        borderRadius: BorderRadius.circular(SizeConfig.height * 0.05),
+                      ),
+                      child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: ( context, index) {
+                            return Text(postModel.visa[index],style: TextStyles.textStyle18Regular.copyWith(
+                                color: Colors.black
+                            ),textAlign: TextAlign.center,);
+
+                          },
+                          separatorBuilder: ( context, index){
+                            return Text(' , ',style: TextStyles.textStyle18Regular.copyWith(
+                                color: Colors.black
+                            ),);
+                          },
+                          itemCount: postModel.visa.length
+                      ),
+                    ),
 
                     SizedBox(
                       height: SizeConfig.height * 0.03,
