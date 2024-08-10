@@ -31,7 +31,9 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       emit(LoginLoading());
        await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((value)  async{
-         print('Login Success');
+         UserDataFromStorage.setUserId(value.user!.uid);
+         UserDataFromStorage.setUserIsLogin(true);
+         debugPrint("User Id ===========================> ${UserDataFromStorage.userId}");
         await  EditProfileRepoImplement().getUserDataFromFireBase().then((value){
             UserModel userModel = UserModel.fromJson(value);
             UserDataFromStorage.setUserId(userModel.uid);
@@ -48,7 +50,7 @@ class AuthCubit extends Cubit<AuthState> {
             debugPrint("user Aircrafts ===========================> ${UserDataFromStorage.userAirCrafts}");
         });
       },);
-      emit(LoginSuccess());
+      // emit(LoginSuccess());
     } on FirebaseAuthException catch (e) {
       debugPrint('Failed with error code: ${e.code}');
       debugPrint(e.message);

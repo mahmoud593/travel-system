@@ -28,6 +28,7 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
     // TODO: implement initState
     super.initState();
     SettingsCubit.get(context).getHistoryPosts();
+    SettingsCubit.get(context).getFavoritePosts();
   }
 
   @override
