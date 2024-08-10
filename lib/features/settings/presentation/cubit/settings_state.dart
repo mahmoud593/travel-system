@@ -41,4 +41,8 @@ class CheckIfIsFavorite extends SettingsState {}
 class SetRankDropDownEditValueState extends SettingsState {}
 class SetBaseDropDownEditValueState extends SettingsState {}
 
+class GetNotificationsLoadingState extends SettingsState {}
+class GetNotificationsSuccessState extends SettingsState {}
+class GetNotificationsErrorState extends SettingsState {}
+
 

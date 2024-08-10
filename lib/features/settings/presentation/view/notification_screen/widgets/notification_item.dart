@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:travel_system/core/helper/app_size_config.dart';
+import 'package:travel_system/features/posts/data/models/post_model.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
 import 'package:travel_system/styles/text_styles/text_styles.dart';
 
 class NotificationItem extends StatelessWidget {
-  final String title, body;
-  const NotificationItem({super.key, required this.title, required this.body});
+  final PostModel postModel;
+  final String percentage;
+  const NotificationItem({super.key, required this.postModel, required this.percentage});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: SizeConfig.height*0.1,
       width: SizeConfig.width,
 
       decoration: BoxDecoration(
@@ -20,27 +21,25 @@ class NotificationItem extends StatelessWidget {
 
       child: Padding(
         padding: EdgeInsets.all(SizeConfig.height*0.01),
-        child: Column(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             /// Notification Title
-            Text(
-              title,
-              style: TextStyles.textStyle18Medium.copyWith(
-                  color: ColorManager.black
-              ),
+            const Icon(
+              Icons.notifications_active,
+              color: ColorManager.primaryBlue,
             ),
 
-            /// Notification Body
+            SizedBox(width: SizeConfig.height*0.01),
+
             Expanded(
               child: Text(
-                body,
-                style: TextStyles.textStyle12Regular.copyWith(
-                    color: ColorManager.black
+                "${postModel.userName} add a new trip corresponding to your trip with $percentage%",
+                style: TextStyles.textStyle18Medium.copyWith(
+                    color: ColorManager.black,
+                    fontWeight: FontWeight.bold
                 ),
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],

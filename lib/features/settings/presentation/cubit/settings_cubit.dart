@@ -9,6 +9,7 @@ import 'package:travel_system/core/constants/constants.dart';
 import 'package:travel_system/core/local/shared_preferences.dart';
 import 'package:travel_system/features/auth/data/model/user_model.dart';
 import 'package:travel_system/features/posts/data/models/post_model.dart';
+import 'package:travel_system/features/posts/presentation/cubit/posts_cubit/posts_cubit.dart';
 import 'package:travel_system/features/settings/data/edit_profile_repo_implement/edit_profile_repo_implement.dart';
 import 'package:travel_system/features/settings/presentation/cubit/settings_state.dart';
 
@@ -186,6 +187,11 @@ class SettingsCubit extends Cubit<SettingsState> {
 
 
   List<PostModel> historyPosts = [];
+
+  List<PostModel> notifications = [];
+  Map<String, int> notificationPercent = {};
+  int percent = 0;
+
   getHistoryPosts() async {
     historyPosts = [];
     emit(GetHistoryPostsLoadingState());
@@ -201,6 +207,62 @@ class SettingsCubit extends Cubit<SettingsState> {
     }catch(e){
       debugPrint("Error when getting History posts ==========> ${e.toString()}");
       emit(GetHistoryPostsErrorState());
+    }
+  }
+
+  getNotifications({required BuildContext context}) async {
+    notifications = [];
+    emit(GetNotificationsLoadingState());
+
+    try{
+      for(var historyElement in historyPosts){
+
+        for(var postElement in PostsCubit.get(context).flights){
+          int percent = 0;
+
+          if(historyElement.postId != postElement.postId){
+            if(historyElement.iWantFlight == postElement.iHaveFlight ||
+                historyElement.visa == postElement.visa ||
+                historyElement.startTime == postElement.startTime ||
+                historyElement.willToFly.any((element) => postElement.willToFly.contains(element))){
+
+              if(!notifications.contains(postElement)){
+
+                notifications.add(postElement);
+
+
+                if(historyElement.iWantFlight == postElement.iHaveFlight){
+                  percent += 25;
+                }
+
+                if(historyElement.visa == postElement.visa){
+                  percent += 25;
+                }
+
+                if(historyElement.startTime == postElement.startTime){
+                  percent += 25;
+                }
+
+                if(historyElement.willToFly.any((element) => postElement.willToFly.contains(element))){
+                  percent += 25;
+                }
+
+                notificationPercent[postElement.postId] = percent;
+
+                debugPrint("percent ==========> ${percent.toString()}");
+              }
+
+            }
+          }
+
+        }
+      }
+      debugPrint("my notifications ==========> ${notifications.toString()}");
+      emit(GetNotificationsSuccessState());
+
+    }catch(e){
+      debugPrint("Error when getting Notifications ==========> ${e.toString()}");
+      emit(GetNotificationsErrorState());
     }
   }
 

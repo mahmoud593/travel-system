@@ -25,7 +25,7 @@ class SettingsScreen extends StatelessWidget {
     listener: (context, state) {},
   builder: (context, state) {
     return ModalProgressHUD(
-      inAsyncCall: state is GetUserDataLoadingState ? true : false,
+      inAsyncCall: state is GetNotificationsLoadingState ? true : false,
       progressIndicator: const LoadingAnimationWidget(),
       child: Scaffold(
         body: Stack(
@@ -98,13 +98,15 @@ class SettingsScreen extends StatelessWidget {
                         SizedBox(height: SizeConfig.height * 0.022,),
 
                         //
-                        // ///Notifications
-                        // SettingsItem(
-                        //   title: 'Notifications',
-                        //   icon: Icons.notifications_outlined,
-                        //   onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationsScreen())),
-                        // ),
-                        // SizedBox(height: SizeConfig.height * 0.01,),
+                        ///Notifications
+                        SettingsItem(
+                          title: 'Notifications',
+                          icon: Icons.notifications_outlined,
+                          onTap: () async {
+                            await SettingsCubit.get(context).getNotifications(context: context).then((value) => Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationsScreen())));
+                          },
+                        ),
+                        SizedBox(height: SizeConfig.height * 0.022,),
                         //
                         //
                         // ///Favorite
