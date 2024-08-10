@@ -30,22 +30,23 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> login({required String email, required String password}) async {
     try {
       emit(LoginLoading());
-       await AuthRepoImplement().login(email: email, password: password).then((value)  async{
-      await  EditProfileRepoImplement().getUserDataFromFireBase().then((value){
-          UserModel userModel = UserModel.fromJson(value);
-          UserDataFromStorage.setUserId(userModel.uid);
-          UserDataFromStorage.setUserEmail(userModel.email);
-          UserDataFromStorage.setUserName(userModel.userName);
-          UserDataFromStorage.setUserPhone(userModel.phoneNumber);
-          UserDataFromStorage.setUserBaseNumber(userModel.beasNumber);
-          UserDataFromStorage.setUserRank(userModel.rank);
-          UserDataFromStorage.setUserPayrollNumber(userModel.payRollNumber);
-          UserDataFromStorage.setUserAirCrafts(userModel.airCrafts);
-          UserDataFromStorage.setuserPersonalImage(userModel.userImage);
-          UserDataFromStorage.setUserIsLogin(true);
-          emit(LoginSuccess());
-debugPrint("user Aircrafts ===========================> ${UserDataFromStorage.userAirCrafts}");
-      });
+       await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((value)  async{
+         print('Login Success');
+        await  EditProfileRepoImplement().getUserDataFromFireBase().then((value){
+            UserModel userModel = UserModel.fromJson(value);
+            UserDataFromStorage.setUserId(userModel.uid);
+            UserDataFromStorage.setUserEmail(userModel.email);
+            UserDataFromStorage.setUserName(userModel.userName);
+            UserDataFromStorage.setUserPhone(userModel.phoneNumber);
+            UserDataFromStorage.setUserBaseNumber(userModel.beasNumber);
+            UserDataFromStorage.setUserRank(userModel.rank);
+            UserDataFromStorage.setUserPayrollNumber(userModel.payRollNumber);
+            UserDataFromStorage.setUserAirCrafts(userModel.airCrafts);
+            UserDataFromStorage.setuserPersonalImage(userModel.userImage);
+            UserDataFromStorage.setUserIsLogin(true);
+            emit(LoginSuccess());
+            debugPrint("user Aircrafts ===========================> ${UserDataFromStorage.userAirCrafts}");
+        });
       },);
       emit(LoginSuccess());
     } on FirebaseAuthException catch (e) {
@@ -100,6 +101,7 @@ debugPrint("user Aircrafts ===========================> ${UserDataFromStorage.us
         payRollNumber: payRollNumber,
         airCrafts: airCrafts,
       );
+
 
       await uploadUserDataToFireBase(
         email: email,

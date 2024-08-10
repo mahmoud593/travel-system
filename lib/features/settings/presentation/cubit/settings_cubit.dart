@@ -239,14 +239,17 @@ class SettingsCubit extends Cubit<SettingsState> {
                 }
 
                 if(historyElement.visa.any((element) => postElement.visa.contains(element))){
+                  print('2');
                   percent += 25;
                 }
 
                 if(historyElement.startTime == postElement.startTime){
+                  print('3');
                   percent += 25;
                 }
 
                 if(historyElement.willToFly.any((element) => postElement.willToFly.contains(element))){
+                  print('4');
                   percent += 25;
                 }
 

@@ -10,11 +10,25 @@ import 'package:travel_system/features/home_layout/presentation/view/home_layout
 import 'package:travel_system/features/home_layout/presentation/view/home_layout_screen/widgets/bottom_navigation_bar_widget.dart';
 import 'package:travel_system/features/posts/presentation/cubit/posts_cubit/posts_cubit.dart';
 import 'package:travel_system/features/posts/presentation/cubit/posts_states/posts_states.dart';
+import 'package:travel_system/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
 
 
-class HomeLayoutScreen extends StatelessWidget {
+class HomeLayoutScreen extends StatefulWidget {
   const HomeLayoutScreen({super.key});
+
+  @override
+  State<HomeLayoutScreen> createState() => _HomeLayoutScreenState();
+}
+
+class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SettingsCubit.get(context).getHistoryPosts();
+  }
 
   @override
   Widget build(BuildContext context) {
