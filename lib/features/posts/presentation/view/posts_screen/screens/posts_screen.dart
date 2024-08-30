@@ -141,7 +141,9 @@ class _PostsScreenState extends State<PostsScreen> {
                                                             Text(cubit.iHaveList[index],style:
                                                             TextStyles.textStyle18Regular.copyWith(
                                                                 color: cubit.locationFilterSelected[index] ? ColorManager.white : ColorManager.primaryBlue
-                                                            ),)
+                                                            ),
+                                                              overflow: TextOverflow.ellipsis,
+                                                            )
                                                           ],
                                                         ) ,
                                                       ),

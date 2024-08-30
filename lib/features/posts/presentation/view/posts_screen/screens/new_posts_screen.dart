@@ -326,7 +326,6 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
                                           borderRadius: BorderRadius.circular(50),
                                           color: cubit.locationIWantSelected[index] ? ColorManager.primaryBlue : Colors.white
                                       ),
-                                      width: SizeConfig.height *.1,
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -334,7 +333,9 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
                                           Text(cubit.iWantList[index],style:
                                           TextStyles.textStyle18Regular.copyWith(
                                               color: cubit.locationIWantSelected[index] ? ColorManager.white : ColorManager.primaryBlue
-                                          ),)
+                                          ),
+                                            overflow: TextOverflow.ellipsis,
+                                          )
                                         ],
                                       ) ,
                                     ),

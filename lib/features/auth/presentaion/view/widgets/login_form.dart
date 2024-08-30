@@ -65,7 +65,10 @@ class LoginForm extends StatelessWidget {
               buttonText: "Login",
               onPressed: () {
                 if (cubit.loginFormKey.currentState!.validate()) {
-                  cubit.login(email: cubit.loginEmailController.text, password: cubit.loginPasswordController.text).then((value) {
+
+                  cubit.login(email: cubit.loginEmailController.text, password: cubit.loginPasswordController.text).then((value) async{
+                    String? token=  await cubit.getToken();
+                    print(token);
                     cubit.loginPasswordController.clear();
                     cubit.loginEmailController.clear();
                   });

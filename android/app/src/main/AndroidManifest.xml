@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.travel.travel_system">
     <application
-        android:label="Flights Trade"
+        android:label="eTrade"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

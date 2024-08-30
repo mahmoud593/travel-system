@@ -10,7 +10,7 @@ class Constants{
 
   static List onBoardingScreens=[
     OnBoardingModel(
-        title: 'Flight Trades',
+        title: 'eTrade',
         content: 'Simplify your schedule with effortless flight exchanges. Post your available flights and find the perfect swap in just a few taps.',
         image: 'assets/images/onBoarding1.png'
     ),

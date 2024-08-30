@@ -31,6 +31,7 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       emit(LoginLoading());
        await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((value)  async{
+
          UserDataFromStorage.setUserId(value.user!.uid);
          UserDataFromStorage.setUserIsLogin(true);
          debugPrint("User Id ===========================> ${UserDataFromStorage.userId}");
@@ -81,6 +82,22 @@ class AuthCubit extends Cubit<AuthState> {
       emit(LoginFailure(errorMessage: 'An unknown error occurred.'));
     }
   }
+
+
+  Future<String?> getToken() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        String? token = await user.getIdToken();
+        print('Generated Token: $token');
+        return token;
+      }
+    } catch (e) {
+      print('Error getting token: $e');
+    }
+    return null;
+  }
+
   Future<void> register({
     required String email,
     required String password,

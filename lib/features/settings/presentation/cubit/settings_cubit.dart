@@ -220,44 +220,47 @@ class SettingsCubit extends Cubit<SettingsState> {
         for(var postElement in PostsCubit.get(context).flights){
           int percent = 0;
 
-          if(historyElement.postId != postElement.postId){
-            if(
-                historyElement.iWantFlight.any((element) => postElement.iHaveFlight == element) ||
-                historyElement.visa.any((element) => postElement.visa.contains(element)) ||
-                historyElement.startTime == postElement.startTime ||
-                historyElement.willToFly.any((element) => postElement.willToFly.contains(element)))
-            {
+          if(UserDataFromStorage.userId != postElement.uid){
+            if(historyElement.postId != postElement.postId){
+              print('Not this user');
+              if(
+              historyElement.iWantFlight.any((element) => postElement.iHaveFlight == element) ||
+                  historyElement.visa.any((element) => postElement.visa.contains(element)) ||
+                  historyElement.startTime == postElement.startTime ||
+                  historyElement.willToFly.any((element) => postElement.willToFly.contains(element)))
+              {
 
-              if(!notifications.contains(postElement)){
+                if(!notifications.contains(postElement)){
 
-                notifications.add(postElement);
+                  notifications.add(postElement);
 
 
-                if(historyElement.iWantFlight.any((element) => postElement.iHaveFlight == element)){
-                  print('1');
-                  percent += 25;
+                  if(historyElement.iWantFlight.any((element) => postElement.iHaveFlight == element)){
+                    print('1');
+                    percent += 25;
+                  }
+
+                  if(historyElement.visa.any((element) => postElement.visa.contains(element))){
+                    print('2');
+                    percent += 25;
+                  }
+
+                  if(historyElement.startTime == postElement.startTime){
+                    print('3');
+                    percent += 25;
+                  }
+
+                  if(historyElement.willToFly.any((element) => postElement.willToFly.contains(element))){
+                    print('4');
+                    percent += 25;
+                  }
+
+                  notificationPercent[postElement.postId] = percent;
+
+                  debugPrint("percent ==========> ${percent.toString()}");
                 }
 
-                if(historyElement.visa.any((element) => postElement.visa.contains(element))){
-                  print('2');
-                  percent += 25;
-                }
-
-                if(historyElement.startTime == postElement.startTime){
-                  print('3');
-                  percent += 25;
-                }
-
-                if(historyElement.willToFly.any((element) => postElement.willToFly.contains(element))){
-                  print('4');
-                  percent += 25;
-                }
-
-                notificationPercent[postElement.postId] = percent;
-
-                debugPrint("percent ==========> ${percent.toString()}");
               }
-
             }
           }
 
