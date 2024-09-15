@@ -103,7 +103,7 @@ class RegisterForm extends StatelessWidget {
                 height: SizeConfig.height * .01,
               ),
 
-              /// Beas number
+              /// Base number
               Container(
                 decoration: BoxDecoration(
                   color: const Color(0xFFF7F8FA),
@@ -111,7 +111,7 @@ class RegisterForm extends StatelessWidget {
                 ),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
-                    hint: Text('Beas',style: TextStyles.textStyle18Regular
+                    hint: Text('Base',style: TextStyles.textStyle18Regular
                         .copyWith(color: ColorManager.darkGrey.withOpacity(.5)),),
                     icon: const Icon(Icons.arrow_drop_down),
                     elevation: 5,

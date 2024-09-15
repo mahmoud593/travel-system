@@ -285,6 +285,27 @@ class AuthCubit extends Cubit<AuthState> {
 
   }
 
+  Future<void> forgetPassword(
+  {
+    required String email
+  })async{
+
+    emit(ForgetPasswordLoading());
+    await FirebaseAuth.instance.sendPasswordResetEmail(
+        email: email
+    ).then((value) {
+
+      customToast(title: 'Changed Password Successfully', color: ColorManager.primaryBlue);
+      // Navigator.pop(context);
+      emit(ForgetPasswordSuccess());
+    }).catchError((error){
+
+      print('error is ${error.toString()}');
+      emit(ForgetPasswordFailure());
+    });
+
+
+  }
 
 
 }

@@ -36,3 +36,7 @@ final class FetchRanksSuccessState extends AuthState {}
 final class FetchBaseLoadingState extends AuthState {}
 final class FetchBaseSuccessState extends AuthState {}
 
+final class ForgetPasswordLoading extends AuthState {}
+final class ForgetPasswordSuccess extends AuthState {}
+final class ForgetPasswordFailure extends AuthState {}
+

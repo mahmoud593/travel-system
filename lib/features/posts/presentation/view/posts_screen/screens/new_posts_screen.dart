@@ -109,7 +109,7 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
                               children: [
 
                                 /// I Have
-                                const NewPostRowDateWidget(icon: AssetsManager.iHaveImage,text: 'I Have',description: 'Choose location of your flight that you have',),
+                                const NewPostRowDateWidget(icon: AssetsManager.iHaveImage,text: 'I Have',description: 'Choose the destination of your flight that you have',),
 
                                 SizedBox(height:  SizeConfig.height * 0.01,),
 
@@ -124,7 +124,7 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
                                   ),
                                   child: DropdownButtonHideUnderline(
                                     child: DropdownButton<String>(
-                                      hint: Text('Enter Your Location',style: TextStyles.textStyle18Regular.copyWith(
+                                      hint: Text('Enter your destination',style: TextStyles.textStyle18Regular.copyWith(
                                           color: Colors.black54
                                       )),
                                       icon: const Icon(Icons.arrow_drop_down),
@@ -306,7 +306,7 @@ class _NewPostsScreenState extends State<NewPostsScreen> {
                                 SizedBox(height:  SizeConfig.height * 0.03,),
 
                                 /// I Want
-                                const NewPostRowDateWidget(icon: AssetsManager.iWantImage,text: 'I Want',description: 'Choose location of your flight that you want',),
+                                const NewPostRowDateWidget(icon: AssetsManager.iWantImage,text: 'I Want',description: 'Choose the destination of the flight you want',),
 
                                 SizedBox(height:  SizeConfig.height * 0.01,),
 

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:travel_system/core/helper/notification_helper.dart';
 import 'package:travel_system/core/local/shared_preferences.dart';
 import 'package:travel_system/features/auth/presentaion/cubit/auth_cubit/auth_cubit.dart';
 import 'package:travel_system/features/post_info/presentation/cubit/comments_cubit.dart';
@@ -19,6 +20,7 @@ void main() async {
   await UserDataFromStorage.getData();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
+  await NotificationHelper().notificationInit();
 
   runApp(const MyApp());
 }

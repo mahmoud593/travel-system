@@ -31,7 +31,7 @@ class _PostsScreenState extends State<PostsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    PostsCubit.get(context).getPosts(context);
+    // PostsCubit.get(context).getPosts(context);
     // PostsCubit.get(context).getFavoritePosts();
   }
 
@@ -102,7 +102,25 @@ class _PostsScreenState extends State<PostsScreen> {
                                               child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Text('Filter By',style: TextStyles.textStyle24Bold.copyWith(color: ColorManager.black),),
+                                                  Row(
+                                                    children: [
+                                                      Text('Filter By',style: TextStyles.textStyle24Bold.copyWith(color: ColorManager.black),),
+                                                      const Spacer(),
+                                                      cubit.isFilter==true?
+                                                      Align(
+                                                        alignment: Alignment.bottomRight,
+                                                        child: IconButton(
+                                                          padding: EdgeInsets.zero,
+                                                          onPressed: ()async{
+                                                            await cubit.getPosts(context);
+                                                            cubit.setIsFilter(value: false);
+                                                            Navigator.pop(context);
+                                                          },
+                                                          icon: const Icon(Icons.filter_alt_off_outlined,color: ColorManager.primaryBlue,),
+                                                        ),
+                                                      ):Container(),
+                                                    ],
+                                                  ),
 
                                                   const Divider(color: Colors.white,),
 
@@ -277,6 +295,7 @@ class _PostsScreenState extends State<PostsScreen> {
                                                               duration: cubit.filterLayover==1?'Layover':cubit.filterLayover==3?'':'Round Trip',
                                                               dateTime: cubit.dateTimeFilter,
                                                           ).then((v){
+                                                            cubit.setIsFilter(value: true);
                                                             cubit.countryFilterSelected='';
                                                             cubit.dateTimeFilter='';
                                                             cubit.filterLayover=3;
@@ -303,12 +322,13 @@ class _PostsScreenState extends State<PostsScreen> {
                                     color: ColorManager.primaryBlue,
                                   ),
                                 )
-
                               ],
                             ),
                             SizedBox(height: MediaQuery.sizeOf(context).height*0.012,),
 
                             Text('Let\'s start',style: TextStyles.textStyle18Bold.copyWith(color: ColorManager.primaryBlue),),
+
+
                           ],
                         )
                     ),

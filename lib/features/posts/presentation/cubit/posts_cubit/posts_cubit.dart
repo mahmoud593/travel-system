@@ -47,7 +47,9 @@ class PostsCubit extends Cubit<PostsStates>{
           String formattedDatetime = DateFormat("dd-MMM-yyyy - HH:00").format(dateTimeToday);
           print(formattedDatetime);
           DateTime todayDate = DateFormat("dd-MMM-yyyy - HH:mm").parse(formattedDatetime);
-          DateTime endDate = DateFormat("dd-MMM-yyyy - HH:mm").parse(post.endTime);
+          print(todayDate);
+          DateTime endDate = DateFormat("dd-MMM-yyyy - HH:mm").parse(post.startTime);
+          print(endDate);
 
           if(endDate.isAfter(todayDate)){
             if(post.rank == UserDataFromStorage.userRank){
@@ -548,6 +550,13 @@ class PostsCubit extends Cubit<PostsStates>{
 
     });
 
+  }
+
+  bool isFilter=false;
+
+  void setIsFilter({required bool value}){
+    isFilter=value;
+    emit(ChangeIsFilterState());
   }
 
 

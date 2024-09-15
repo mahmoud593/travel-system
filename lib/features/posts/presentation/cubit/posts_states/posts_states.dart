@@ -48,3 +48,5 @@ final class FetchIHaveSuccessState extends PostsStates {}
 
 final class FetchIWantLoadingState extends PostsStates {}
 final class FetchIWantSuccessState extends PostsStates {}
+
+final class ChangeIsFilterState extends PostsStates {}

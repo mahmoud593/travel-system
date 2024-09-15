@@ -6,6 +6,7 @@ import 'package:travel_system/core/helper/material_navigation.dart';
 import 'package:travel_system/core/local/shared_preferences.dart';
 import 'package:travel_system/features/auth/presentaion/cubit/auth_cubit/auth_cubit.dart';
 import 'package:travel_system/features/auth/presentaion/view/screens/register/resgister.dart';
+import 'package:travel_system/features/auth/presentaion/view/widgets/forget_password_screen.dart';
 import 'package:travel_system/styles/colors/color_manager.dart';
 import 'package:travel_system/styles/text_styles/text_styles.dart';
 import 'package:travel_system/styles/widets/default_button.dart';
@@ -56,6 +57,24 @@ class LoginForm extends StatelessWidget {
             keyboardType: TextInputType.text,
             textInputAction: TextInputAction.done,
           ),
+
+
+          /// Forgot Password
+          Align(
+            alignment: Alignment.topRight,
+            child: TextButton(
+                onPressed: () {
+                  customPushNavigator(context, ForgetPasswordScreen());
+                },
+                child: Text('Forgot Password ?',
+                  style: TextStyles.textStyle18Bold.copyWith(
+                      color: ColorManager.primaryBlue,
+                      fontSize: 15
+                  ),
+                )
+            ),
+          ),
+
           SizedBox(
             height: SizeConfig.height * .02,
           ),
